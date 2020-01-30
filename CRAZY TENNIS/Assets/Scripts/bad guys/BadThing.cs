@@ -62,7 +62,7 @@ public abstract class BadThing : MonoBehaviour
     /// <param name="ball">Thats the fucker who did it right there thats him</param>
     public virtual void Ouch(Ball ball)
     {
-        Physics2D.IgnoreCollision(ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
+        Destroy(ball.gameObject);
         hits--;
         print("Ouch " + hits);
         if(hits <= 0)

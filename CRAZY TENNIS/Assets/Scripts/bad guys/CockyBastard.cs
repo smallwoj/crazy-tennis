@@ -21,7 +21,7 @@ public class CockyBastard : BadThing
     {
         if(ball != null && ball.OutsideCourt())
         {
-            Destroy(ball);
+            Destroy(ball.gameObject);
             ball = null;
         }
         if(ball == null)
@@ -34,6 +34,7 @@ public class CockyBastard : BadThing
     public override void NextPhase()
     {
         DestroyAllBalls();
+        ball = null;
         phase++;
         hits = 3;
         if(phase == 4)
@@ -81,8 +82,8 @@ public class CockyBastard : BadThing
             base.Ouch(ball);
         else
         {
+            print("rally " + rallyCount);
             rallyCount--;
-            print("rally");
             ball.hit = false;
             Physics2D.IgnoreCollision(ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
             if(phase == 2)

@@ -40,7 +40,6 @@ public class Ball : MonoBehaviour
             if(hit)
             {
                 other.gameObject.GetComponent<BadThing>().Ouch(this);
-                Destroy(gameObject);
             }
         }
 
