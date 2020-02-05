@@ -7,12 +7,13 @@ public class CockyBastard : BadThing
     private Ball ball;
     private int phase;
     private int rallyCount;
+    private PlayerBehaviour pb;
     // Start is called before the first frame update
     void Start()
     {
         phase = 0;
         NextPhase();
-        PlayerBehaviour pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
+        pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         pb.Breakout = true;
     }
 
@@ -51,7 +52,7 @@ public class CockyBastard : BadThing
                 typeof(GenericHittable), 
                 transform.position, 
                 new Vector2(0, -3), 
-                Random.Range(6f, 15f)
+                Random.Range(6f, 10f)
             );
         }
         else if(phase == 2)
@@ -59,8 +60,8 @@ public class CockyBastard : BadThing
             return SpawnBall(
                 typeof(GenericHittable), 
                 transform.position, 
-                new Vector2(Random.Range(-4f, 4f), Random.Range(-3f, -4f)),
-                Random.Range(6f, 15f)
+                new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)),
+                Random.Range(6f, 10f)
             );
         }
         else if(phase == 3)
@@ -68,8 +69,8 @@ public class CockyBastard : BadThing
             return SpawnBall(
                 typeof(GenericHittable), 
                 transform.position, 
-                new Vector2(0, -5), 
-                Random.Range(6f, 15f)
+                (pb.transform.position - transform.position).normalized * 5, 
+                Random.Range(6f, 10f)
             );
         }
         else
@@ -87,7 +88,9 @@ public class CockyBastard : BadThing
             ball.hit = false;
             Physics2D.IgnoreCollision(ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
             if(phase == 2)
-                ball.Velocity = new Vector2(Random.Range(-4f, 4f), Random.Range(-3f, -4f));
+                ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f));
+            else if(phase == 3)
+                ball.Velocity = (pb.transform.position - transform.position).normalized * 5;
         }
     }
 

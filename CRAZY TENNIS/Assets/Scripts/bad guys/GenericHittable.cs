@@ -15,12 +15,12 @@ public class GenericHittable : GenericUnhittable
                 if(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>().Breakout)
                 {
                     //this one is kinda like breakout
-                    Velocity = (transform.position - other.transform.position)*8;
+                    Velocity = (transform.position - other.transform.position).normalized*6;
                 }
                 else
                 {
                     //this one just go 
-                    Velocity = (Parent.transform.position - transform.position)*2;
+                    Velocity = (Parent.transform.position - transform.position).normalized*6;
                 }
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), Parent.GetComponent<Collider2D>(), false);
             }

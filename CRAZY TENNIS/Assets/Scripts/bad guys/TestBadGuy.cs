@@ -9,9 +9,12 @@ public class TestBadGuy : BadThing
 {
     private Ball[] balls;
     private int phase = 0;
+    private PlayerBehaviour pb;
     void Start()
     {
         balls = new Ball[25];
+        pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
+        pb.Breakout= false;
         GameObject bounds = GameObject.Find("bounds false");
         if(bounds != null)
             bounds.SetActive(false);
