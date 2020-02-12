@@ -927,6 +927,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CockyBastard
       objectReference: {fileID: 0}
+    - target: {fileID: 990710018427954108, guid: 1abff3c4fdeb5bf4999ebf40e3711974,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 990710018427954109, guid: 1abff3c4fdeb5bf4999ebf40e3711974,
         type: 3}
       propertyPath: m_LocalPosition.x
