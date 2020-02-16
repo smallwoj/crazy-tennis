@@ -22,10 +22,10 @@ public abstract class BadThing : MonoBehaviour
         //instantiate the prefab
 		ball = (GameObject)PrefabUtility.InstantiatePrefab(ball);
         Ball comp = (Ball)ball.AddComponent(type);
-        ball.GetComponent<Ball>().Velocity = initVel;
-        ball.GetComponent<Ball>().RotationalVelocity = initRotVel;
-        ball.GetComponent<Ball>().Parent = this;
-        ball.GetComponent<Transform>().position = initPos;
+        comp.Velocity = initVel;
+        comp.RotationalVelocity = initRotVel;
+        comp.Parent = this;
+        comp.transform.position = initPos;
         Physics2D.IgnoreCollision(ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
         return comp;
     }
