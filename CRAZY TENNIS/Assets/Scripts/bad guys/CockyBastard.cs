@@ -9,7 +9,6 @@ public class CockyBastard : BadThing
     private int rallyCount;
     private PlayerBehaviour pb;
     private Animator anim;
-    private bool BallSpawnTriggered;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +17,7 @@ public class CockyBastard : BadThing
         NextPhase();
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         pb.Breakout = true;
-        BallSpawnTriggered = false;
+        pb.PlayerHurt += Rally;
     }
 
     // Update is called once per frame
@@ -28,12 +27,7 @@ public class CockyBastard : BadThing
         {
             Destroy(ball.gameObject);
             ball = null;
-        }
-        if(ball == null && !BallSpawnTriggered)
-        {
-            anim.SetTrigger("swing");
-            BallSpawnTriggered = true;
-            rallyCount = phase - 1;
+            anim.SetTrigger("rally");
         }
     }
 
@@ -46,6 +40,10 @@ public class CockyBastard : BadThing
         if(phase == 4)
         {
             SpawnNextEnemy("redCharacter");
+        }
+        else
+        {
+            anim.SetTrigger("rally");
         }
     }
 
@@ -74,7 +72,7 @@ public class CockyBastard : BadThing
             return SpawnBall(
                 typeof(GenericHittable), 
                 transform.position + new Vector3(-0.7f, -0.2f, 0),
-                (pb.transform.position - transform.position).normalized * 5,
+                (pb.transform.position - (transform.position + new Vector3(-0.7f, -0.2f, 0))).normalized * 5,
                 Random.Range(6f, 10f)
             );
         }
@@ -85,10 +83,13 @@ public class CockyBastard : BadThing
     public override void Ouch(Ball ball)
     {
         if(rallyCount <= 0)
+        {
+            anim.SetTrigger("hurt");
             base.Ouch(ball);
+        }    
         else
         {
-            anim.SetTrigger("swing");
+            anim.SetTrigger("rally");
             print("rally " + rallyCount);
             rallyCount--;
             ball.hit = false;
@@ -98,10 +99,10 @@ public class CockyBastard : BadThing
 
     public void HitTime()
     {
-        if(ball == null && BallSpawnTriggered)
+        if(ball == null)
         {
             ball = SpawnBallPhase(phase);
-            BallSpawnTriggered = false;
+            rallyCount = phase - 1;
         }
         else
         {
@@ -110,5 +111,15 @@ public class CockyBastard : BadThing
             else if(phase == 3)
                 ball.Velocity = (pb.transform.position - transform.position).normalized * 5;
         }
+    }
+
+    public void Rally()
+    {
+        anim.SetTrigger("rally");
+    }
+
+    void OnDestroy()
+    {
+        pb.PlayerHurt -= Rally;
     }
 }

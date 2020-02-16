@@ -16,6 +16,8 @@ public class PlayerBehaviour : MonoBehaviour
     private Animator anim;
     private Collider2D swang;
     public bool Breakout = false;
+    public delegate void ouchohgod();
+    public event ouchohgod PlayerHurt;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +60,8 @@ public class PlayerBehaviour : MonoBehaviour
             print("lives: "+lives);
         }
         BadThing.DestroyAllBalls();
+        if(PlayerHurt != null)
+            PlayerHurt();
     }
 
     public void ToggleSwang()
