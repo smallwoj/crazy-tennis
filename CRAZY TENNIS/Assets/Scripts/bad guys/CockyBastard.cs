@@ -10,8 +10,9 @@ public class CockyBastard : BadThing
     private PlayerBehaviour pb;
     private Animator anim;
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
+        base.Start();
         anim = GetComponent<Animator>();
         phase = 0;
         NextPhase();
@@ -36,7 +37,7 @@ public class CockyBastard : BadThing
         DestroyAllBalls();
         ball = null;
         phase++;
-        hits = 3;
+        maxhits = 3;
         if(phase == 4)
         {
             SpawnNextEnemy("redCharacter");
@@ -90,7 +91,6 @@ public class CockyBastard : BadThing
         else
         {
             anim.SetTrigger("rally");
-            print("rally " + rallyCount);
             rallyCount--;
             ball.hit = false;
             Physics2D.IgnoreCollision(ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);

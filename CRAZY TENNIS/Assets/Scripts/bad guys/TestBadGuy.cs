@@ -10,8 +10,9 @@ public class TestBadGuy : BadThing
     private Ball[] balls;
     private int phase = 0;
     private PlayerBehaviour pb;
-    void Start()
+    new void Start()
     {
+        base.Start();
         balls = new Ball[25];
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         pb.Breakout= false;
@@ -59,7 +60,7 @@ public class TestBadGuy : BadThing
         else
         {
             phase++;
-            hits = 5*phase;
+            maxhits = 5*phase;
             DestroyAllBalls();
             balls = new Ball[balls.Length*2];
         }

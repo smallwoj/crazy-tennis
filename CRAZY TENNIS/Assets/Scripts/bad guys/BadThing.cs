@@ -5,8 +5,52 @@ using UnityEditor;
 
 public abstract class BadThing : MonoBehaviour
 {
+    public float HealthRadius;
+    protected int hits
+    {
+        get
+        {
+            return _hits;
+        }
+        set
+        {
+            _hits = value;
+            if(value != 0 && maxhits != 0)
+            {
+                List<Vector3> vertices = new List<Vector3>();
+                double limit = ((double)hits/maxhits)*2*System.Math.PI;
+                double inc = limit/100;
+                for(double t = 0; t <= limit; t+=inc)
+                {
+                    vertices.Add(new Vector3((float)System.Math.Cos(t+0.5*System.Math.PI)*HealthRadius, (float)System.Math.Sin(t+0.5*System.Math.PI)*HealthRadius, -1));
+                }
+                lines.positionCount = vertices.Count;
+                lines.SetPositions(vertices.ToArray());
+            }
+        }
+    }
+    private int _hits = 0;
+    public int maxhits
+    {
+        get
+        {
+            return _maxhits;
+        }
+        set
+        {
+            _maxhits = value;
+            hits = value;
+        }
+    }
+    private int _maxhits = 0;
+    private LineRenderer lines;
+
     // Start isn't called before the first frame update this time...
-    protected int hits = 0;
+    // nvm
+    protected void Start()
+    {
+        lines = GetComponent<LineRenderer>();
+    }
 
     /// <summary>
     /// Spawns a ball at the position with the given type.
@@ -64,7 +108,6 @@ public abstract class BadThing : MonoBehaviour
     {
         Destroy(ball.gameObject);
         hits--;
-        print("Ouch " + hits);
         if(hits <= 0)
             NextPhase();
     }
