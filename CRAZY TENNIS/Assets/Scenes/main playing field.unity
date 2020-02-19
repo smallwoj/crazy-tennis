@@ -310,6 +310,7 @@ MonoBehaviour:
   bombs: 5
   score: 0
   defaultPosition: {x: -1.87, y: -2.55}
+  defaultBombs: 0
   Breakout: 0
 --- !u!1 &519420028
 GameObject:
@@ -986,6 +987,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3569248081404357856, guid: 1abff3c4fdeb5bf4999ebf40e3711974,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3569248081404357856, guid: 1abff3c4fdeb5bf4999ebf40e3711974,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 3569248081404357856, guid: 1abff3c4fdeb5bf4999ebf40e3711974,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 0.6886792
+      objectReference: {fileID: 0}
+    - target: {fileID: 3569248081404357856, guid: 1abff3c4fdeb5bf4999ebf40e3711974,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 0.08770915
+      objectReference: {fileID: 0}
+    - target: {fileID: 3569248081404357856, guid: 1abff3c4fdeb5bf4999ebf40e3711974,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 0.08770915
+      objectReference: {fileID: 0}
+    - target: {fileID: 3569248081404357856, guid: 1abff3c4fdeb5bf4999ebf40e3711974,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 0.6901961
+      objectReference: {fileID: 0}
+    - target: {fileID: 3569248081404357856, guid: 1abff3c4fdeb5bf4999ebf40e3711974,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.g
+      value: 0.08627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 3569248081404357856, guid: 1abff3c4fdeb5bf4999ebf40e3711974,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.b
+      value: 0.08627451
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1abff3c4fdeb5bf4999ebf40e3711974, type: 3}
