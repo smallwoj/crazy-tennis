@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// This is the base enemy class. All enemies draw from this.
+/// </summary>
 public abstract class BadThing : MonoBehaviour
 {
+    /// <summary>
+    /// Radius in 'unity units' of the health circle
+    /// </summary>
     public float HealthRadius;
+
+    /// <summary>
+    /// How many hits the enemy has left. Hit 0 and uh oh
+    /// </summary>
     protected int hits
     {
         get
@@ -24,12 +34,17 @@ public abstract class BadThing : MonoBehaviour
                 {
                     vertices.Add(new Vector3((float)System.Math.Cos(t+0.5*System.Math.PI)*HealthRadius, (float)System.Math.Sin(t+0.5*System.Math.PI)*HealthRadius, -1));
                 }
-                lines.positionCount = vertices.Count;
-                lines.SetPositions(vertices.ToArray());
+                HealthCircle.positionCount = vertices.Count;
+                HealthCircle.SetPositions(vertices.ToArray());
             }
         }
     }
+
     private int _hits = 0;
+    /// <summary>
+    /// Sets the maximum health (and also the current health)
+    /// Used to calculate how much of the health ring to draw
+    /// </summary>
     public int maxhits
     {
         get
@@ -43,13 +58,37 @@ public abstract class BadThing : MonoBehaviour
         }
     }
     private int _maxhits = 0;
-    private LineRenderer lines;
+    /// <summary>
+    /// The position of the object in 3d space. Equivalent to transform.position. USE THIS!
+    /// This also sets the health ui ring's position.
+    /// </summary>
+    public Vector3 position
+    {
+        get
+        {
+            return transform.position;
+        }
+        set
+        {
+            Vector3[] positions = new Vector3[HealthCircle.positionCount];
+            HealthCircle.GetPositions(positions);
+            for(int i = 0; i < positions.Length; i++)
+            {
+                positions[i] += (value - transform.position);
+            }
+            transform.position = value;
+        }
+    }
+    /// <summary>
+    /// LineRenderer that draws the ring of health around the enemy.
+    /// </summary>
+    private LineRenderer HealthCircle;
 
     // Start isn't called before the first frame update this time...
     // nvm
     protected void Start()
     {
-        lines = GetComponent<LineRenderer>();
+        HealthCircle = GetComponent<LineRenderer>();
     }
 
     /// <summary>
@@ -112,5 +151,8 @@ public abstract class BadThing : MonoBehaviour
             NextPhase();
     }
 
+    /// <summary>
+    /// This method will go to the next phase, whatever that may be
+    /// </summary>
     public abstract void NextPhase();
 }

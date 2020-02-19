@@ -4,26 +4,53 @@ using UnityEngine;
 
 public class CockyBastard : BadThing
 {
+    /// <summary>
+    /// da ball
+    /// </summary>
     private Ball ball;
+
+    /// <summary>
+    /// Current phase
+    /// 1 -> he serves it straight down
+    /// 2 -> he serves it in a random direction
+    /// 3 -> he serves it right at you
+    /// 4 -> fuckin deadd
+    /// </summary>
     private int phase;
+
+    /// <summary>
+    /// However many rallies he still needs before he takes a hit
+    /// </summary>
     private int rallyCount;
+
+    /// <summary>
+    /// Shortcut to the player
+    /// </summary>
     private PlayerBehaviour pb;
+
+    /// <summary>
+    /// Shortcut to the animator
+    /// </summary>
     private Animator anim;
     // Start is called before the first frame update
     new void Start()
     {
+        // call the BadThing start method
+        // you need this. if youre encountering null pointers when taking damage thats prolly it
         base.Start();
         anim = GetComponent<Animator>();
         phase = 0;
         NextPhase();
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         pb.Breakout = true;
+        // add rally function to player hurt event
         pb.PlayerHurt += Rally;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //respawn the ball if its outside the court
         if(ball != null && ball.OutsideCourt())
         {
             Destroy(ball.gameObject);
@@ -32,6 +59,9 @@ public class CockyBastard : BadThing
         }
     }
 
+    /// <summary>
+    /// Goes to the next phase, as described in the 'phase' summary
+    /// </summary>
     public override void NextPhase()
     {
         DestroyAllBalls();
@@ -48,6 +78,11 @@ public class CockyBastard : BadThing
         }
     }
 
+    /// <summary>
+    /// Spawns a ball based on the current phase
+    /// </summary>
+    /// <param name="phase">current phase</param>
+    /// <returns>Ball component with the properties for the phase</returns>
     private Ball SpawnBallPhase(int phase)
     {
         if(phase == 1)
@@ -81,6 +116,11 @@ public class CockyBastard : BadThing
             return null;
     }
 
+    /// <summary>
+    /// Overridden method that is fired when the enemy takes damage.
+    /// If we still have some rallies to do, make the rally, else do the regular ouch.
+    /// </summary>
+    /// <param name="ball"></param>
     public override void Ouch(Ball ball)
     {
         if(rallyCount <= 0)
@@ -92,11 +132,17 @@ public class CockyBastard : BadThing
         {
             anim.SetTrigger("rally");
             rallyCount--;
+            // the ball is not hit anymore
             ball.hit = false;
+            // ignore collision between the enemy and the ball again
             Physics2D.IgnoreCollision(ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
         }
     }
 
+    /// <summary>
+    /// This method is fired when the bastard is at a certain frame of his swing animation.
+    /// It spawns a ball if there isnt one, or resets the velocity to go to places.
+    /// </summary>
     public void HitTime()
     {
         if(ball == null)
@@ -113,6 +159,9 @@ public class CockyBastard : BadThing
         }
     }
 
+    /// <summary>
+    /// Method to trigger the rally animation
+    /// </summary>
     public void Rally()
     {
         anim.SetTrigger("rally");
@@ -120,6 +169,7 @@ public class CockyBastard : BadThing
 
     void OnDestroy()
     {
+        // remove this
         pb.PlayerHurt -= Rally;
     }
 }
