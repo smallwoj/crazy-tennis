@@ -32,7 +32,7 @@ public abstract class BadThing : MonoBehaviour
                 double inc = limit/100;
                 for(double t = 0; t <= limit; t+=inc)
                 {
-                    vertices.Add(new Vector3((float)System.Math.Cos(t+0.5*System.Math.PI)*HealthRadius, (float)System.Math.Sin(t+0.5*System.Math.PI)*HealthRadius, -0.1f));
+                    vertices.Add(new Vector3((float)System.Math.Cos(t+0.5*System.Math.PI)*HealthRadius, (float)System.Math.Sin(t+0.5*System.Math.PI)*HealthRadius, 0f));
                 }
                 HealthCircle.positionCount = vertices.Count;
                 HealthCircle.SetPositions(vertices.ToArray());

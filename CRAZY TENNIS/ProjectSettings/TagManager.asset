@@ -44,8 +44,17 @@ TagManager:
   - name: bg
     uniqueID: 4292036505
     locked: 0
+  - name: health
+    uniqueID: 3202994115
+    locked: 0
+  - name: Enemy
+    uniqueID: 820883293
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ball
+    uniqueID: 97637807
     locked: 0
   - name: on top
     uniqueID: 1657889067
