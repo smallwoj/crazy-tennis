@@ -37,6 +37,10 @@ public abstract class BadThing : MonoBehaviour
                 HealthCircle.positionCount = vertices.Count;
                 HealthCircle.SetPositions(vertices.ToArray());
             }
+            else
+            {
+                HealthCircle.positionCount = 0;
+            }
         }
     }
 
@@ -72,9 +76,10 @@ public abstract class BadThing : MonoBehaviour
         {
             Vector3[] positions = new Vector3[HealthCircle.positionCount];
             HealthCircle.GetPositions(positions);
+            Vector3 temp = transform.position;
             for(int i = 0; i < positions.Length; i++)
             {
-                positions[i] += (value - transform.position);
+                positions[i] += (value - temp);
             }
             transform.position = value;
         }

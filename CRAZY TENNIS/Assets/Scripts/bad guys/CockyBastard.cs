@@ -67,7 +67,7 @@ public class CockyBastard : BadThing
         DestroyAllBalls();
         ball = null;
         phase++;
-        maxhits = 3;
+        maxhits = 0;
         if(phase == 4)
         {
             SpawnNextEnemy("redCharacter");
@@ -147,6 +147,8 @@ public class CockyBastard : BadThing
     {
         if(ball == null)
         {
+            if(maxhits == 0)
+                maxhits = 3;
             ball = SpawnBallPhase(phase);
             rallyCount = phase - 1;
         }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6375389988626615604}
   - component: {fileID: 1844509173506831203}
   - component: {fileID: 9123701193404625680}
-  - component: {fileID: 3963449629268515090}
+  - component: {fileID: 4932211018097936518}
   m_Layer: 0
   m_Name: redCharacter
   m_TagString: Enemy
@@ -135,7 +135,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 5.725
---- !u!120 &3963449629268515090
+--- !u!120 &4932211018097936518
 LineRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,7 +153,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 37d29271fa842bc4991136c594c94e31, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -171,9 +171,9 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -13
+  m_SortingLayerID: -1091973181
+  m_SortingLayer: -2
+  m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -197,8 +197,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.6886792, g: 0.08770915, b: 0.08770915, a: 1}
+      key1: {r: 0.6901961, g: 0.08627451, b: 0.08627451, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

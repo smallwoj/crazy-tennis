@@ -24,6 +24,7 @@ public class TestBadGuy : BadThing
 
     void Update()
     {
+        Vector3? pos = null;
         for(int i = 0; i < balls.Length; i++)
         {
             if(balls[i] != null && balls[i].OutsideCourt())
@@ -42,8 +43,9 @@ public class TestBadGuy : BadThing
                 v *= 3;
                 if(v.magnitude < 0.1)
                     v*=3;
-
-                balls[i] = (Ball)SpawnBall(ballType, transform.position+new Vector3(0.619f, 0.207f, 0), v, 3f);
+                if(pos == null) 
+                    pos = transform.position;
+                balls[i] = (Ball)SpawnBall(ballType, (Vector3)pos+new Vector3(0.619f, 0.207f, 0), v, 3f);
             }
         }
         if(Input.GetKeyUp("tab"))
