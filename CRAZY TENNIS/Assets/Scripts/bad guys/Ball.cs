@@ -47,6 +47,7 @@ public class Ball : MonoBehaviour
 
     public bool OutsideCourt()
     {
-        return transform.position.x < -9.6 || transform.position.y > 5.65 || transform.position.x > 5.75 || transform.position.y < -5.65;
+        Vector3 pos = transform.position;
+        return pos.x < -9.6 || pos.y > 5.65 || pos.x > 5.75 || pos.y < -5.65;
     }
 }

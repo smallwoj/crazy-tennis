@@ -3,10 +3,98 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// This is the base enemy class. All enemies draw from this.
+/// </summary>
 public abstract class BadThing : MonoBehaviour
 {
+    /// <summary>
+    /// Radius in 'unity units' of the health circle
+    /// </summary>
+    public float HealthRadius;
+
+    /// <summary>
+    /// How many hits the enemy has left. Hit 0 and uh oh
+    /// </summary>
+    protected int hits
+    {
+        get
+        {
+            return _hits;
+        }
+        set
+        {
+            _hits = value;
+            if(value != 0 && maxhits != 0)
+            {
+                List<Vector3> vertices = new List<Vector3>();
+                double limit = ((double)hits/maxhits)*2*System.Math.PI;
+                double inc = limit/100;
+                for(double t = 0; t <= limit; t+=inc)
+                {
+                    vertices.Add(new Vector3((float)System.Math.Cos(t+0.5*System.Math.PI)*HealthRadius, (float)System.Math.Sin(t+0.5*System.Math.PI)*HealthRadius, 0f));
+                }
+                HealthCircle.positionCount = vertices.Count;
+                HealthCircle.SetPositions(vertices.ToArray());
+            }
+            else
+            {
+                HealthCircle.positionCount = 0;
+            }
+        }
+    }
+
+    private int _hits = 0;
+    /// <summary>
+    /// Sets the maximum health (and also the current health)
+    /// Used to calculate how much of the health ring to draw
+    /// </summary>
+    public int maxhits
+    {
+        get
+        {
+            return _maxhits;
+        }
+        set
+        {
+            _maxhits = value;
+            hits = value;
+        }
+    }
+    private int _maxhits = 0;
+    /// <summary>
+    /// The position of the object in 3d space. Equivalent to transform.position. USE THIS!
+    /// This also sets the health ui ring's position.
+    /// </summary>
+    public Vector3 position
+    {
+        get
+        {
+            return transform.position;
+        }
+        set
+        {
+            Vector3[] positions = new Vector3[HealthCircle.positionCount];
+            HealthCircle.GetPositions(positions);
+            Vector3 temp = transform.position;
+            for(int i = 0; i < positions.Length; i++)
+            {
+                positions[i] += (value - temp);
+            }
+            transform.position = value;
+        }
+    }
+    /// <summary>
+    /// LineRenderer that draws the ring of health around the enemy.
+    /// </summary>
+    private LineRenderer HealthCircle;
+
     // Start isn't called before the first frame update this time...
-    protected int hits = 0;
+    // nvm
+    protected void Start()
+    {
+        HealthCircle = GetComponent<LineRenderer>();
+    }
 
     /// <summary>
     /// Spawns a ball at the position with the given type.
@@ -22,10 +110,10 @@ public abstract class BadThing : MonoBehaviour
         //instantiate the prefab
 		ball = (GameObject)PrefabUtility.InstantiatePrefab(ball);
         Ball comp = (Ball)ball.AddComponent(type);
-        ball.GetComponent<Ball>().Velocity = initVel;
-        ball.GetComponent<Ball>().RotationalVelocity = initRotVel;
-        ball.GetComponent<Ball>().Parent = this;
-        ball.GetComponent<Transform>().position = initPos;
+        comp.Velocity = initVel;
+        comp.RotationalVelocity = initRotVel;
+        comp.Parent = this;
+        comp.transform.position = initPos;
         Physics2D.IgnoreCollision(ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
         return comp;
     }
@@ -64,10 +152,12 @@ public abstract class BadThing : MonoBehaviour
     {
         Destroy(ball.gameObject);
         hits--;
-        print("Ouch " + hits);
         if(hits <= 0)
             NextPhase();
     }
 
+    /// <summary>
+    /// This method will go to the next phase, whatever that may be
+    /// </summary>
     public abstract void NextPhase();
 }
