@@ -35,7 +35,7 @@ public class CockyBastard : BadThing
     /// <summary>
     /// How many degrees off the center the direction for the second phase is.
     /// </summary>
-    private float angleOffset = 180;
+    private float angleOffset = 135;
     // Start is called before the first frame update
     new void Start()
     {
