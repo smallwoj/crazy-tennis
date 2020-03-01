@@ -32,6 +32,10 @@ public class CockyBastard : BadThing
     /// Shortcut to the animator
     /// </summary>
     private Animator anim;
+    /// <summary>
+    /// How many degrees off the center the direction for the second phase is.
+    /// </summary>
+    private float angleOffset = 180;
     // Start is called before the first frame update
     new void Start()
     {
@@ -42,7 +46,7 @@ public class CockyBastard : BadThing
         phase = 0;
         NextPhase();
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
-        pb.Breakout = true;
+        pb.Breakout = false;
         // add rally function to player hurt event
         pb.PlayerHurt += Rally;
     }
@@ -88,9 +92,9 @@ public class CockyBastard : BadThing
         if(phase == 1)
         {
             return SpawnBall(
-                typeof(GenericHittable),
+                typeof(GenericHittable), 
                 transform.position + new Vector3(-0.7f, -0.2f, 0),
-                new Vector2(0, -3),
+                (pb.transform.position - (transform.position + new Vector3(-0.7f, -0.2f, 0))).normalized * 3,
                 Random.Range(6f, 10f)
             );
         }
@@ -99,7 +103,7 @@ public class CockyBastard : BadThing
             return SpawnBall(
                 typeof(GenericHittable), 
                 transform.position + new Vector3(-0.7f, -0.2f, 0),
-                new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)),
+                Quaternion.AngleAxis(Random.Range(-angleOffset, angleOffset), Vector3.up) * (pb.transform.position - (transform.position + new Vector3(-0.7f, -0.2f, 0))).normalized * 4,
                 Random.Range(6f, 10f)
             );
         }
@@ -108,7 +112,7 @@ public class CockyBastard : BadThing
             return SpawnBall(
                 typeof(GenericHittable), 
                 transform.position + new Vector3(-0.7f, -0.2f, 0),
-                (pb.transform.position - (transform.position + new Vector3(-0.7f, -0.2f, 0))).normalized * 5,
+                new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5,
                 Random.Range(6f, 10f)
             );
         }
@@ -155,9 +159,9 @@ public class CockyBastard : BadThing
         else
         {
             if(phase == 2)
-                ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f));
+                ball.Velocity = Quaternion.AngleAxis(Random.Range(-angleOffset, angleOffset), Vector3.up) * (pb.transform.position - (transform.position + new Vector3(-0.7f, -0.2f, 0))).normalized * 4;
             else if(phase == 3)
-                ball.Velocity = (pb.transform.position - transform.position).normalized * 5;
+                ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
         }
     }
 
@@ -169,6 +173,11 @@ public class CockyBastard : BadThing
         anim.SetTrigger("rally");
     }
 
+    /// <summary>
+    /// aw fuc i missed tyhis
+    /// 
+    /// when the game object die remove the rally from the delegate palyer hurt ouch
+    /// </summary>
     void OnDestroy()
     {
         // remove this
