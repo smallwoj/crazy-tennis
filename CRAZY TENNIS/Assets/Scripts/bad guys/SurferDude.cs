@@ -16,6 +16,7 @@ public class SurferDude : BadThing
     private Vector2 to;
     private Vector2 from;
     private float t;
+    private Vector3 prev;
 
     // Start is called before the first frame update
     new void Start()
@@ -30,20 +31,24 @@ public class SurferDude : BadThing
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        t += 0.005f;
+        prev = transform.position;
+        t += 0.02f /*/ Vector2.Distance(to, from)*/;
+        float T = (float)(1f - System.Math.Cos(t * System.Math.PI))/2f;
         if(t >= 1f)
         {
             t = 1f;
-            transform.position = Vector3.Lerp(from, to, t);
+            transform.position = Vector3.Lerp(from, to, T);
             t = 0;
             from = to;
             target = (target + 1) % currPath.Count;
             to = currPath[target];
         }
         else
-            transform.position = Vector3.Lerp(from, to, t);
+            transform.position = Vector3.Lerp(from, to, T);
+        anim.SetFloat("xVel", transform.position.x - prev.x);
+        print(transform.position + " " + prev);
     }
 
     public override void NextPhase()
@@ -51,7 +56,19 @@ public class SurferDude : BadThing
         phase++;
         if(phase == 1)
         {
-            currPath = path1;
+            currPath = path3;
+        }
+        else if(phase == 2)
+        {
+            currPath = path2;
+        }
+        else if(phase == 3)
+        {
+            currPath = path3;
+        }
+        else if(phase == 4)
+        {
+            SpawnNextEnemy("redCharacter");
         }
         target = 0;
         from = transform.position;
