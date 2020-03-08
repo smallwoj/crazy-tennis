@@ -28,27 +28,43 @@ public class SurferDude : BadThing
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         pb.Breakout = false;
         Physics2D.IgnoreCollision(GameObject.FindGameObjectWithTag("bounds false").GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
-    }
+		anim.SetBool("NeedBall", true);
+	}
+
+	void Update()
+	{
+		if(ball != null && ball.OutsideCourt())
+		{
+			Destroy(ball.gameObject);
+			ball = null;
+			anim.SetBool("NeedBall", true);
+		}
+	}
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        prev = transform.position;
-        t += 0.02f /*/ Vector2.Distance(to, from)*/;
-        float T = (float)(1f - System.Math.Cos(t * System.Math.PI))/2f;
-        if(t >= 1f)
-        {
-            t = 1f;
-            transform.position = Vector3.Lerp(from, to, T);
-            t = 0;
-            from = to;
-            target = (target + 1) % currPath.Count;
-            to = currPath[target];
-        }
-        else
-            transform.position = Vector3.Lerp(from, to, T);
-        anim.SetFloat("xVel", transform.position.x - prev.x);
-        print(transform.position + " " + prev);
+		if(!anim.GetCurrentAnimatorStateInfo(0).IsName("swing"))
+		{
+			prev = transform.position;
+			t += 0.05f / Vector2.Distance(to, from);
+			float T = (float)(1f - System.Math.Cos(t * System.Math.PI))/2f;
+			if(t >= 1f)
+			{
+				if (anim.GetBool("NeedBall"))
+					anim.SetTrigger("swing");
+			    t = 1f;
+			    transform.position = Vector3.Lerp(from, to, T);
+			    t = 0;
+			    from = to;
+			    target = (target + 1) % currPath.Count;
+			    to = currPath[target];
+			}
+			else
+			    transform.position = Vector3.Lerp(from, to, T);
+			anim.SetFloat("xVel", transform.position.x - prev.x);
+			print(transform.position + " " + prev);
+		}
     }
 
     public override void NextPhase()
@@ -89,6 +105,7 @@ public class SurferDude : BadThing
 
     public void Hit()
     {
-        // @TODO set animator trigger
+		ball = SpawnTheBall();
+		anim.SetBool("NeedBall", false);
     }
 }
