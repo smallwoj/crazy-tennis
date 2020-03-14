@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class SurferDude : BadThing
 {
-    private Ball ball;
+    public Ball ball {
+		get
+		{
+			return _ball;
+		}
+		set
+		{
+			anim.SetBool("NeedBall", value == null);
+			_ball = value;
+		}
+	}
+	private Ball _ball;
     private int phase;
     private PlayerBehaviour pb;
     private Animator anim;
@@ -27,6 +38,7 @@ public class SurferDude : BadThing
         NextPhase();
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         pb.Breakout = false;
+		pb.PlayerHurt += PlayerGotOuchSad;
         Physics2D.IgnoreCollision(GameObject.FindGameObjectWithTag("bounds false").GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
 		anim.SetBool("NeedBall", true);
 	}
@@ -37,12 +49,17 @@ public class SurferDude : BadThing
 		{
 			Destroy(ball.gameObject);
 			ball = null;
-			anim.SetBool("NeedBall", true);
 		}
 	}
 
-    // Update is called once per frame
-    void FixedUpdate()
+	public override void Ouch(Ball ball)
+	{
+		base.Ouch(ball);
+		this.ball = null;
+	}
+
+	// Update is called once per frame
+	void FixedUpdate()
     {
 		if(!anim.GetCurrentAnimatorStateInfo(0).IsName("swing"))
 		{
@@ -63,7 +80,6 @@ public class SurferDude : BadThing
 			else
 			    transform.position = Vector3.Lerp(from, to, T);
 			anim.SetFloat("xVel", transform.position.x - prev.x);
-			print(transform.position + " " + prev);
 		}
     }
 
@@ -72,7 +88,7 @@ public class SurferDude : BadThing
         phase++;
         if(phase == 1)
         {
-            currPath = path3;
+            currPath = path1;
         }
         else if(phase == 2)
         {
@@ -87,9 +103,15 @@ public class SurferDude : BadThing
             SpawnNextEnemy("redCharacter");
         }
         target = 0;
+		maxhits = 3;
         from = transform.position;
         to = currPath[target];
     }
+
+	public void PlayerGotOuchSad()
+	{
+		ball = null;
+	}
 
     private Ball SpawnTheBall()
     {
@@ -108,4 +130,9 @@ public class SurferDude : BadThing
 		ball = SpawnTheBall();
 		anim.SetBool("NeedBall", false);
     }
+
+	void OnDestroy()
+	{
+		pb.PlayerHurt -= PlayerGotOuchSad;
+	}
 }
