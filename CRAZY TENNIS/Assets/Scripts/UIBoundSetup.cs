@@ -1,4 +1,4 @@
-﻿// Adjusts the collision bound for the UI (based on screen bounds, which are in turn based on the aspect ratio)
+﻿// Adjusts the collision bound for the UI (based on screen size, which is in turn based on the aspect ratio)
 
 using System.Collections;
 using System.Collections.Generic;
