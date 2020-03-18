@@ -28,6 +28,7 @@ public class SurferDude : BadThing
     private Vector2 from;
     private float t;
     private Vector3 prev;
+    private Rigidbody2D rb;
 
     // Start is called before the first frame update
     new void Start()
@@ -35,12 +36,13 @@ public class SurferDude : BadThing
         base.Start();
         anim = GetComponent<Animator>();
         phase = 0;
-        NextPhase();
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         pb.Breakout = false;
 		pb.PlayerHurt += PlayerGotOuchSad;
         Physics2D.IgnoreCollision(GameObject.FindGameObjectWithTag("bounds false").GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
 		anim.SetBool("NeedBall", true);
+        rb = GetComponent<Rigidbody2D>();
+        NextPhase();
 	}
 
 	void Update()
@@ -63,7 +65,7 @@ public class SurferDude : BadThing
     {
 		if(!anim.GetCurrentAnimatorStateInfo(0).IsName("swing"))
 		{
-			prev = transform.position;
+			prev = rb.position;
 			t += 0.05f / Vector2.Distance(to, from);
 			float T = (float)(1f - System.Math.Cos(t * System.Math.PI))/2f;
 			if(t >= 1f)
@@ -71,15 +73,15 @@ public class SurferDude : BadThing
 				if (anim.GetBool("NeedBall"))
 					anim.SetTrigger("swing");
 			    t = 1f;
-			    transform.position = Vector3.Lerp(from, to, T);
+			    rb.position = Vector3.Lerp(from, to, T);
 			    t = 0;
 			    from = to;
 			    target = (target + 1) % currPath.Count;
 			    to = currPath[target];
 			}
 			else
-			    transform.position = Vector3.Lerp(from, to, T);
-			anim.SetFloat("xVel", transform.position.x - prev.x);
+			    rb.position = Vector3.Lerp(from, to, T);
+			anim.SetFloat("xVel", rb.position.x - prev.x);
 		}
     }
 
@@ -104,7 +106,7 @@ public class SurferDude : BadThing
         }
         target = 0;
 		maxhits = 3;
-        from = transform.position;
+        from = rb.position;
         to = currPath[target];
     }
 
@@ -117,8 +119,8 @@ public class SurferDude : BadThing
     {
         Ball b = SpawnBall(
             typeof(GenericHittable),
-            transform.position + new Vector3(0, 0, 0),
-            (pb.transform.position - (transform.position + new Vector3(-0.7f, -0.2f, 0))).normalized * 4,
+            rb.position + new Vector2(0, 0),
+            (pb.GetComponent<Rigidbody2D>().position - (rb.position + new Vector2(-0.7f, -0.2f))).normalized * 4,
             Random.Range(6f, 10f)
         );
         Physics2D.IgnoreCollision(b.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
