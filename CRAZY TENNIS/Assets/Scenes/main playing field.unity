@@ -485,7 +485,7 @@ GameObject:
   - component: {fileID: 549488191}
   - component: {fileID: 549488193}
   - component: {fileID: 549488192}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Left bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1353,7 +1353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 1.7777778
+  m_AspectRatio: 1.2509364
 --- !u!222 &1740609736
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1458,7 +1458,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.4082127, y: 10.000772}
+  m_Size: {x: 5.540215, y: 10.000772}
   m_EdgeRadius: 0
 --- !u!1 &1974127475
 GameObject:
