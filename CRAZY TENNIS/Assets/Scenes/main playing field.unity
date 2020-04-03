@@ -775,7 +775,6 @@ GameObject:
   m_Component:
   - component: {fileID: 915233203}
   - component: {fileID: 915233202}
-  - component: {fileID: 915233204}
   m_Layer: 0
   m_Name: Court cropped
   m_TagString: Untagged
@@ -927,10 +926,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1221074276}
+  - component: {fileID: 1221074273}
   - component: {fileID: 1221074275}
   - component: {fileID: 1221074272}
   - component: {fileID: 1221074274}
-  - component: {fileID: 1221074273}
   m_Layer: 8
   m_Name: Court bounds
   m_TagString: Untagged
@@ -1368,7 +1367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 1.7775666
+  m_AspectRatio: 1.7776026
 --- !u!222 &1740609736
 CanvasRenderer:
   m_ObjectHideFlags: 0

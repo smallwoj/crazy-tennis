@@ -39,7 +39,8 @@ public class SurferDude : BadThing
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         pb.Breakout = false;
 		pb.PlayerHurt += PlayerGotOuchSad;
-        Physics2D.IgnoreCollision(GameObject.FindGameObjectWithTag("bounds false").GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
+        Physics2D.IgnoreCollision(GameObject.Find("Net").GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
+        Physics2D.IgnoreCollision(GameObject.Find("Wacky collision stuff").transform.Find("Court bounds").GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
 		anim.SetBool("NeedBall", true);
         rb = GetComponent<Rigidbody2D>();
         NextPhase();
