@@ -57,6 +57,7 @@ public class SurferDude : BadThing
 
 	public override void Ouch(Ball ball)
 	{
+        anim.SetTrigger("ouch");
 		base.Ouch(ball);
 		this.ball = null;
 	}
@@ -64,7 +65,7 @@ public class SurferDude : BadThing
 	// Update is called once per frame
 	void FixedUpdate()
     {
-		if(!anim.GetCurrentAnimatorStateInfo(0).IsName("swing"))
+		if(!anim.GetCurrentAnimatorStateInfo(0).IsName("swing") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Ouch!"))
 		{
 			prev = rb.position;
 			t += 0.05f / Vector2.Distance(to, from);
@@ -84,6 +85,8 @@ public class SurferDude : BadThing
 			    rb.position = Vector3.Lerp(from, to, T);
 			anim.SetFloat("xVel", rb.position.x - prev.x);
 		}
+        else
+        	anim.SetFloat("xVel", 0f);
     }
 
     public override void NextPhase()
