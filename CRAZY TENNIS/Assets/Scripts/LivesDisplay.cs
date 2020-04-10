@@ -52,7 +52,5 @@ public class LivesDisplay : MonoBehaviour
             }
             LivesText.text = "x" + lives;
         }
-            print(lives);
-
     }
 }

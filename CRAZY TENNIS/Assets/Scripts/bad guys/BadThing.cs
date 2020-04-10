@@ -154,6 +154,9 @@ public abstract class BadThing : MonoBehaviour
         hits--;
         if(hits <= 0)
             NextPhase();
+
+        // Award some points to the player
+        GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentHit();
     }
 
     /// <summary>
