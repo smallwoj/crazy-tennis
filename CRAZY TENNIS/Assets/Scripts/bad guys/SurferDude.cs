@@ -108,6 +108,7 @@ public class SurferDude : BadThing
         {
             SpawnNextEnemy("redCharacter");
         }
+        t = 0;
         target = 0;
 		maxhits = 3;
         from = rb.position;
