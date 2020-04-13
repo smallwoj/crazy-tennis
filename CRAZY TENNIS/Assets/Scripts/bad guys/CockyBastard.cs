@@ -74,7 +74,7 @@ public class CockyBastard : BadThing
         maxhits = 0;
         if(phase == 4)
         {
-            SpawnNextEnemy("redCharacter");
+            SpawnNextEnemy("Surfer dude");
         }
         else
         {
