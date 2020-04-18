@@ -400,6 +400,7 @@ MonoBehaviour:
   defaultPosition: {x: -1.87, y: -2.55}
   defaultBombs: 0
   Breakout: 0
+  rb: {fileID: 0}
 --- !u!1001 &472548793
 PrefabInstance:
   m_ObjectHideFlags: 0

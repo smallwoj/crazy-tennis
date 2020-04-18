@@ -210,7 +210,7 @@ public class SurferDude : BadThing
         Ball b = SpawnBall(
             typeof(GenericHittable),
             rb.position + new Vector2(0, 0),
-            (pb.GetComponent<Rigidbody2D>().position - (rb.position + new Vector2(-0.7f, -0.2f))).normalized * 4,
+            (pb.CenterPos - (rb.position/* + new Vector2(-0.7f, -0.2f)*/)).normalized * 4,
             Random.Range(6f, 10f)
         );
         // remove collision between the new ball and this

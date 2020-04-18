@@ -94,7 +94,7 @@ public class CockyBastard : BadThing
             return SpawnBall(
                 typeof(GenericHittable), 
                 transform.position + new Vector3(-0.7f, -0.2f, 0),
-                (pb.transform.position - (transform.position + new Vector3(-0.7f, -0.2f, 0))).normalized * 3,
+                (pb.CenterPos - ((Vector2)transform.position + new Vector2(-0.7f, -0.2f))).normalized * 3,
                 Random.Range(6f, 10f)
             );
         }
@@ -103,7 +103,7 @@ public class CockyBastard : BadThing
             return SpawnBall(
                 typeof(GenericHittable), 
                 transform.position + new Vector3(-0.7f, -0.2f, 0),
-                Quaternion.AngleAxis(Random.Range(-angleOffset, angleOffset), Vector3.up) * (pb.transform.position - (transform.position + new Vector3(-0.7f, -0.2f, 0))).normalized * 4,
+                Quaternion.AngleAxis(Random.Range(-angleOffset, angleOffset), Vector3.up) * (pb.CenterPos - ((Vector2)transform.position + new Vector2(-0.7f, -0.2f))).normalized * 4,
                 Random.Range(6f, 10f)
             );
         }
@@ -159,7 +159,7 @@ public class CockyBastard : BadThing
         else
         {
             if(phase == 2)
-                ball.Velocity = Quaternion.AngleAxis(Random.Range(-angleOffset, angleOffset), Vector3.up) * (pb.transform.position - (transform.position + new Vector3(-0.7f, -0.2f, 0))).normalized * 4;
+                ball.Velocity = Quaternion.AngleAxis(Random.Range(-angleOffset, angleOffset), Vector3.up) * (pb.CenterPos - ((Vector2)transform.position + new Vector2(-0.7f, -0.2f))).normalized * 4;
             else if(phase == 3)
                 ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
         }
