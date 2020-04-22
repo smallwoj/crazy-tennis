@@ -81,6 +81,15 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // Award points for almost hitting the ball
+        if (other.gameObject.CompareTag("Ball"))
+        {
+            GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().BallNearHit();
+        }
+    }
+
     /// <summary>
     /// Die
     /// </summary>
