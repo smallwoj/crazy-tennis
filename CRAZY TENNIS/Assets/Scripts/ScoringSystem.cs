@@ -14,9 +14,9 @@ public class ScoringSystem : MonoBehaviour
     // Constants specifying how much to add to the score given certain events
     private static readonly int
         BALL_NEAR_HIT = 1,  // The player almost gets hit by the ball
-        BALL_HIT = 1,       // The player hits the ball
-        OPPONENT_HIT = 1,   // The player hits an opponent
-        PHASE_CLEAR = 1,    // The player beats one of the opponent's phases
+        BALL_HIT      = 1,  // The player hits the ball
+        OPPONENT_HIT  = 1,  // The player hits an opponent
+        PHASE_CLEAR   = 1,  // The player beats one of the opponent's phases
         OPPONENT_BEAT = 1;  // The player beats the opponent
     private static readonly int DIGITS = 6; // How long the displayed score
                                             // should be

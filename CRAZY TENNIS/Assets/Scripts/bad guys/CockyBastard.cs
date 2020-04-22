@@ -78,6 +78,11 @@ public class CockyBastard : BadThing
         }
         else
         {
+            // Award points (the if is there to avoid awarding points when the guy spawns)
+            if (phase > 1)
+            {
+                base.NextPhase();
+            }
             anim.SetTrigger("rally");
         }
     }
