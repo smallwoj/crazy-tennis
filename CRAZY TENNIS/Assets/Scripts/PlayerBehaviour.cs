@@ -18,6 +18,17 @@ public class PlayerBehaviour : MonoBehaviour
     public int bombs;
 
     /// <summary>
+    /// The real center of the player
+    /// </summary>
+    public Vector2 CenterPos
+    {
+        get
+        {
+            return rb.position + new Vector2(0, -0.75f);
+        }
+    }
+
+    /// <summary>
     /// This is the good number, if it goes up youre kinda epic
     /// </summary>
     public int score = 0;
@@ -56,11 +67,17 @@ public class PlayerBehaviour : MonoBehaviour
     /// Fires when the player takes a hit
     /// </summary>
     public event ouchohgod PlayerHurt;
+
+    /// <summary>
+    /// Reference to the rigidbody component
+    /// </summary>
+    public Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
-        GetComponent<Rigidbody2D>().position = defaultPosition;
+        rb = GetComponent<Rigidbody2D>();
+        rb.position = defaultPosition;
         defaultBombs = bombs;
         swang = GameObject.Find("Player/swang").GetComponent<PolygonCollider2D>();
         swang.enabled = false;

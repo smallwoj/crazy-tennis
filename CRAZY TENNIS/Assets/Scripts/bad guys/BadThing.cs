@@ -62,28 +62,7 @@ public abstract class BadThing : MonoBehaviour
         }
     }
     private int _maxhits = 0;
-    /// <summary>
-    /// The position of the object in 3d space. Equivalent to transform.position. USE THIS!
-    /// This also sets the health ui ring's position.
-    /// </summary>
-    public Vector3 position
-    {
-        get
-        {
-            return transform.position;
-        }
-        set
-        {
-            Vector3[] positions = new Vector3[HealthCircle.positionCount];
-            HealthCircle.GetPositions(positions);
-            Vector3 temp = transform.position;
-            for(int i = 0; i < positions.Length; i++)
-            {
-                positions[i] += (value - temp);
-            }
-            transform.position = value;
-        }
-    }
+
     /// <summary>
     /// LineRenderer that draws the ring of health around the enemy.
     /// </summary>
