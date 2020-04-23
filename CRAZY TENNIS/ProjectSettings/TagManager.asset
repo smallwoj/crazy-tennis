@@ -8,6 +8,7 @@ TagManager:
   - player child
   - Enemy
   - Score
+  - bounds false
   layers:
   - Default
   - TransparentFX
