@@ -7,6 +7,7 @@ TagManager:
   - Ball
   - player child
   - Enemy
+  - Score
   - bounds false
   layers:
   - Default

@@ -23,6 +23,8 @@ public class GenericHittable : GenericUnhittable
                     Velocity = (Parent.transform.position - transform.position).normalized*8;
                 }
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), Parent.GetComponent<Collider2D>(), false);
+                // You hit the ball!!!!!! You get a point
+                GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().BallHit();
             }
         }
     }

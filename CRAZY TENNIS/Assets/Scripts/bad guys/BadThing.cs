@@ -103,6 +103,9 @@ public abstract class BadThing : MonoBehaviour
     /// <param name="nextEnemy">prefab of the next enemy</param>
     public void SpawnNextEnemy(string nextEnemy)
     {
+        // Yay they did it
+        GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentBeat();
+
         Destroy(this.gameObject);
         if(GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
         {
@@ -133,10 +136,18 @@ public abstract class BadThing : MonoBehaviour
         hits--;
         if(hits <= 0)
             NextPhase();
+
+        // Award some points to the player
+        GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentHit();
     }
 
     /// <summary>
     /// This method will go to the next phase, whatever that may be
     /// </summary>
-    public abstract void NextPhase();
+    public virtual void NextPhase()
+    {
+        // Give the player some epic points
+        GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().PhaseClear();
+        // Any derived class of BadThing should probably refine this method with more functionality, such as going to the next phase
+    }
 }
