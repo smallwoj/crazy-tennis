@@ -55,7 +55,7 @@ public class CockyBastard : BadThing
     void Update()
     {
         //respawn the ball if its outside the court
-        if(ball != null && ball.OutsideCourt())
+        if(ball != null && ball.OutsideCourt)
         {
             Destroy(ball.gameObject);
             ball = null;

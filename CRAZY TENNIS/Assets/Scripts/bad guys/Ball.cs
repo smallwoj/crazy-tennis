@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour
     public BadThing Parent;
     private Rigidbody2D body;
     private static bool start = false;
+    public bool OutsideCourt = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,11 +44,5 @@ public class Ball : MonoBehaviour
             }
         }
 
-    }
-
-    public bool OutsideCourt()
-    {
-        Vector3 pos = transform.position;
-        return pos.x < -9.6 || pos.y > 5.65 || pos.x > 5.75 || pos.y < -5.65;
     }
 }

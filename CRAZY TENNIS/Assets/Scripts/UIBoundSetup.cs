@@ -29,7 +29,7 @@ public class UIBoundSetup : MonoBehaviour
         if (other.gameObject.tag == "Ball")
         {
             // When the ball goes under the UI, from the player's perspective it's offscreen
-            print(other.gameObject.tag + " is offscreen");
+            other.GetComponent<Ball>().OutsideCourt = true;
         }
     }
 }
