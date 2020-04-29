@@ -106,7 +106,7 @@ public class SurferDude : BadThing
 	void Update()
 	{
         // if ball gone
-		if(ball != null && ball.OutsideCourt())
+		if(ball != null && ball.OutsideCourt)
 		{
             // bye
 			Destroy(ball.gameObject);

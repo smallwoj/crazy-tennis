@@ -35,8 +35,7 @@ public class ScreenTriggerSetup : MonoBehaviour
     {
         if (other.gameObject.tag == "Ball")
         {
-            // Idea for later: To avoid balls going under the UI, reuse this code in UIBoundSetup.OnCollisionorwhatever
-            print(other.gameObject.tag + " is offscreen");
+            other.GetComponent<Ball>().OutsideCourt = true;
         }
     }
 }

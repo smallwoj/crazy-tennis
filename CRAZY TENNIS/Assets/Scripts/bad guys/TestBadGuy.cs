@@ -27,7 +27,7 @@ public class TestBadGuy : BadThing
         Vector3? pos = null;
         for(int i = 0; i < balls.Length; i++)
         {
-            if(balls[i] != null && balls[i].OutsideCourt())
+            if(balls[i] != null && balls[i].OutsideCourt)
             {
                 Destroy(balls[i].gameObject);
                 balls[i] = null;
