@@ -88,13 +88,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if(Input.GetButtonDown("Submit"))
         {
-            anim.ResetTrigger("space released");
             anim.SetTrigger("space pressed");
-        }
-        else if(Input.GetButtonUp("Submit"))
-        {
-            anim.ResetTrigger("space pressed");
-            anim.SetTrigger("space released");
         }
     }
 
