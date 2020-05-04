@@ -191,6 +191,12 @@ public class SurferDude : BadThing
 		maxhits = 3;
         from = rb.position;
         to = currPath[target];
+
+        // Award points (the if is there to avoid awarding points when the guy spawns)
+        if (phase > 1)
+        {
+            base.NextPhase();
+        }
     }
 
     /// <summary>
