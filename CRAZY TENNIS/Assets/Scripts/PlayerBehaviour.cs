@@ -107,15 +107,10 @@ public class PlayerBehaviour : MonoBehaviour
     public void Die()
     {
         lives--;
-        if(lives <= 0)
-        {
-            print("uh oh i am dead X_X");
-        }
-        else
+        if(lives > 0)
         {
             bombs = defaultBombs;
             GetComponent<Rigidbody2D>().position = defaultPosition;
-            print("lives: "+lives);
         }
         BadThing.DestroyAllBalls();
         if(PlayerHurt != null)

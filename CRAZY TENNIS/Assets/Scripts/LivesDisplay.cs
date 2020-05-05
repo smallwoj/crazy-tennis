@@ -34,7 +34,6 @@ public class LivesDisplay : MonoBehaviour
                 }
                 else if (i < lives && !lifeIcons[i].enabled)
                 {
-                    print ("life " + i + " should be displayed");
                     lifeIcons[i].enabled = true;
                 }
             }
