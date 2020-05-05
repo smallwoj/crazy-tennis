@@ -72,6 +72,13 @@ public class SurferDude : BadThing
     /// </summary>
     private float t;
     /// <summary>
+    /// How much the target variable increases (or decreases!) each time it changes.
+    /// Its usual values are 1 (clockwise) and -1 (counterclockwise), but 
+    /// values with absolute value greater than 1 can be used to skip points, 
+    /// making for less predicatble paths (and a value of 0 can be used to stay still)
+    /// </summary>
+    private int pathStep;
+    /// <summary>
     /// the previous position of the dude that is this
     /// </summary>
     private Vector3 prev;
@@ -94,8 +101,8 @@ public class SurferDude : BadThing
 		pb.PlayerHurt += PlayerGotOuchSad;
         // ignore collision between the net and the surfer dude
         Physics2D.IgnoreCollision(GameObject.Find("Net").GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
-        // ignore collision between the outer bounds and the surfer dude
-        Physics2D.IgnoreCollision(GameObject.Find("Wacky collision stuff").transform.Find("Court bounds").GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
+        // ignore collision between the top bound and the surfer dude
+        Physics2D.IgnoreCollision(GameObject.Find("Wacky collision stuff").transform.Find("Court bounds").transform.Find("Top court bound").GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
         // we NEED  ball im begging you
 		anim.SetBool("NeedBall", true);
         rb = GetComponent<Rigidbody2D>();
@@ -149,8 +156,12 @@ public class SurferDude : BadThing
                 // go towards the next point
 			    t = 0;
 			    from = to;
-			    target = (target + 1) % currPath.Count;
-			    to = currPath[target];
+			    target = (target + pathStep) % currPath.Count;
+                // If we're going counterclockwise, add currPath.Count to ensure proper cycling
+                if (pathStep < 0)
+                    to = currPath[currPath.Count - 1 + target];
+                else
+                    to = currPath[target];
 			}
 			else // just lerp
 			    rb.position = Vector3.Lerp(from, to, T);
@@ -190,7 +201,23 @@ public class SurferDude : BadThing
         target = 0;
 		maxhits = 3;
         from = rb.position;
-        to = currPath[target];
+        // Randomly decide to go clockwise or counterclockwise
+        if (Random.value * 2 > 1)
+        {
+            pathStep = 1;
+            to = currPath[target];
+        }
+        else
+        {
+            pathStep = -1;
+            to = currPath[currPath.Count - 1 + target];
+        }
+
+        // Award points (the if is there to avoid awarding points when the guy spawns)
+        if (phase > 1)
+        {
+            base.NextPhase();
+        }
     }
 
     /// <summary>
