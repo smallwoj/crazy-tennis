@@ -218,9 +218,6 @@ public class SurferDude : BadThing
         {
             base.NextPhase();
         }
-
-        //TODO: Make sure that it currently works like before, and then add the pathStep randomization code in this method
-        //    (step 1 done, step 1.5 is to change the initial value of target based on the value of pathStep)
     }
 
     /// <summary>
