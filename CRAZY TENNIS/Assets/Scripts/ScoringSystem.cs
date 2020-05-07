@@ -7,19 +7,27 @@ using UnityEngine.UI;
 
 public class ScoringSystem : MonoBehaviour
 {
-    public Text scoreTextbox;   // The textbox that will display the score
+    /// <summary> The textbox that will display the score </summary>
+    public Text scoreTextbox;
 
-    private int score = 0;      // The score to be displayed
+    /// <summary> Reference to the crowd, used to make them cheer when certain scoring events occur </summary>
+    public CrowdBehaviour crowd;
+    
+    /// <summary> The score to be displayed </summary>
+    private int score = 0;
 
-    // Constants specifying how much to add to the score given certain events
+    // Point values: Constants specifying how much to add to the score given certain events
     private static readonly int
         BALL_NEAR_HIT = 1,  // The player almost gets hit by the ball
         BALL_HIT      = 1,  // The player hits the ball
         OPPONENT_HIT  = 1,  // The player hits an opponent
         PHASE_CLEAR   = 1,  // The player beats one of the opponent's phases
         OPPONENT_BEAT = 1;  // The player beats the opponent
-    private static readonly int DIGITS = 6; // How long the displayed score
-                                            // should be
+    /// <summary> The maximum amount that the score can increase by in one go. 
+    /// Used to gauge how much the crowd should cheer at each action </summary>
+    private static readonly int MAX_POINT_VALUE = Mathf.Max(BALL_NEAR_HIT, BALL_HIT, OPPONENT_HIT, PHASE_CLEAR, OPPONENT_BEAT);
+    /// <summary> How long the displayed score should be </summary>
+    private static readonly int DIGITS = 6;
 
     // Start is called when the... object is created?
     // You'd think I'd remember the usual comment
@@ -41,6 +49,7 @@ public class ScoringSystem : MonoBehaviour
     {
         score += BALL_HIT;
         scoreTextbox.text = score.ToString().PadLeft(DIGITS, '0');
+        crowd.Cheer((float)BALL_HIT / MAX_POINT_VALUE);
     }
     public void OpponentHit()
     {
