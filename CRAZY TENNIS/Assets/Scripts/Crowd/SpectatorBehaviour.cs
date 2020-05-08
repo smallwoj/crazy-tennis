@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpectatorBehaviour : MonoBehaviour
+public class SpectatorBehaviour : MonoBehaviour, Spectator
 {
     /// <summary> How many times the spectator may jump during a cheer </summary>
     private static readonly float MAX_JUMPS = 16; // (note: if the variable hype stuff doesn't work out and we decide to just have constant hype, set this to 7. Makes the crowd look less... crazy)
@@ -56,10 +56,9 @@ public class SpectatorBehaviour : MonoBehaviour
     /// </summary>
     /// <param name="hype"> A number from 0 to 1 measuring how excited the crowd gets. 
     /// More specifically, it's the probability that any given spectator will cheer, 
-    /// and it plays a (as of yet undetermined) role in deciding the intensity and length of a spectator's cheer</param>
+    /// and it provides a coefficient for the intensity and length of a spectator's cheer</param>
     public void Cheer(float hype)
     {
-
         // Randomly decide whether or not to cheer, based on the hype. A hype of 1 guarantees a cheer
         if (!hyped && Random.value <= hype)
         {

@@ -21,6 +21,7 @@ public class CrowdSideBehaviour : MonoBehaviour
     /// </summary>
     private static readonly float Y_OFFSET = 0.2f;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +29,13 @@ public class CrowdSideBehaviour : MonoBehaviour
         for (int i = 0; i < CROWD_SIZE; i++)
         {
             // Instantiate a spectator
-            GameObject spectator = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Generic crowd person.prefab");
+            string prefabName;  // The name of the spectator prefab 
+            switch ((int)(Random.value * 10))
+            {
+                case 0: prefabName = "oh yeah woo yeah";    break;
+                default: prefabName = "Generic crowd person";   break;
+            }
+            GameObject spectator = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/" + prefabName + ".prefab");
             GameObject spectatorInstance = PrefabUtility.InstantiatePrefab(spectator) as GameObject;
         
             // Make it a child of the crowd object (and then fix up the transform so it displays properly)
@@ -60,7 +67,7 @@ public class CrowdSideBehaviour : MonoBehaviour
         // Where are my children
         foreach (Transform spectator in transform)
         {
-            spectator.GetComponent<SpectatorBehaviour>().Cheer(hype);
+            spectator.GetComponent<Spectator>().Cheer(hype);
         }
     }
 }

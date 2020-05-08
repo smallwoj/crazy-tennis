@@ -36,8 +36,7 @@ public class ScoringSystem : MonoBehaviour
         scoreTextbox.text = score.ToString().PadLeft(DIGITS, '0');
     }
 
-    // Scoring methods! As of right now, OpponentHit is the only one that's
-    // called anywhere else in the code.
+    // Scoring methods!
     // To call one of these from any other class, use the following line:
     // GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().whatevermethodyouwantedtocall();
     public void BallNearHit()
