@@ -7,11 +7,13 @@ using UnityEngine;
 public class SpectatorBehaviour : MonoBehaviour
 {
     /// <summary> How many times the spectator may jump during a cheer </summary>
-    private static readonly float MAX_JUMPS = 7;
+    private static readonly float MAX_JUMPS = 16; // (note: if the variable hype stuff doesn't work out and we decide to just have constant hype, set this to 7. Makes the crowd look less... crazy)
     /// <summary> How many (world space?) distance units high the spectator can jump </summary>
-    private static readonly float MAX_HEIGHT = 1;
+    private static readonly float MAX_HEIGHT = 0.5f;
+    /// <summary> The least amount of times the spectator can jump per second </summary>
+    private static readonly float MIN_SPEED = 3;
     /// <summary> How many times the spectator can jump per second </summary>
-    private static readonly float MAX_SPEED = 10;
+    private static readonly float MAX_SPEED = 6;
     /// <summary> Whether the spectator is currently cheering </summary>
     private bool hyped = false;
     /// <summary> How many seconds are left in the cheer </summary>
@@ -64,10 +66,10 @@ public class SpectatorBehaviour : MonoBehaviour
             hyped = true;
 
             // Randomly decide the jump's properties
-            jumpHeight = Random.value * MAX_HEIGHT;
-            speed = Random.value * MAX_SPEED;
+            jumpHeight = Random.value * MAX_HEIGHT * hype;
+            speed = Random.value * (MAX_SPEED - MIN_SPEED) + MIN_SPEED * hype;
             // The calcuation for the duration of the cheer ensures that the spectator will start their cheer on the ground 
-            timeLeft = (int)(Random.value * MAX_JUMPS) / speed;
+            timeLeft = (int)(Random.value * MAX_JUMPS * hype) / speed;
 
             // Record the position before cheering
             originalPos = transform.position;

@@ -19,10 +19,10 @@ public class ScoringSystem : MonoBehaviour
     // Point values: Constants specifying how much to add to the score given certain events
     private static readonly int
         BALL_NEAR_HIT = 1,  // The player almost gets hit by the ball
-        BALL_HIT      = 1,  // The player hits the ball
-        OPPONENT_HIT  = 1,  // The player hits an opponent
-        PHASE_CLEAR   = 1,  // The player beats one of the opponent's phases
-        OPPONENT_BEAT = 1;  // The player beats the opponent
+        BALL_HIT      = 2,  // The player hits the ball
+        OPPONENT_HIT  = 5,  // The player hits an opponent
+        PHASE_CLEAR   = 7,  // The player beats one of the opponent's phases
+        OPPONENT_BEAT = 10;  // The player beats the opponent
     /// <summary> The maximum amount that the score can increase by in one go. 
     /// Used to gauge how much the crowd should cheer at each action </summary>
     private static readonly int MAX_POINT_VALUE = Mathf.Max(BALL_NEAR_HIT, BALL_HIT, OPPONENT_HIT, PHASE_CLEAR, OPPONENT_BEAT);
@@ -44,6 +44,7 @@ public class ScoringSystem : MonoBehaviour
     {
         score += BALL_NEAR_HIT;
         scoreTextbox.text = score.ToString().PadLeft(DIGITS, '0');
+        crowd.Cheer((float)BALL_NEAR_HIT / MAX_POINT_VALUE);
     }
     public void BallHit()
     {
@@ -55,15 +56,18 @@ public class ScoringSystem : MonoBehaviour
     {
         score += OPPONENT_HIT;
         scoreTextbox.text = score.ToString().PadLeft(DIGITS, '0');
+        crowd.Cheer((float)OPPONENT_HIT / MAX_POINT_VALUE);
     }
     public void PhaseClear()
     {
         score += PHASE_CLEAR;
         scoreTextbox.text = score.ToString().PadLeft(DIGITS, '0');
+        crowd.Cheer((float)PHASE_CLEAR / MAX_POINT_VALUE);
     }
     public void OpponentBeat()
     {
         score += OPPONENT_BEAT;
         scoreTextbox.text = score.ToString().PadLeft(DIGITS, '0');
+        crowd.Cheer((float)OPPONENT_BEAT / MAX_POINT_VALUE);
     }
 }
