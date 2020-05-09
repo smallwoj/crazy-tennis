@@ -48,7 +48,7 @@ public class CrowdSideBehaviour : MonoBehaviour
             // aaaand fix up the transform, as promised
             spectatorInstance.transform.localScale = Vector3.one;
             spectatorInstance.transform.localPosition = new Vector3(Random.Range(X_MIN, X_MAX), yPos, 0);
-            spectatorInstance.GetComponent<SpriteRenderer>().sortingOrder = CROWD_SIZE - i;
+            spectatorInstance.GetComponent<Spectator>().setSortingOrder(CROWD_SIZE - i);
         }
     }
 

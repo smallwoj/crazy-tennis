@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class SpectatorBehaviour : MonoBehaviour, Spectator
 {
+    private static readonly string[] OUTFITS = { "Generic crowd person", "Cocky bastard fan", "Surfer dude fan" };
+    private static readonly string[] SKIN_COLOURS = { "Pale", "Fair", "Tan", "Dark" };
     /// <summary> How many times the spectator may jump during a cheer </summary>
     private static readonly float MAX_JUMPS = 16; // (note: if the variable hype stuff doesn't work out and we decide to just have constant hype, set this to 7. Makes the crowd look less... crazy)
     /// <summary> How many (world space?) distance units high the spectator can jump </summary>
@@ -28,7 +30,13 @@ public class SpectatorBehaviour : MonoBehaviour, Spectator
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Local variables
+        SpriteRenderer outfit = transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();    // Sprite renderer for the outfit sprite
+        SpriteRenderer skinColour = transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();    // Sprite renderer for the skin colour sprite
+
+        // Randomly choose an outfit and skin colour
+        outfit.sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/images/Crowd/Outfits/" + OUTFITS[(int)(Random.value * OUTFITS.Length)] + ".png");
+        skinColour.sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/images/Crowd/Skin colours/" + SKIN_COLOURS[(int)(Random.value * SKIN_COLOURS.Length)] + ".png");
     }
 
     // Update is called once per frame
@@ -72,6 +80,18 @@ public class SpectatorBehaviour : MonoBehaviour, Spectator
 
             // Record the position before cheering
             originalPos = transform.position;
+        }
+    }
+
+    /// <summary>
+    /// Sets the spectator's order in their drawing layer
+    /// </summary>
+    /// <param name="sortOrder"> The intended value for their order in layer </param>
+    public void setSortingOrder(int sortOrder)
+    {
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<SpriteRenderer>().sortingOrder = sortOrder;
         }
     }
 }
