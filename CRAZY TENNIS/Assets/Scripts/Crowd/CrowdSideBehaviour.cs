@@ -9,9 +9,13 @@ public class CrowdSideBehaviour : MonoBehaviour
 {
     // Constan🅱s
     /// <summary>
-    /// How many spectators are in the crowd
+    /// How many spectators are (generally) in the crowd
     /// </summary>
     private static readonly int CROWD_SIZE = 8;
+    /// <summary>
+    /// The actual value for the number of spectators in the crowd is CROWD_SIZE +/- CROWD_VARIATION
+    /// </summary>
+    private static readonly int CROWD_VARIATION = 1;
     /// <summary>
     /// Bounds for the spectator's position relative to the centre of the crowd
     /// </summary>
@@ -25,8 +29,11 @@ public class CrowdSideBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Decide how many spectators there will be
+        int chosenCrowdSize = CROWD_SIZE + (int)System.Math.Round(Random.value * (2 * CROWD_VARIATION) - CROWD_VARIATION);  // CROWD_SIZE +/- CROWD_VARIATION
+
         // Create the spectators in the crowd
-        for (int i = 0; i < CROWD_SIZE; i++)
+        for (int i = 0; i < chosenCrowdSize; i++)
         {
             // Instantiate a spectator
             string prefabName;  // The name of the spectator prefab 
@@ -42,13 +49,13 @@ public class CrowdSideBehaviour : MonoBehaviour
             spectatorInstance.transform.parent = gameObject.transform;
 
             // The spectator's y position is pretty involved, so it's calculated here before doing anything else with the transform
-            float yPos = ((float)i / (CROWD_SIZE - 1)) * (Y_MAX - Y_MIN) + Y_MIN + Random.Range(0, Y_OFFSET);
+            float yPos = ((float)i / (chosenCrowdSize - 1)) * (Y_MAX - Y_MIN) + Y_MIN + Random.Range(0, Y_OFFSET);
             // Basically, repeating this distributes the spectators evenly along the side of the court, but with a random offset to make it look more natural
 
             // aaaand fix up the transform, as promised
             spectatorInstance.transform.localScale = Vector3.one;
             spectatorInstance.transform.localPosition = new Vector3(Random.Range(X_MIN, X_MAX), yPos, 0);
-            spectatorInstance.GetComponent<Spectator>().setSortingOrder(CROWD_SIZE - i);
+            spectatorInstance.GetComponent<Spectator>().setSortingOrder(chosenCrowdSize - i);
         }
     }
 
