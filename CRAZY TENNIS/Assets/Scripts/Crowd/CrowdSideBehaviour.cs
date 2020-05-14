@@ -37,9 +37,13 @@ public class CrowdSideBehaviour : MonoBehaviour
         {
             // Instantiate a spectator
             string prefabName;  // The name of the spectator prefab 
-            switch ((int)(Random.value * 10))
+            switch ((int)(Random.value * 100))
             {
-                case 0: prefabName = "oh yeah woo yeah";    break;
+                case 0: 
+                case 1: 
+                case 2: 
+                case 3: 
+                case 4: prefabName = "oh yeah woo yeah";    break;
                 default: prefabName = "Generic crowd person";   break;
             }
             GameObject spectator = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/" + prefabName + ".prefab");

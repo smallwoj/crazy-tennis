@@ -725,7 +725,7 @@ GameObject:
   m_Component:
   - component: {fileID: 481607789}
   - component: {fileID: 481607791}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Crowd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1799,7 +1799,7 @@ GameObject:
   - component: {fileID: 1140173913}
   - component: {fileID: 1140173914}
   - component: {fileID: 1140173915}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Left side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1943,7 +1943,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1225377681}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 900091529}
@@ -2511,7 +2511,7 @@ GameObject:
   - component: {fileID: 2040087811}
   - component: {fileID: 2040087812}
   - component: {fileID: 2040087813}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Right side
   m_TagString: Untagged
   m_Icon: {fileID: 0}

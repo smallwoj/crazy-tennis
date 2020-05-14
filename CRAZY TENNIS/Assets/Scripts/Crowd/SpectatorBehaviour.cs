@@ -42,6 +42,7 @@ public class SpectatorBehaviour : MonoBehaviour, Spectator
     // Update is called once per frame
     void Update()
     {
+        // Play the hype animation (jumping up and down) if applicable
         if (hyped)
         {
             transform.position = new Vector3(
@@ -60,7 +61,7 @@ public class SpectatorBehaviour : MonoBehaviour, Spectator
     }
 
     /// <summary>
-    /// Makes this spectator jump up and down wildly (or mildly, or even not at all, depending on the hype value)
+    /// Makes this spectator start to jump up and down wildly (or mildly, or even not at all, depending on the hype value)
     /// </summary>
     /// <param name="hype"> A number from 0 to 1 measuring how excited the crowd gets. 
     /// More specifically, it's the probability that any given spectator will cheer, 
