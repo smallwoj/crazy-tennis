@@ -9,6 +9,8 @@ public class CrowdBehaviour : MonoBehaviour
     // A reference to each side
     private CrowdSideBehaviour left, right;
 
+    public Collider2D screenTrigger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,5 +33,12 @@ public class CrowdBehaviour : MonoBehaviour
     {
         left.Cheer(hype);
         right.Cheer(hype);
+    }
+
+    private bool isOnScreen(Vector2 point)
+    {
+        Vector2 closest = screenTrigger.ClosestPoint(point);
+        // Fun fact from answers.unity.com: If the given point is inside the collider, ClosestPoint will return that point
+        return closest == point;
     }
 }
