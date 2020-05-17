@@ -1486,7 +1486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthRadius: 1.5
-  chargeAnimTime: 1
+  ANGLE_RANGE: 0
 --- !u!95 &678986338
 Animator:
   serializedVersion: 3
@@ -2658,7 +2658,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2.5400002}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -68.55, y: -23.540009}
+  m_AnchoredPosition: {x: -68.54999, y: -23.540009}
   m_SizeDelta: {x: 137.09, y: 47.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1278034614
