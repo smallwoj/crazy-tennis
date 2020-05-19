@@ -72,7 +72,7 @@ public class MechanicalBallThrower : BadThing
         if (phase == 4)
         {
             DestroyAllBalls();
-            SpawnNextEnemy("redCharacter");
+            SpawnNextEnemy("Spider/Spider");
         }
         else
         {
