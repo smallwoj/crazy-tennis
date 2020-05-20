@@ -122,22 +122,26 @@ public class MechanicalBallThrower : BadThing
                 // Clean up this ball from the previous call to this method
                 if (lastPhaseBalls[i] != null && lastPhaseBalls[i].OutsideCourt)
                 {
-                    GameObject.Destroy(lastPhaseBalls[i]);
+                    GameObject.Destroy(lastPhaseBalls[i].gameObject);
                     lastPhaseBalls[i] = null;
                 }
 
-                // Prepare a velocity vector that uses a random angle
-                Vector2 velocity = new Vector2(Random.Range(-1/2f, 1/2f), Random.Range(-1f, -1/2f));
-                velocity.Normalize();
-                velocity *= Random.value * BALL_SPEEDS[phase];
+                // Fire a new ball!
+                if (lastPhaseBalls[i] == null)
+                {
+                    // Prepare a velocity vector that uses a random angle
+                    Vector2 velocity = new Vector2(Random.Range(-1/2f, 1/2f), Random.Range(-1f, -1/2f));
+                    velocity.Normalize();
+                    velocity *= Random.value * BALL_SPEEDS[phase];
 
-                // Fire this ball at a random angle
-                lastPhaseBalls[i] = SpawnBall(
-                    typeof(GenericHittable), 
-                    transform.position + BALL_OFFSET,
-                    velocity,
-                    velocity.magnitude * 2
-                    );
+                    // Fire this ball at a random angle
+                    lastPhaseBalls[i] = SpawnBall(
+                        typeof(GenericHittable), 
+                        transform.position + BALL_OFFSET,
+                        velocity,
+                        velocity.magnitude * 2
+                        );
+                }
             }
         }
     }

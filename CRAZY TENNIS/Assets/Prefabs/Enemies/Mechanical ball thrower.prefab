@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3110d06ddd7db14db0e9549f6a8b3d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthRadius: 1.5
+  HealthRadius: 1.25
 --- !u!95 &7918874903402662467
 Animator:
   serializedVersion: 3
