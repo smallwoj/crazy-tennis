@@ -131,7 +131,10 @@ public class Spider : BadThing
                 rackets[i].BallType = typeof(GenericUnhittable);
             }
 
-            rackets[i].Anim.SetTrigger("Swing time");
+            if (rackets[i].Anim != null)
+            {
+                rackets[i].Anim.SetTrigger("Swing time");
+            }
         }
     }
 
