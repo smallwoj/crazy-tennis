@@ -195,7 +195,7 @@ public class SurferDude : BadThing
         }
         else if(phase == 4)
         {
-            SpawnNextEnemy("redCharacter");
+            SpawnNextEnemy("Mechanical ball thrower");
         }
         t = 0;
         target = 0;
