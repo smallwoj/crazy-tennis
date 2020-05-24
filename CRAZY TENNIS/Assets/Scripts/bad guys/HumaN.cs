@@ -8,12 +8,12 @@ public class HumaN : BadThing
 {
     // cONSTANTS
     /// <summary> The intial value for the rallyCount variable </summary>
-    private static readonly int INITIAL_RALLY_COUNT = 3;
+    private static readonly int INITIAL_RALLY_COUNT = 10;
     /// <summary> The displacement from this object's position and the head 
     /// (the part that hits the ball) of the racket </summary>
     private static readonly Vector3 HEAD_OFFSET = new Vector3(-0.399f, -0.322f, 0);
     /// <summary> The third natural number </summary>
-    private static readonly float THREE = 2 + 1;
+    private static readonly int THREE = 2 + 1;
 
     // Instance variables
     /// <summary> The current ball in the scene </summary>
@@ -61,7 +61,7 @@ public class HumaN : BadThing
             // we must destroy it 
             // for it is a creature of darkness
 			Destroy(ball.gameObject);
-			ball = null;
+            ball = null;
             Serve();
 		}
     }
@@ -73,7 +73,7 @@ public class HumaN : BadThing
     {
         DestroyAllBalls();
         ball = null;
-        maxhits = 3;
+        maxhits = THREE * THREE;
         phase++;
 
         // Destroy all current UFOs
@@ -124,21 +124,25 @@ public class HumaN : BadThing
 
     /// <summary>
     /// Called when hit by a ball.
-    /// Either rallies or gets hurt, depending on the current value of RallyCount
+    /// Either rallies or gets hurt, depending on the ball's origin and the 
+    /// current value of RallyCount.
+    /// A ball from a UFO will hurt Huma N. instantly, skipping the rally, 
+    /// because it turns out getting a BadThing to rally another BadThing's 
+    /// ball is very glitchy and difficult :(
     /// </summary>
-    /// <param name="ball"> The ball that hit the enemy </param>
-    public override void Ouch(Ball ball)
+    /// <param name="hitBall"> The ball that hit the enemy </param>
+    public override void Ouch(Ball hitBall)
     {
-
         // The enemy's time has come... execute oof
-        if (rallyCount <= 0)
+        if (rallyCount <= 0 || hitBall != this.ball)
         {
             anim.SetTrigger("Hurt");
-            base.Ouch(ball);
+            base.Ouch(hitBall);
             
+            // If the ouch was caused by a UFO, reset that UFO
             foreach (UFO ufo in ufoFleet)
             {
-                if (ball == ufo.Ball)
+                if (hitBall == ufo.Ball)
                 {
                     ufo.Reset();
                 }
@@ -149,9 +153,9 @@ public class HumaN : BadThing
             // Rallying time!
             Rally();
             rallyCount--;
-            ball.hit = false;
+            hitBall.hit = false;
             // Ignore collision between the enemy and the ball
-            Physics2D.IgnoreCollision(ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
+            Physics2D.IgnoreCollision(hitBall.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
         }
     }
 
@@ -161,33 +165,15 @@ public class HumaN : BadThing
     /// </summary>
     private void HitTime()
     {
-        // New for this guy: rally balls that don't belong to it!
-        foreach (UFO ufo in ufoFleet)
-        {
-            if (ufo.Ball != null)
-            {
-                if (Physics2D.Distance(ufo.Ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>()).distance < 1 / THREE)
-                {
-                    ufo.Ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
-                }
-            }
-        }
-
         // If there isn't already a ball, spawn a new one
         if (ball == null)
         {
             ball = SpawnBall();
         }
-        // Otherwise, send the existing one back (if it's close enough)
+        // Otherwise, send the existing one back
         else
         {
-            // (maybe bring this back in later phases)
-            /*
-            if (Physics2D.Distance(ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>()).distance < 1 / THREE)
-            {
-                ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
-            }
-            */
+            ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
         }
     }
 
@@ -220,7 +206,7 @@ public class HumaN : BadThing
             // Identical to Cocky Bastard phase 3, but the ball is unhittable 
             // because this guy's a jerk.
             return base.SpawnBall(
-                typeof(GenericUnhittable),
+                typeof(GenericHittable),
                 transform.position + HEAD_OFFSET,
                 new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5,
                 Random.Range(6f, 10f)

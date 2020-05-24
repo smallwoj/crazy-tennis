@@ -181,5 +181,8 @@ public class UFO : BadThing
     {
         shipAnim.ResetTrigger("Serve");
         Ball = Fire();
+
+        // Ignore collision between the commander and the ball
+        Physics2D.IgnoreCollision(Ball.GetComponent<Collider2D>(), Commander.GetComponent<Collider2D>(), true);
     }
 }
