@@ -16,12 +16,17 @@ public class UFO : BadThing
     private static readonly float MIN_X = -5.23F, MIN_Y = -3.73F, MAX_X = 4.57F, MAX_Y = 3.8F;
     /// <summary> Constant used in calculating new t values </summary>
     private static readonly float T_INCREASE = 0.125f;
+    /// <summary> While the UFO is spinning, this is how many balls can be on 
+    /// screen before it chooses a new position </summary>
+    private static readonly int MAX_BALLS = 9;
 
     // Instance variables
     /// <summary> The bad thing who created this UFO </summary>
     public HumaN Commander { private get; set; }
     /// <summary> The ball that this object spawns </summary>
-    public Ball Ball { get; set; } = null;
+    public Ball Ball { get; private set; } = null;
+    /// <summary> In later phases, we use this to rapidly fire balls </summary>
+    private List<Ball> balls = new List<Ball>();
     /// <summary> The script belonging to the player, so we can throw balls at it </summary>
     private PlayerBehaviour pb;
     /// <summary> The animator that belongs to the ship (which is a child of 
@@ -50,7 +55,7 @@ public class UFO : BadThing
         // Get the ship's animator and the player's, uh, behaviour
         shipAnim = GetComponentInChildren<Animator>();
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
-        pb.PlayerHurt += Reset;
+        pb.PlayerHurt += ResetUFO;
         
         // Generate the first path
         GeneratePath();
@@ -73,17 +78,32 @@ public class UFO : BadThing
             // it's time for a new path.
             GeneratePath();
 		}
+
+        // Garbage collection part 2: This time it's a loop
+        for (int i = balls.Count - 1; i >= 0; i--)
+        {
+            if (balls[i] != null && balls[i].OutsideCourt)
+            {
+                Destroy(balls[i].gameObject);
+                balls[i] = null;
+            }
+            // Making this condition separate allows us to garbage-collect 
+            // balls that were destroyed as as a result of hitting the enemy
+            if (balls[i] == null)
+            {
+                balls.RemoveAt(i);
+            }
+        }
     }
 
     // This function is called every fixed framerate frame, if the MonoBehaviour is enabled. (Unity Code Snippets)
     private void FixedUpdate() {
+
         // Move to the next spot in the path.
         // In addition to checking if a path exists, only move if the ball is 
         // null. That way, it'll stay still for a little while after swinging
         if (path != null && Ball == null)
         {
-            // Set previous position
-            Vector3 prev = transform.position;
             // Set new t value
             t += T_INCREASE / Vector2.Distance(to, from);
             
@@ -128,9 +148,16 @@ public class UFO : BadThing
     /// <summary>
     /// Resets the ball (and the path???crazy)
     /// </summary>
-    public void Reset()
+    public void ResetUFO()
     {
         Ball = null;
+
+        foreach(Ball ball in balls)
+        {
+            Destroy(ball.gameObject);
+        }
+        balls.Clear();
+        
         GeneratePath();
     }
 
@@ -140,20 +167,23 @@ public class UFO : BadThing
     /// <returns>
     private void GeneratePath()
     {
-        // Randomly decide the length of the path
-        int pathLength = (int)(Random.value * MAX_PATH_LENGTH) + 1;
-
-        // Make the path!
-        path = new List<Vector2>(pathLength);
-        for (int i = 0; i < pathLength; i++)
+        if (!shipAnim.GetBool("Spinning"))
         {
-            path.Add(new Vector2(Random.Range(MIN_X, MAX_X), Random.Range(MIN_Y, MAX_Y)));
-        }
+            // Randomly decide the length of the path
+            int pathLength = (int)(Random.value * MAX_PATH_LENGTH) + 1;
 
-        t = 0;
-        target = 0;
-        from = transform.position;
-        to = path[target];
+            // Make the path!
+            path = new List<Vector2>(pathLength);
+            for (int i = 0; i < pathLength; i++)
+            {
+                path.Add(new Vector2(Random.Range(MIN_X, MAX_X), Random.Range(MIN_Y, MAX_Y)));
+            }
+
+            t = 0;
+            target = 0;
+            from = transform.position;
+            to = path[target];
+        }
     }
 
     /// <summary>
@@ -162,8 +192,19 @@ public class UFO : BadThing
     /// <returns> A ball aimed directly at the player </returns>
     private Ball Fire()
     {
+        // Randomize the type of the ball
+        System.Type ballType;
+        if (Random.value < 0.75f)
+        {
+            ballType = typeof(GenericHittable);
+        }
+        else
+        {
+            ballType = typeof(GenericUnhittable);
+        }
+
         Ball toReturn = SpawnBall(
-            typeof(GenericHittable),
+            ballType,
             transform.position,
             (pb.CenterPos - new Vector2(transform.position.x, transform.position.y)).normalized * 4,
             Random.Range(6f, 10f)
@@ -180,9 +221,46 @@ public class UFO : BadThing
     public void Hit()
     {
         shipAnim.ResetTrigger("Serve");
-        Ball = Fire();
+
+        // Depending on the state of the UFO, either fire a standalone ball or 
+        // contribute to the onslaught of rapid-fire balls
+        Ball newBall = Fire();
+        if (shipAnim.GetBool("Spinning"))
+        {
+            balls.Add(newBall);
+        }
+        else
+        {
+            Ball = newBall;
+        }
 
         // Ignore collision between the commander and the ball
-        Physics2D.IgnoreCollision(Ball.GetComponent<Collider2D>(), Commander.GetComponent<Collider2D>(), true);
+        Physics2D.IgnoreCollision(newBall.GetComponent<Collider2D>(), Commander.GetComponent<Collider2D>(), true);
+    }
+
+    /// <summary>
+    /// Makes the UFO spin its racket around, which makes it hurt the player on 
+    /// contact
+    /// </summary>
+    public void Spin()
+    {
+        /* Since HumaN.NextPhase instantiates a UFO prefab and then calls this
+        method, we can't guarantee that shipAnim exists when this method is 
+        called. Thus:
+        */
+        if (shipAnim == null)
+        {
+            GetComponentInChildren<Animator>().SetBool("Spinning", true);
+        }
+        else
+        {
+            shipAnim.SetBool("Spinning", true);
+        }
+        path = null;
+    }
+
+    // This function is called when the MonoBehaviour will be destroyed. (Unity Code Snippets)
+    private void OnDestroy() {
+        pb.PlayerHurt -= ResetUFO;
     }
 }

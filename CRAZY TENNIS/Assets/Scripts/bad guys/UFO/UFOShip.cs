@@ -30,4 +30,12 @@ public class UFOShip : MonoBehaviour
     {
         mainScript.Hit();
     }
+
+    /// <summary>
+    /// Tells the main script to remove the ball and make a new path
+    /// </summary>
+    public void ResetUFO()
+    {
+        mainScript.ResetUFO();
+    }
 }

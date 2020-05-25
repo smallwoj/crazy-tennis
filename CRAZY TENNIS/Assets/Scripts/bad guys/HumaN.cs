@@ -46,7 +46,7 @@ public class HumaN : BadThing
         
         // Tell the player about this cool thing called Rally (and !Breakout)
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
-        pb.PlayerHurt += Rally;
+        pb.PlayerHurt += Serve;
         pb.Breakout = false;
 
         NextPhase();
@@ -73,7 +73,6 @@ public class HumaN : BadThing
     {
         DestroyAllBalls();
         ball = null;
-        maxhits = THREE * THREE;
         phase++;
 
         // Destroy all current UFOs
@@ -83,13 +82,12 @@ public class HumaN : BadThing
         }
         ufoFleet.Clear();
 
-        // Spawn some UFOs based on the phase
+        // Spawn some UFOs and set the health
+        GameObject ufoPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/UFO.prefab");
         switch (phase)
         {
             case 1: 
-            {
-                GameObject ufoPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/UFO.prefab");
-                
+            {   
                 GameObject ufo1 = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ufoPrefab);
                 ufo1.GetComponent<UFO>().Commander = this;
                 ufo1.transform.position = new Vector3(2.38f, 3.26f, 0);
@@ -100,6 +98,29 @@ public class HumaN : BadThing
                 ufo2.GetComponent<UFO>().Commander = this;
                 ufo2.transform.position = new Vector3(-2.4f, 3.26f, 0);
                 ufoFleet.Add(ufo2.GetComponent<UFO>());
+
+                maxhits = THREE * THREE;
+                
+                break;
+            }
+            case 2:
+            {   
+
+// Idea: Smoothly transition between phases by having the existing UFOs move to their new positions... Probably using a UFO method that adds a path containing only the intended position
+
+                GameObject ufo1 = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ufoPrefab);
+                ufo1.GetComponent<UFO>().Commander = this;
+                ufo1.GetComponent<UFO>().Spin();
+                ufo1.transform.position = new Vector3(-2.4f, 4.5f, 0);
+                ufoFleet.Add(ufo1.GetComponent<UFO>());
+
+                GameObject ufo2 = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ufoPrefab);
+                ufo2.GetComponent<UFO>().Commander = this;
+                ufo2.GetComponent<UFO>().Spin();
+                ufo2.transform.position = new Vector3(2.4f, 4.5f, 0);
+                ufoFleet.Add(ufo2.GetComponent<UFO>());
+
+                maxhits = THREE * THREE  + THREE + THREE + (THREE / THREE);
 
                 break;
             }
@@ -144,7 +165,7 @@ public class HumaN : BadThing
             {
                 if (hitBall == ufo.Ball)
                 {
-                    ufo.Reset();
+                    ufo.ResetUFO();
                 }
             }
         }
@@ -165,6 +186,25 @@ public class HumaN : BadThing
     /// </summary>
     private void HitTime()
     {
+        /* 
+        There's a bug in which he swings the racket while his ball is 
+        currently somewhere else on the court, and I have no idea what causes 
+        it.
+        All I really know is that this method is being called at the wrong time 
+        sometimes.
+
+        Oh, and sometimes he stops serving until the player gets hurt. I think that glitch is caused by him getting 
+        hurt after transitioning to the serve animation but before spawning the 
+        ball.
+        I think it can be worked around by appending "&& ball != null" to the 
+        condition in the first line of Ouch. This would make the enemy 
+        invincible while serving, which would probably be more frustrating to 
+        the player than the occasional pause.
+
+        Basically, remind me not to let an enemy get hurt by another enemy's 
+        ball ever again 😤
+        */
+
         // If there isn't already a ball, spawn a new one
         if (ball == null)
         {
@@ -206,7 +246,7 @@ public class HumaN : BadThing
             // Identical to Cocky Bastard phase 3, but the ball is unhittable 
             // because this guy's a jerk.
             return base.SpawnBall(
-                typeof(GenericHittable),
+                typeof(GenericUnhittable),
                 transform.position + HEAD_OFFSET,
                 new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5,
                 Random.Range(6f, 10f)
@@ -221,6 +261,6 @@ public class HumaN : BadThing
     void OnDestroy()
     {
         // remove this
-        pb.PlayerHurt -= Rally;
+        pb.PlayerHurt -= Serve;
     }
 }
