@@ -16,9 +16,6 @@ public class UFO : BadThing
     private static readonly float MIN_X = -5.23F, MIN_Y = -3.73F, MAX_X = 4.57F, MAX_Y = 3.8F;
     /// <summary> Constant used in calculating new t values </summary>
     private static readonly float T_INCREASE = 0.125f;
-    /// <summary> While the UFO is spinning, this is how many balls can be on 
-    /// screen before it chooses a new position </summary>
-    private static readonly int MAX_BALLS = 9;
 
     // Instance variables
     /// <summary> The bad thing who created this UFO </summary>
@@ -158,32 +155,46 @@ public class UFO : BadThing
         }
         balls.Clear();
         
-        GeneratePath();
+        if (!shipAnim.GetBool("Spinning"))
+        {
+            GeneratePath();
+        }
     }
 
     /// <summary>
     /// Randomly generates a path for the UFO to follow
     /// </summary>
-    /// <returns>
     private void GeneratePath()
     {
-        if (!shipAnim.GetBool("Spinning"))
+        // Randomly decide the length of the path
+        int pathLength = (int)(Random.value * MAX_PATH_LENGTH) + 1;
+
+        // Make the path!
+        path = new List<Vector2>(pathLength);
+        for (int i = 0; i < pathLength; i++)
         {
-            // Randomly decide the length of the path
-            int pathLength = (int)(Random.value * MAX_PATH_LENGTH) + 1;
-
-            // Make the path!
-            path = new List<Vector2>(pathLength);
-            for (int i = 0; i < pathLength; i++)
-            {
-                path.Add(new Vector2(Random.Range(MIN_X, MAX_X), Random.Range(MIN_Y, MAX_Y)));
-            }
-
-            t = 0;
-            target = 0;
-            from = transform.position;
-            to = path[target];
+            path.Add(new Vector2(Random.Range(MIN_X, MAX_X), Random.Range(MIN_Y, MAX_Y)));
         }
+
+        t = 0;
+        target = 0;
+        from = transform.position;
+        to = path[target];
+    }
+
+    
+    /// <summary>
+    /// Generates a one-step path to move to a specific position
+    /// </summary>
+    /// <param name="destination"> The position to move to </param>
+    public void MoveTo(Vector2 destination)
+    {
+        path = new List<Vector2>() { destination };
+
+        t = 0;
+        target = 0;
+        from = transform.position;
+        to = path[target];
     }
 
     /// <summary>
@@ -256,7 +267,14 @@ public class UFO : BadThing
         {
             shipAnim.SetBool("Spinning", true);
         }
+
+        // 🦀🦀🦀
         path = null;
+        if (Ball != null)
+        {
+            Destroy(Ball.gameObject);
+            Ball = null;
+        }
     }
 
     // This function is called when the MonoBehaviour will be destroyed. (Unity Code Snippets)

@@ -75,19 +75,13 @@ public class HumaN : BadThing
         ball = null;
         phase++;
 
-        // Destroy all current UFOs
-        foreach (UFO ufo in ufoFleet)
-        {
-            Destroy(ufo.gameObject);
-        }
-        ufoFleet.Clear();
-
         // Spawn some UFOs and set the health
-        GameObject ufoPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/UFO.prefab");
         switch (phase)
         {
             case 1: 
             {   
+                GameObject ufoPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/UFO.prefab");
+                
                 GameObject ufo1 = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ufoPrefab);
                 ufo1.GetComponent<UFO>().Commander = this;
                 ufo1.transform.position = new Vector3(2.38f, 3.26f, 0);
@@ -99,29 +93,25 @@ public class HumaN : BadThing
                 ufo2.transform.position = new Vector3(-2.4f, 3.26f, 0);
                 ufoFleet.Add(ufo2.GetComponent<UFO>());
 
-                maxhits = THREE * THREE;
+                maxhits = THREE + THREE;
                 
                 break;
             }
             case 2:
             {   
+                ufoFleet[0].GetComponent<UFO>().Spin();
+                ufoFleet[0].GetComponent<UFO>().MoveTo(new Vector3(-2.4f, 4.5f, 0));
 
-// Idea: Smoothly transition between phases by having the existing UFOs move to their new positions... Probably using a UFO method that adds a path containing only the intended position
-
-                GameObject ufo1 = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ufoPrefab);
-                ufo1.GetComponent<UFO>().Commander = this;
-                ufo1.GetComponent<UFO>().Spin();
-                ufo1.transform.position = new Vector3(-2.4f, 4.5f, 0);
-                ufoFleet.Add(ufo1.GetComponent<UFO>());
-
-                GameObject ufo2 = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ufoPrefab);
-                ufo2.GetComponent<UFO>().Commander = this;
-                ufo2.GetComponent<UFO>().Spin();
-                ufo2.transform.position = new Vector3(2.4f, 4.5f, 0);
-                ufoFleet.Add(ufo2.GetComponent<UFO>());
+                ufoFleet[1].GetComponent<UFO>().Spin();
+                ufoFleet[1].GetComponent<UFO>().MoveTo(new Vector3(2.4f, 4.5f, 0));
 
                 maxhits = THREE * THREE  + THREE + THREE + (THREE / THREE);
 
+                break;
+            }
+            case 3:
+            {
+                DestroyUFOs();
                 break;
             }
         }
@@ -222,8 +212,11 @@ public class HumaN : BadThing
     /// </summary>
     public void Serve()
     {
-        anim.SetTrigger("Serve");
-        rallyCount = INITIAL_RALLY_COUNT;
+        if (phase != 2)
+        {
+            anim.SetTrigger("Serve");
+            rallyCount = INITIAL_RALLY_COUNT;
+        }
     }
 
     /// <summary>
@@ -253,6 +246,18 @@ public class HumaN : BadThing
             );
         default: return null;
         }
+    }
+
+    /// <summary>
+    /// Destroys all current UFOs
+    /// </summary>
+    private void DestroyUFOs()
+    {     
+        foreach (UFO ufo in ufoFleet)
+        {
+            Destroy(ufo.gameObject);
+        }
+        ufoFleet.Clear();
     }
 
     /// <summary>
