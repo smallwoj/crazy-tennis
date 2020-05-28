@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using UnityEngine;
 
 public class Dog : GoodBoy
@@ -15,6 +16,9 @@ public class Dog : GoodBoy
     private Animator anim;
     new private SpriteRenderer renderer;
     private Collider2D JumpOver;
+    private DateTime startTime;
+    private bool hasBall;
+    private bool waiting;
     // Start is called before the first frame update
     new void Start()
     {
@@ -23,10 +27,27 @@ public class Dog : GoodBoy
         anim = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
         phase = 0;
+        hasBall = true;
+        waiting = false;
         NextPhase();
     }
 
     // Update is called once per frame
+    void Update()
+    {
+        switch (phase)
+        {
+            case 2:
+            //print((DateTime.Now - startTime).Seconds);
+            if((DateTime.Now - startTime).Seconds >= 1)
+            {
+                if (hasBall)
+                    anim.SetTrigger("drop ball");
+            }
+            break;
+        }
+    }
+
     void FixedUpdate()
     {
         prev = rb.position;
@@ -41,7 +62,19 @@ public class Dog : GoodBoy
         }
         else
         {
-
+            if(phase == 1)
+            {
+                NextPhase();
+            }
+            else if(phase == 2)
+                if(!hasBall && !waiting)
+                {
+                    from = rb.position;
+                    to = rb.position + new Vector2(0.1f, 0f);
+                    t = 0;
+                    waiting = true;
+                }
+                
         }
         DetermineDirection();
     }
@@ -59,6 +92,23 @@ public class Dog : GoodBoy
     public void CheerForJump()
     {
         FindObjectOfType<CrowdBehaviour>().Cheer(0.75f);
+    }
+
+    public void ActuallyPutDownBall()
+    {
+        hasBall = false;
+        ball = SpawnBall(
+            typeof(GenericHittable),
+            rb.position + new Vector2(-0.328f, 0.007f),
+            Vector2.zero,
+            0f
+        );
+        ball.transform.localScale = new Vector3(0.65f, 0.65f, 1);
+        // remove collision between the new ball and this
+        Physics2D.IgnoreCollision(ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
+        from = rb.position;
+        to = rb.position + new Vector2(-1.5f, 0f);
+        t = 0;
     }
 
     public void Land()
@@ -92,6 +142,9 @@ public class Dog : GoodBoy
                 from = rb.position;
                 to = new Vector2(-0.16f, -1.95f);
                 t = 0;
+            break;
+            case 2: // dogy put the ball down and wait.
+                startTime = DateTime.Now;
             break;
         }
     }
