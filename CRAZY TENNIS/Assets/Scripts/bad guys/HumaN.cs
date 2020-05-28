@@ -79,7 +79,7 @@ public class HumaN : BadThing
         {
             case 1: 
             {   
-                GameObject ufoPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/UFO.prefab");
+                GameObject ufoPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/Huma N/UFO.prefab");
                 
                 GameObject ufo1 = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ufoPrefab);
                 ufo1.GetComponent<UFO>().Commander = this;
@@ -278,14 +278,5 @@ public class HumaN : BadThing
             Destroy(ufo.gameObject);
         }
         ufoFleet.Clear();
-    }
-
-    /// <summary>
-    /// Cleans up when this object is destroyed
-    /// </summary>
-    void OnDestroy()
-    {
-        // remove this
-        // ()
     }
 }

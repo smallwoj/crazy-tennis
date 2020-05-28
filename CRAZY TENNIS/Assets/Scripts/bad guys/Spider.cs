@@ -89,7 +89,7 @@ public class Spider : BadThing
         if (phase == 4)
         {
             DestroyAllBalls();
-            SpawnNextEnemy("redCharacter");
+            SpawnNextEnemy("Huma N/Huma N.");
         }
         else
         {
