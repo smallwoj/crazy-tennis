@@ -8,7 +8,7 @@ public class HumaN : BadThing
 {
     // cONSTANTS
     /// <summary> The intial value for the rallyCount variable </summary>
-    private static readonly int INITIAL_RALLY_COUNT = 10;
+    private static readonly int INITIAL_RALLY_COUNT = 2;
     /// <summary> The displacement from this object's position and the head 
     /// (the part that hits the ball) of the racket </summary>
     private static readonly Vector3 HEAD_OFFSET = new Vector3(-0.399f, -0.322f, 0);
@@ -71,7 +71,6 @@ public class HumaN : BadThing
     /// </summary>
     public override void NextPhase()
     {
-        DestroyAllBalls();
         ball = null;
         phase++;
 
@@ -99,6 +98,14 @@ public class HumaN : BadThing
             }
             case 2:
             {   
+                UFO.BallProbability = 0;
+                maxhits = THREE;
+                break;
+            }
+            case 3:
+            {
+                UFO.BallProbability = 0.75f;
+
                 ufoFleet[0].GetComponent<UFO>().Spin();
                 ufoFleet[0].GetComponent<UFO>().MoveTo(new Vector3(-2.4f, 4.5f, 0));
 
@@ -106,18 +113,16 @@ public class HumaN : BadThing
                 ufoFleet[1].GetComponent<UFO>().MoveTo(new Vector3(2.4f, 4.5f, 0));
 
                 maxhits = THREE * THREE  + THREE + THREE + (THREE / THREE);
+                
+                pb.PlayerHurt -= Serve;
 
-                break;
-            }
-            case 3:
-            {
-                DestroyUFOs();
                 break;
             }
         }
 
         if(phase == 4)
         {
+            DestroyAllUFOs();
             SpawnNextEnemy("redCharacter");
         }
         else
@@ -129,7 +134,10 @@ public class HumaN : BadThing
             }
             
             // Start the rally
-            Serve();
+            if (phase < 3)
+            {
+                Serve();
+            }
         }
     }
 
@@ -157,6 +165,11 @@ public class HumaN : BadThing
                 {
                     ufo.ResetUFO();
                 }
+            }
+
+            if (phase < 3)
+            {
+                Serve();
             }
         }
         else
@@ -212,11 +225,8 @@ public class HumaN : BadThing
     /// </summary>
     public void Serve()
     {
-        if (phase != 2)
-        {
-            anim.SetTrigger("Serve");
-            rallyCount = INITIAL_RALLY_COUNT;
-        }
+        anim.SetTrigger("Serve");
+        rallyCount = INITIAL_RALLY_COUNT;
     }
 
     /// <summary>
@@ -244,6 +254,16 @@ public class HumaN : BadThing
                 new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5,
                 Random.Range(6f, 10f)
             );
+        case 2: 
+            // Very similar to the previous phase, but the ball is hittable and 
+            // a bit faster
+            return base.SpawnBall(
+                typeof(GenericHittable),
+                transform.position + HEAD_OFFSET,
+                new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 6,
+                Random.Range(6f, 10f)
+            );
+        // In phase 3, the UFOs do all the spawning
         default: return null;
         }
     }
@@ -251,7 +271,7 @@ public class HumaN : BadThing
     /// <summary>
     /// Destroys all current UFOs
     /// </summary>
-    private void DestroyUFOs()
+    private void DestroyAllUFOs()
     {     
         foreach (UFO ufo in ufoFleet)
         {
@@ -266,6 +286,6 @@ public class HumaN : BadThing
     void OnDestroy()
     {
         // remove this
-        pb.PlayerHurt -= Serve;
+        // ()
     }
 }

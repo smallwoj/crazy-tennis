@@ -18,6 +18,12 @@ public class UFO : BadThing
     private static readonly float T_INCREASE = 0.125f;
 
     // Instance variables
+    /// <summary> A number (from 0 to 1) that helps decide which type of ball 
+    /// to spawn. 
+    /// When a ball is spawned, a random number from 0 to 1 is generated; if 
+    /// the random number is less than ballProbability, the ball will be 
+    /// hittable, otherwise, it'll be unhittable. </summary>
+    public static float BallProbability = 1;
     /// <summary> The bad thing who created this UFO </summary>
     public HumaN Commander { private get; set; }
     /// <summary> The ball that this object spawns </summary>
@@ -95,7 +101,6 @@ public class UFO : BadThing
 
     // This function is called every fixed framerate frame, if the MonoBehaviour is enabled. (Unity Code Snippets)
     private void FixedUpdate() {
-
         // Move to the next spot in the path.
         // In addition to checking if a path exists, only move if the ball is 
         // null. That way, it'll stay still for a little while after swinging
@@ -205,7 +210,7 @@ public class UFO : BadThing
     {
         // Randomize the type of the ball
         System.Type ballType;
-        if (Random.value < 0.75f)
+        if (Random.value < BallProbability)
         {
             ballType = typeof(GenericHittable);
         }
