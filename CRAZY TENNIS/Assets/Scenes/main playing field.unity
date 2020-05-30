@@ -2453,13 +2453,26 @@ GameObject:
   - component: {fileID: 1231158964}
   - component: {fileID: 1231158969}
   - component: {fileID: 1231158968}
+  - component: {fileID: 1231158963}
   m_Layer: 5
   m_Name: Pause menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
+--- !u!114 &1231158963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231158962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cabe363eda8181348999f2115a6c5be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1231158964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3143,7 +3156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8d76e3d30deaf43a2c4b4f92169cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paused: 0
 --- !u!4 &1819761204
 Transform:
   m_ObjectHideFlags: 0

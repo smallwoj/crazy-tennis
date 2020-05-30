@@ -8,7 +8,7 @@ using UnityEngine;
 public class PauseControl : MonoBehaviour
 {
     /// <summary> Whether the game is currently paused </summary>
-    private bool paused = false;
+    public static bool Paused { get; private set; } = false;
 
     /// <summary> The pause menu that this script enables </summary>
     private GameObject menu;
@@ -26,10 +26,10 @@ public class PauseControl : MonoBehaviour
         // Pause and unpause when the cancel button (right now, Esc) is pressed
         if (Input.GetButtonDown("Cancel"))
         {
-            paused = !paused;
-            menu.SetActive(paused);
+            Paused = !Paused;
+            menu.SetActive(Paused);
             // If this were C(++) I'd be able to say Time.timeScale = paused 😤
-            if (paused)
+            if (Paused)
             {
                 Time.timeScale = 0;
             }
