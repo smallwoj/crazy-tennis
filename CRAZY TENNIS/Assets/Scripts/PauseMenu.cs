@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
+    private Animation textAnim;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        textAnim = GetComponentInChildren<Animation>();
     }
 
     // Update is called once per frame
