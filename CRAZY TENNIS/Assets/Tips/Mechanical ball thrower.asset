@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Tips:
   - Segmentation fault (core dumped)
-  - 'IOException: The process cannot access the file ''TIPS.TXT'' because it is being
+  - 'IOException: The process cannot access the file ''TIPS.BMP'' because it is being
     used by another process.'
   - print("pause screen tips work");
-  - '! YOUR COMPUTER HAS 6 VIRUES!!! TO FIX GO TO: walmart.com'
+  - '! WARNING ! YOUR COMPUTER HAS 6 VIRUES!!! TO FIX NOW GO TO: walmart.com'
   - Hitting the ball back can be very tricky. To practice, stand to the side and
     check your timing.
