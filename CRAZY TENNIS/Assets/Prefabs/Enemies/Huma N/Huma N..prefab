@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8500984da7f6942adcb656c43ab3ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TipList: {fileID: 11400000, guid: 52c68f1f8f912c44598b12002f0f3c7b, type: 2}
   HealthRadius: 1.5
 --- !u!50 &8278215582964729976
 Rigidbody2D:

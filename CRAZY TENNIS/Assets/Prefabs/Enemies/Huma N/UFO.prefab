@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bf532cbcade504ea44f85d5700b270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TipList: {fileID: 11400000, guid: 8af24c4e140403647b3d61f84e7ec513, type: 2}
   HealthRadius: 1
 --- !u!70 &6331413605358266959
 CapsuleCollider2D:

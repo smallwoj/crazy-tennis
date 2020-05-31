@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16a5d95f477611e488f5e7aa99b872b1, type: 3}
+  m_Name: Huma N.
+  m_EditorClassIdentifier: 
+  Tips:
+  - Huma N. is a completely normal human. He enjoys long walks on the beach, bone
+    harvesting, and bullying people on youtube.com.
+  - Sure is nice to see another human in Crazy Tennis!
+  - When the UFOs are buzzing around, they'll move to at most 4 spots before shooting
+    a ball.
+  - Huma N. is an incredibly vicious, efficient opponent who doesn't worry about
+    extraneous things like 'fair play' or 'breathing'.
+  - 'Strategy for their final attack: Stand still on the edge of the court, wait
+    for the UFOs to both shoot several hittable balls in a row, and then cross the
+    line of fire while swinging your racket!'
+  - Huma N. used to enjoy vlogging, until he received a mean comment from Cocky Bastard.

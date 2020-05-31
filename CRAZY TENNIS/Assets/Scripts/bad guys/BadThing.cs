@@ -8,6 +8,9 @@ using UnityEditor;
 /// </summary>
 public abstract class BadThing : MonoBehaviour
 {
+    /// <summary> List of tips that appear on the pause menu for this enemy </summary>
+    public TipList TipList;
+
     /// <summary>
     /// Radius in 'unity units' of the health circle
     /// </summary>

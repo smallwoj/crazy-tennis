@@ -2181,9 +2181,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -410.5, y: -261.3}
+  m_AnchoredPosition: {x: -410.50003, y: -252.20001}
   m_SizeDelta: {x: 48.34, y: 48.34}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.49999964}
 --- !u!114 &1130862473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2533,7 +2533,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1231158964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3674,8 +3674,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 37.8, y: -265.4}
-  m_SizeDelta: {x: 1649, y: 138.3}
+  m_AnchoredPosition: {x: 29.8, y: -252.2}
+  m_SizeDelta: {x: 1612.4, y: 141.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1972247719
 MonoBehaviour:
@@ -3706,9 +3706,11 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: You can pause the game by pressing the escape key, like you did just now.
+  m_Text: He turns himself into He turns himself into a pickle! He's called "Pickle
+    Rick." Funniest shit I've ever seen! He turns himself into a pickle! He's called
+    "Pickle Rick." Funniest shit I've ever seen!
 --- !u!222 &1972247720
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3730,6 +3732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tip: {fileID: 1972247719}
+  genericTipList: {fileID: 11400000, guid: 8af24c4e140403647b3d61f84e7ec513, type: 2}
 --- !u!1 &1974127475
 GameObject:
   m_ObjectHideFlags: 0
