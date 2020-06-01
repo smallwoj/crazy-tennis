@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c90afb3ad6e55a3418103d6cebf9cba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TipList: {fileID: 11400000, guid: f1cffb353530a2f49aa85ce522f8f4fd, type: 2}
   HealthRadius: 2
 --- !u!120 &472362514262733766
 LineRenderer:

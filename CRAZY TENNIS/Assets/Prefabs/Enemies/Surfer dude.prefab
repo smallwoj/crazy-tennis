@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ecb89e95b906814599313f38da15a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TipList: {fileID: 11400000, guid: caf733a9d5e7f574485f09fa1541c01c, type: 2}
   HealthRadius: 1.5
   path1:
   - {x: -2.77, y: 3.14}

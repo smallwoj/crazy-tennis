@@ -22,6 +22,14 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    /// <summary>
+    /// Like Update but it stops being called when the game is paused 😤
+    /// </summary>
+    private void FixedUpdate()
+    {
         transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + RotationalVelocity);
         body.velocity = (Vector3)Velocity;
     }
