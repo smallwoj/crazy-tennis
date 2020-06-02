@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,12 +15,12 @@ public class GenericHittable : GenericUnhittable
                 if(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>().Breakout)
                 {
                     //this one is kinda like breakout
-                    Velocity = (transform.position - other.transform.position).normalized*8;
+                    body.velocity = (transform.position - other.transform.position).normalized*8;
                 }
                 else
                 {
                     //this one just go 
-                    Velocity = (Parent.transform.position - transform.position).normalized*8;
+                    body.velocity = (Parent.transform.position - transform.position).normalized*8;
                 }
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), Parent.GetComponent<Collider2D>(), false);
                 // You hit the ball!!!!!! You get a point
