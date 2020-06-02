@@ -26,6 +26,7 @@ public class Dog : GoodBoy
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
+        FindObjectOfType<PlayerBehaviour>().Breakout = true;
         phase = 0;
         hasBall = true;
         waiting = false;
@@ -53,12 +54,25 @@ public class Dog : GoodBoy
         prev = rb.position;
         if (t < 1)
         {
-            inc = 0.05f / Vector2.Distance(to, from);
-            t += inc;
-            if(t >= 1)
-                t = 1f;
-            float T = (float)(1f - System.Math.Cos(t * System.Math.PI))/2f;
-            rb.position = Vector2.Lerp(from, to, T);
+            if(phase != 3)
+            {
+                inc = 0.05f / Vector2.Distance(to, from);
+                t += inc;
+                if(t >= 1)
+                    t = 1f;
+                float T = (float)(1f - System.Math.Cos(t * System.Math.PI))/2f;
+                rb.position = Vector2.Lerp(from, to, T);
+            }
+            else if(phase == 3)
+            {
+                inc =  0.2f / Vector2.Distance(to, from);
+                t += inc;
+                if(t >= 1)
+                    t = 1f;
+                float T = (float)(1f - System.Math.Cos(t * System.Math.PI/2.0));
+                Vector2 anchor = new Vector2(from.x, to.y);
+                rb.position = (1f-T) * (1f-T) * from + 2f * (1f-T) * T * anchor + T*T*to;
+            }
         }
         else
         {
@@ -74,9 +88,21 @@ public class Dog : GoodBoy
                     t = 0;
                     waiting = true;
                 }
-                
+
         }
         DetermineDirection();
+    }
+
+    new public void Ouch(Ball ball)
+    {
+        anim.SetTrigger("catch ball");
+        ((GenericHittable) ball).OnHit -= GoFetch;
+        DestroyAllBalls();
+    }
+
+    public void GoFetch()
+    {
+        NextPhase();
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -103,11 +129,12 @@ public class Dog : GoodBoy
             Vector2.zero,
             0f
         );
+        ((GenericHittable) ball).OnHit += GoFetch;
         ball.transform.localScale = new Vector3(0.65f, 0.65f, 1);
         // remove collision between the new ball and this
         Physics2D.IgnoreCollision(ball.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
         from = rb.position;
-        to = rb.position + new Vector2(-1.5f, 0f);
+        to = rb.position + new Vector2(-2f, -1f);
         t = 0;
     }
 
@@ -145,6 +172,11 @@ public class Dog : GoodBoy
             break;
             case 2: // dogy put the ball down and wait.
                 startTime = DateTime.Now;
+            break;
+            case 3: // go fetch!!
+                from = rb.position;
+                to = ball.body.position + ball.body.velocity * 0.75f;
+                t = 0;
             break;
         }
     }

@@ -1,9 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GenericHittable : GenericUnhittable
 {
+    public delegate void HitEvent();
+    public event HitEvent OnHit;
     void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "player child")
@@ -25,6 +27,9 @@ public class GenericHittable : GenericUnhittable
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), Parent.GetComponent<Collider2D>(), false);
                 // You hit the ball!!!!!! You get a point
                 GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().BallHit();
+                // Fire the on hit event
+                if(OnHit != null)
+                    OnHit();
             }
         }
     }
