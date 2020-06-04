@@ -2159,7 +2159,7 @@ GameObject:
   - component: {fileID: 1130862474}
   - component: {fileID: 1130862473}
   m_Layer: 5
-  m_Name: I don't have any drawing stuff with me right now so this'll hafta do
+  m_Name: I'm talkin to ya!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2174,15 +2174,15 @@ RectTransform:
   m_GameObject: {fileID: 1130862471}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1231158967}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -346.6, y: -264}
-  m_SizeDelta: {x: 40.65, y: 40.65}
+  m_AnchoredPosition: {x: -338.5, y: -245.35}
+  m_SizeDelta: {x: 109.26, y: 109.31}
   m_Pivot: {x: 0.5, y: 0.49999964}
 --- !u!114 &1130862473
 MonoBehaviour:
@@ -2202,7 +2202,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7716fb3d33a04974cb47c1d93fd581fa, type: 3}
+  m_Sprite: {fileID: 7352331080984546934, guid: 620904800553ee746bf0b5129dfcb162,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3674,7 +3675,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.8, y: -235.4}
+  m_AnchoredPosition: {x: 12.8, y: -236.2}
   m_SizeDelta: {x: 1268.4, y: 196.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1972247719
