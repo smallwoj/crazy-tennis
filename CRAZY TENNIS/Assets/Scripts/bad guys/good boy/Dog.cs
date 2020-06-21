@@ -93,11 +93,13 @@ public class Dog : GoodBoy
         DetermineDirection();
     }
 
-    new public void Ouch(Ball ball)
+    public override void Ouch(Ball ball)
     {
         anim.SetTrigger("catch ball");
         ((GenericHittable) ball).OnHit -= GoFetch;
         DestroyAllBalls();
+        hasBall = true;
+        FindObjectOfType<CrowdBehaviour>().Cheer(2f);
     }
 
     public void GoFetch()
@@ -129,6 +131,7 @@ public class Dog : GoodBoy
             Vector2.zero,
             0f
         );
+                    print("heck");
         ((GenericHittable) ball).OnHit += GoFetch;
         ball.transform.localScale = new Vector3(0.65f, 0.65f, 1);
         // remove collision between the new ball and this
@@ -177,6 +180,7 @@ public class Dog : GoodBoy
                 from = rb.position;
                 to = ball.body.position + ball.body.velocity * 0.75f;
                 t = 0;
+                anim.ResetTrigger("drop ball");
             break;
         }
     }

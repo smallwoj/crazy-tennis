@@ -18,6 +18,8 @@ public class GenericHittable : GenericUnhittable
                 {
                     //this one is kinda like breakout
                     body.velocity = (transform.position - other.transform.position).normalized*8;
+                    if(body.velocity.y < 0)
+                        body.velocity = new Vector2(body.velocity.x, 0f).normalized*8;
                 }
                 else
                 {
