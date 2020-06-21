@@ -31,6 +31,7 @@ public class Dog : GoodBoy
         hasBall = true;
         waiting = false;
         NextPhase();
+        FindObjectOfType<PlayerBehaviour>().PlayerHurt += ReplaceBall;
     }
 
     // Update is called once per frame
@@ -39,7 +40,6 @@ public class Dog : GoodBoy
         switch (phase)
         {
             case 2:
-            //print((DateTime.Now - startTime).Seconds);
             if((DateTime.Now - startTime).Seconds >= 1)
             {
                 if (hasBall)
@@ -131,7 +131,6 @@ public class Dog : GoodBoy
             Vector2.zero,
             0f
         );
-                    print("heck");
         ((GenericHittable) ball).OnHit += GoFetch;
         ball.transform.localScale = new Vector3(0.65f, 0.65f, 1);
         // remove collision between the new ball and this
@@ -145,6 +144,16 @@ public class Dog : GoodBoy
     {
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), JumpOver, false);
         JumpOver = null;
+    }
+
+    public void ReplaceBall()
+    {
+        anim.ResetTrigger("drop ball");
+        anim.SetTrigger("catch ball");
+        hasBall = true;
+        waiting = false;
+        phase = 0;
+        NextPhase();
     }
 
     private void DetermineDirection()
@@ -180,6 +189,7 @@ public class Dog : GoodBoy
                 from = rb.position;
                 to = ball.body.position + ball.body.velocity * 0.75f;
                 t = 0;
+                waiting = false;
                 anim.ResetTrigger("drop ball");
             break;
         }
