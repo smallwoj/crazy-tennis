@@ -86,7 +86,7 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Submit"))
+        if(Input.GetButtonDown("Submit") && !PauseControl.Paused)
         {
             anim.SetTrigger("space pressed");
         }
