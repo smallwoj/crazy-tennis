@@ -19,6 +19,7 @@ public class Dog : GoodBoy
     private DateTime startTime;
     private bool hasBall;
     private bool waiting;
+    public String nextEnemy;
     // Start is called before the first frame update
     new void Start()
     {
@@ -100,6 +101,7 @@ public class Dog : GoodBoy
         DestroyAllBalls();
         hasBall = true;
         FindObjectOfType<CrowdBehaviour>().Cheer(2f);
+        NextPhase();
     }
 
     public void GoFetch()
@@ -192,6 +194,15 @@ public class Dog : GoodBoy
                 waiting = false;
                 anim.ResetTrigger("drop ball");
             break;
+            case 4: // win!
+                StartCoroutine("GoToNextEnemy");
+            break;
         }
+    }
+
+    private IEnumerator GoToNextEnemy()
+    {
+        yield return new WaitForSeconds(2.5f);
+        SpawnNextEnemy(nextEnemy);
     }
 }

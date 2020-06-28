@@ -107,8 +107,11 @@ public abstract class BadThing : MonoBehaviour
     /// <param name="nextEnemy">prefab of the next enemy</param>
     public void SpawnNextEnemy(string nextEnemy)
     {
-        // Yay they did it
-        GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentBeat();
+        if(!(this is Dog))
+        {
+            // Yay they did it
+            GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentBeat();
+        }
 
         Destroy(this.gameObject);
         if(GameObject.FindGameObjectsWithTag("Enemy").Length == 1)

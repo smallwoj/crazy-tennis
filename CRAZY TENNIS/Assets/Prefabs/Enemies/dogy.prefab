@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 820883293
-  m_SortingLayer: -2
+  m_SortingLayerID: 705182271
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 16d5b427db9971e4b818e421da5f9efa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -116,7 +116,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e252ddb9598e3249b7215199e701341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TipList: {fileID: 11400000, guid: 5307fe3becce71f4bb2625d4552e8695, type: 2}
   HealthRadius: 0
+  nextEnemy: 
 --- !u!50 &3043566562298257101
 Rigidbody2D:
   serializedVersion: 4
@@ -151,6 +153,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.05, y: 0.25}
   serializedVersion: 2
   m_Radius: 0.65
