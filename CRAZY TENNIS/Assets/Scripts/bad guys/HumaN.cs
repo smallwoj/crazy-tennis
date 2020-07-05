@@ -282,6 +282,9 @@ public class HumaN : BadThing
         ufoFleet.Clear();
     }
 
+    /// <summary>
+    /// Clears any ufos, then spawns the recovery enemy
+    /// </summary>
     public new void SpawnRecoveryEnemy()
     {
         DestroyAllUFOs();

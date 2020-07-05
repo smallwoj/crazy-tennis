@@ -108,7 +108,12 @@ public abstract class BadThing : MonoBehaviour
     /// <param name="nextEnemy">prefab of the next enemy</param>
     public BadThing SpawnNextEnemy(string nextEnemy)
     {
-        if(!(this is Dog))
+        //this is self documenting code
+        if(this is Dog)
+        {
+            //it's a dog!
+        }
+        else
         {
             // Yay they did it
             GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentBeat();
@@ -126,6 +131,9 @@ public abstract class BadThing : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// This method spawns funny dog.
+    /// </summary>
     public void SpawnRecoveryEnemy()
     {
         //TODO: make this be a lookup table for when we have different recovery enemies and not just Dog
