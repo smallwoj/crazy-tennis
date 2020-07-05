@@ -258,8 +258,18 @@ public class SurferDude : BadThing
     /// <summary>
     /// on the destruction of the surfer dude... remove delegate method
     /// </summary>
-	void OnDestroy()
+	new void OnDestroy()
 	{
+        base.OnDestroy();
 		pb.PlayerHurt -= PlayerGotOuchSad;
 	}
+
+    /// <summary>
+    /// String representing the enemies prefab
+    /// </summary>
+    /// <returns>See: summary</returns>
+    public override string PrefabString()
+    {
+        return "Surfer dude";
+    }
 }

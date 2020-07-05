@@ -76,6 +76,7 @@ public abstract class BadThing : MonoBehaviour
     protected void Start()
     {
         HealthCircle = GetComponent<LineRenderer>();
+        FindObjectOfType<PlayerBehaviour>().PlayerGameOver += SpawnRecoveryEnemy;
     }
 
     /// <summary>
@@ -105,7 +106,7 @@ public abstract class BadThing : MonoBehaviour
     /// Spawns the next enemy, denoted by the name of a prefab in Assets/Prefabs/Enemies
     /// </summary>
     /// <param name="nextEnemy">prefab of the next enemy</param>
-    public void SpawnNextEnemy(string nextEnemy)
+    public BadThing SpawnNextEnemy(string nextEnemy)
     {
         if(!(this is Dog))
         {
@@ -113,12 +114,25 @@ public abstract class BadThing : MonoBehaviour
             GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentBeat();
         }
 
-        Destroy(this.gameObject);
+        if(this != null) //??????
+            Destroy(this.gameObject);
         if(GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
         {
             DestroyAllBalls();
             GameObject enemy = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/"+nextEnemy+".prefab");
-            PrefabUtility.InstantiatePrefab(enemy);
+            enemy = PrefabUtility.InstantiatePrefab(enemy) as GameObject;
+            return enemy.GetComponent<BadThing>();
+        }
+        return null;
+    }
+
+    public void SpawnRecoveryEnemy()
+    {
+        //TODO: make this be a lookup table for when we have different recovery enemies and not just Dog
+        BadThing enemy = SpawnNextEnemy("dogy");
+        if(enemy is Dog dog) //that a funny line
+        {
+            dog.nextEnemy = this.PrefabString();
         }
     }
 
@@ -156,5 +170,16 @@ public abstract class BadThing : MonoBehaviour
         // Give the player some epic points
         GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().PhaseClear();
         // Any derived class of BadThing should probably refine this method with more functionality, such as going to the next phase
+    }
+
+    /// <summary>
+    /// String representing the enemies prefab
+    /// </summary>
+    /// <returns>See: summary</returns>
+    public abstract string PrefabString();
+
+    protected void OnDestroy()
+    {
+        FindObjectOfType<PlayerBehaviour>().PlayerGameOver -= SpawnRecoveryEnemy;
     }
 }

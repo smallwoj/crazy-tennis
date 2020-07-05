@@ -33,6 +33,7 @@ public class Dog : GoodBoy
         waiting = false;
         NextPhase();
         FindObjectOfType<PlayerBehaviour>().PlayerHurt += ReplaceBall;
+        FindObjectOfType<PlayerBehaviour>().PlayerGameOver -= SpawnRecoveryEnemy;
     }
 
     // Update is called once per frame
@@ -181,7 +182,7 @@ public class Dog : GoodBoy
         {
             case 1: // dogy bring ball to you!
                 from = rb.position;
-                to = new Vector2(-0.16f, -1.95f);
+                to = new Vector2(-0.16f, -2.5f);
                 t = 0;
             break;
             case 2: // dogy put the ball down and wait.
@@ -203,6 +204,17 @@ public class Dog : GoodBoy
     private IEnumerator GoToNextEnemy()
     {
         yield return new WaitForSeconds(2.5f);
+        FindObjectOfType<PlayerBehaviour>().PlayerHurt -= ReplaceBall;
+        FindObjectOfType<PlayerBehaviour>().inRecovery = false;
         SpawnNextEnemy(nextEnemy);
+    }
+
+    /// <summary>
+    /// String representing the enemies prefab
+    /// </summary>
+    /// <returns>See: summary</returns>
+    public override string PrefabString() 
+    {
+        return "dogy";
     }
 }

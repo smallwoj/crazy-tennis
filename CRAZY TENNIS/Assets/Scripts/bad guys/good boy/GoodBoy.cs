@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoodBoy : BadThing
+public abstract class GoodBoy : BadThing
 {
     // :)
 }

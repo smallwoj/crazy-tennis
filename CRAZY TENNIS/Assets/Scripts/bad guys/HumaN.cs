@@ -24,7 +24,7 @@ public class HumaN : BadThing
     ///     are also shooting at you
     /// 2 - He moves around the court erratically while some UFOs are further 
     ///     harrassing the player
-    /// 3 - He stands still while the UFOs pull a Space Invaders on ya
+    /// 3 - He stands still while the UFOs go sicko mode
     /// </summary>
     private int phase;
     /// <summary> How many times it can rally before taking a hit </summary>
@@ -49,6 +49,8 @@ public class HumaN : BadThing
         pb.PlayerHurt += Serve;
         pb.Breakout = false;
 
+        pb.PlayerGameOver -= base.SpawnRecoveryEnemy;
+        pb.PlayerGameOver += SpawnRecoveryEnemy;
         NextPhase();
     }
 
@@ -93,7 +95,7 @@ public class HumaN : BadThing
                 ufoFleet.Add(ufo2.GetComponent<UFO>());
 
                 maxhits = THREE + THREE;
-                
+                UFO.BallProbability = 1;
                 break;
             }
             case 2:
@@ -278,5 +280,29 @@ public class HumaN : BadThing
             Destroy(ufo.gameObject);
         }
         ufoFleet.Clear();
+    }
+
+    public new void SpawnRecoveryEnemy()
+    {
+        DestroyAllUFOs();
+        base.SpawnRecoveryEnemy();
+    }
+
+    /// <summary>
+    /// Removes the Serve method from the PlayerHurt event when the gameobject is destroyed
+    /// </summary>
+    private new void OnDestroy()
+    {
+        base.OnDestroy();
+        pb.PlayerHurt -= Serve;
+    }
+
+    /// <summary>
+    /// String representing the enemies prefab
+    /// </summary>
+    /// <returns>See: summary</returns>
+    public override string PrefabString() 
+    {
+        return "Huma N/Huma N.";
     }
 }
