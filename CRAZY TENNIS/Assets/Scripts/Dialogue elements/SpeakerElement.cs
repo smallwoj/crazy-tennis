@@ -15,6 +15,8 @@ public class SpeakerElement : IDialogueElement
             switch (currentElement.Name)
             {
             case "Name": elements.Add(new NameElement(currentElement)); break;
+            case "Bust": elements.Add(new BustElement(currentElement)); break;
+            case "AnimatedBust": elements.Add(new AnimatedBustElement(currentElement)); break;
             //case "Side": elements.Add(new SideElement(currentElement)); break;
             case "Font": elements.Add(new FontElement(currentElement)); break;
             case "Speed": elements.Add(new SpeedElement(currentElement)); break;

@@ -8,17 +8,16 @@ DialogueBehaviour: This one defines the  蠟 behaviour for the  蠟  dialo
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using TMPro;
+using UnityEngine.UI;
 using System;
 using System.Xml;
 
 public class DialogueBehaviour : MonoBehaviour
 {
     public TextAsset script; // XML file containing the script for this dialogue
-    public TMP_Text speakerName; // The name of the character who is talking (the "speaker")
+    public Text speakerName; // The name of the character who is talking (the "speaker")
     public string speech; // The text to be displayed (whatever the speaker is speaking)
-    public TMP_Text displayedSpeech;    // The text currently being displayed
+    public Text displayedSpeech;    // The text currently being displayed
     public Image bust;  // The image of the talking character
     public Font font;   // The font the speakers's speech is rendered in. Defaults to size-25 Arial
     public AudioSource voice;   // The speaker's voice
@@ -27,6 +26,8 @@ public class DialogueBehaviour : MonoBehaviour
     private Queue<IDialogueElement> elements;    // The elements (lines, busts, sounds, etc.) of the dialogue
     private IDialogueElement currentElement;    // The dialogue element current applying its changes to the dialogue canvas
     private float revealedChars = 0;  // How many characters of the current line/string are visible
+    /// <summary> The thing that makes it go whoosh </summary>
+    private Animator anim;
 
     // Start is uhhhh I forget the rest
     void Start()
@@ -41,6 +42,8 @@ public class DialogueBehaviour : MonoBehaviour
         // {
         //     currentElement = elements.Dequeue();
         // }
+
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -50,18 +53,18 @@ public class DialogueBehaviour : MonoBehaviour
         // if (currentElement isn't LineElement) // darn (don't delete this is funny)
         if (!(currentElement is LineElement) || (Input.GetButtonDown("Submit") && revealedChars >= speech.Length))
         {
-            revealedChars = 0;
 
             // Dequeue an element to serve as the current element
             if (elements.Count != 0)
             {
+                revealedChars = 0;
                 currentElement = elements.Dequeue();
             }
             // If there are no more elements, end the dialogue
             else
             {
                 // End the dialogue
-                GameObject.Destroy(gameObject);
+                anim.SetTrigger("Exit");
             }
 
             // Have the current element apply its changes to the dialogue canvas
@@ -72,22 +75,6 @@ public class DialogueBehaviour : MonoBehaviour
             // Reveal dat speech
             if (revealedChars < speech.Length)
             {
-                // Detect the emogies  (lol jk)
-                /*
-                if (speech[Convert.ToInt32(revealedChars + speed)] == '<')
-                {string inbetween = "";
-                    int extraChars = 0;
-                    while (speech[Convert.ToInt32(revealedChars + speed + extraChars)] != '>')
-                    {
-                        inbetween += speech[Convert.ToInt32(revealedChars + speed + extraChars)];
-                        extraChars++;
-                    }
-
-
-                    revealedChars += extraChars;
-                }
-                */
-
                 // Determine whether to play the sound effect for the character's voice
                 if (Convert.ToInt32(revealedChars + speed) > Convert.ToInt32(revealedChars))
                 {
@@ -127,7 +114,7 @@ public class DialogueBehaviour : MonoBehaviour
             {
                 case "SPEAKER": elements.Enqueue(new SpeakerElement(currentElement)); break;
                 case "NAME": elements.Enqueue(new NameElement(currentElement));		  break;
-                // case "BUST": elements.Enqueue(new BustElement(currentElement));		  break;
+                case "BUST": elements.Enqueue(new BustElement(currentElement));		  break;
                 //case "SIDE": elements.Enqueue(new SideElement(currentElement));		  break;
                 case "SPEED": elements.Enqueue(new SpeedElement(currentElement));	  break;
                 case "VOICE": elements.Enqueue(new VoiceElement(currentElement));	  break;
@@ -138,5 +125,10 @@ public class DialogueBehaviour : MonoBehaviour
                 default: throw new Exception("Sorry to inconvenience you but you probably misspelt something :(");
             }
         }
+    }
+
+    public void Destroy()
+    {
+        GameObject.Destroy(gameObject);
     }
 }

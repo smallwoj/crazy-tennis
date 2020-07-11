@@ -1,0 +1,23 @@
+<DennisCutscene>
+    <Speaker>
+        <Name>Old guy</Name>
+        <Font></Font>
+        <Bust>redCharacter</Bust>
+        <Speed>Medium</Speed>
+        <Voice></Voice>
+    </Speaker>
+
+    <Line>Well well well, kiddo.</Line>
+
+    <Line>Not many whippersnappers like you make it this far.</Line>
+
+    <Line>Kid, ya well on your way to becomin' a True Tennis Master!</Line>
+
+    <Line>But there's something you should know.</Line>
+
+    <Line>Truth is...</Line>
+    
+    <Bust>redCharacter has a gun</Bust>
+    <Speed>Slow</Speed>
+    <Line>The tennis was crazy from the start.</Line>
+</DennisCutscene>

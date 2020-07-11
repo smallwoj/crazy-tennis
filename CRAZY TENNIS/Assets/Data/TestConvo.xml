@@ -1,0 +1,38 @@
+<TestConvo>
+    <Speaker>
+        <Name>Fresh Grade A Frying Chicken</Name>
+        <Font></Font>
+        <Bust>Fresh Grade A Frying Chicken</Bust>
+        <Speed>Medium</Speed>
+        <Voice>Main Theme Family Foods</Voice>
+    </Speaker>
+    <Line>Greetings, Thanos from Fortnite</Line>
+
+    <Speaker>
+        <Name>Thanos</Name>
+        <Font></Font>
+        <AnimatedBust>Thanos animation</AnimatedBust>
+        <Speed>Medium</Speed>
+        <Voice>Thanos' gamer moment</Voice>
+    </Speaker>
+    <Line>Hello Chicken from Family Foods</Line>
+
+    <Speaker>
+        <Name>Fresh Grade A Frying Chicken</Name>
+        <Font></Font>
+        <Bust>Fresh Grade A Frying Chicken</Bust>
+        <Speed>Medium</Speed>
+        <Voice>Main Theme Family Foods</Voice>
+    </Speaker>
+    <Line>Biohazard was approved as part of Unicode 1.1 in 1993 under the name Biohazard Sign and added to Emoji 1.0 in 2015.</Line>
+    
+    <Speaker>
+        <Name>Thanos</Name>
+        <Font></Font>
+        <AnimatedBust>Thanos animation</AnimatedBust>
+        <Speed>Medium</Speed>
+        <Voice>Thanos' gamer moment</Voice>
+    </Speaker>
+    <Line>epic</Line>
+
+</TestConvo>

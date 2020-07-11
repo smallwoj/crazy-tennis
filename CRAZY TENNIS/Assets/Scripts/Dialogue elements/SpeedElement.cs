@@ -16,7 +16,7 @@ public class SpeedElement : IDialogueElement
     {
         switch (data.InnerText.ToUpper())
         {
-            case "SLOW": return 0.25f;
+            case "SLOW": return 0.09f;
             case "MEDIUM": return 0.5f;
             case "FAST": return 2;
             default: return Convert.ToSingle(1.5 * Math.Ceiling(Math.Pow(4.0 / 3.0, 8)) / Convert.ToSingle(Convert.ToInt32("00011110", 2)));  /* don't worry 'bout it it's 15 I mean 0.5 */
