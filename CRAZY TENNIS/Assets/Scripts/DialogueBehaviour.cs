@@ -49,11 +49,14 @@ public class DialogueBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Epic workaround for the fact that I didn't understand time back when I wrote this
+        if (Time.deltaTime == 0)
+            return;
+
         // Advance the current element if the current element isn't a line or the player presses the button at the end of a line
         // if (currentElement isn't LineElement) // darn (don't delete this is funny)
         if (!(currentElement is LineElement) || (Input.GetButtonDown("Submit") && revealedChars >= speech.Length))
         {
-
             // Dequeue an element to serve as the current element
             if (elements.Count != 0)
             {
@@ -83,7 +86,7 @@ public class DialogueBehaviour : MonoBehaviour
                 }
 
                 // Reveal text incrementally
-                revealedChars += speed;
+                revealedChars += speed * Time.deltaTime;
                 
                 // If the player presses the button while speec text is currently being revealed,
                 // or revealedChars exceeds the length of the speech, go ahead and reveal the whole thing

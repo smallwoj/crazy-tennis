@@ -22,6 +22,12 @@ public class CutsceneDennis : BadThing
 
         // Get the dialogue
         dialogue = transform.GetChild(0).gameObject;
+
+        // Disable player movement
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Move2D>().enabled = false;
+        // (and swinging)
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>().enabled = false;
+
     }
 
     // Update is called once per frame
@@ -30,7 +36,7 @@ public class CutsceneDennis : BadThing
         if (dialogue == null && talking)
         {
             talking = false;
-            anim.SetTrigger("Gun");
+            gun();
         }
     }
 
@@ -51,6 +57,16 @@ public class CutsceneDennis : BadThing
         // Spawn a dialogue box (TODOne)
         dialogue.SetActive(true);
         talking = true;
+
+        /*
+        As mentioned in the onenote, try giving DialogueBehaviour a public 
+        field that lets it communicate with other entities (either a list of 
+        actors or just a reference to the entity that created it). Also, maybe 
+        make an interface for things that the dialogue interacts with, to 
+        facilitate making a dialogue element for interacting with said things. 
+        Maybe.
+        dialogue.GetComponent<DialogueBehaviour>().
+        */
     }
 
     /// <summary>
@@ -58,6 +74,15 @@ public class CutsceneDennis : BadThing
     /// </summary>
     public void gun()
     {
-        //anim.SetTrigger("Gun");
+        anim.SetTrigger("Gun");
+    }
+    
+    /// <summary>
+    /// He'll be back...
+    /// </summary>
+    private void OnDestroy() {
+        // Lift the restrictions we put on the player        
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Move2D>().enabled = true;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>().enabled = true;
     }
 }
