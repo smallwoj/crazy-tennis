@@ -111,13 +111,12 @@ public class DialogueBehaviour : MonoBehaviour
         // The fun part - create CutsceneElement objects for each element contained in dialogueInfo
         foreach (XmlNode currentElement in dialogueInfo.FirstChild.ChildNodes)
         {
-
             // (this is funny)
             switch (currentElement.Name.ToString().ToUpper())
             {
                 case "SPEAKER": elements.Enqueue(new SpeakerElement(currentElement)); break;
                 case "NAME": elements.Enqueue(new NameElement(currentElement));		  break;
-                case "BUST": elements.Enqueue(new BustElement(currentElement));		  break;
+                // case "BUST": elements.Enqueue(new BustElement(currentElement));		  break;
                 //case "SIDE": elements.Enqueue(new SideElement(currentElement));		  break;
                 case "SPEED": elements.Enqueue(new SpeedElement(currentElement));	  break;
                 case "VOICE": elements.Enqueue(new VoiceElement(currentElement));	  break;
@@ -125,6 +124,8 @@ public class DialogueBehaviour : MonoBehaviour
                 //case "STRING": elements.Enqueue(new StringElement(currentElement));	  break;
                 //case "CLEAR": elements.Enqueue(new ClearElement(currentElement));     break;
                 //case "CHOICE": elements.Enqueue(new ChoiceElement(currentElement));	  break;
+                case "#COMMENT": break;
+
                 default: throw new Exception("Sorry to inconvenience you but you probably misspelt something :(");
             }
         }

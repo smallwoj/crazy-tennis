@@ -552,7 +552,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155589034}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -585,8 +585,8 @@ LineRenderer:
   m_SortingLayer: -3
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0.3, y: 0, z: 0}
+  - {x: 0.3, y: -8, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1.0131104
@@ -594,8 +594,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.19738287
-        value: 0.1971107
+        time: 0.09934515
+        value: 0.08282237
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -607,8 +607,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.6886792, g: 0.08770915, b: 0.08770915, a: 1}
-      key1: {r: 0.6901961, g: 0.08627451, b: 0.08627451, a: 1}
+      key0: {r: 0.96297497, g: 1, b: 0.06132078, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -2181,7 +2181,7 @@ SpriteRenderer:
   m_SortingLayer: -4
   m_SortingOrder: -20
   m_Sprite: {fileID: 21300000, guid: 0b61cfa38f4689d48a27d818494deae1, type: 3}
-  m_Color: {r: 0.874, g: 0.874, b: 0.874, a: 1}
+  m_Color: {r: 0.8745098, g: 0.8745098, b: 0.8745098, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
