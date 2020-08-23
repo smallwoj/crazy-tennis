@@ -37,6 +37,7 @@ public class CutsceneDennis : BadThing
         if (player)
         {
             player.GetComponent<Move2D>().enabled = false;
+            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             player.transform.position = new Vector3(0, player.transform.position.y, player.transform.position.z);
             PlayerBehaviour pb = player.GetComponent<PlayerBehaviour>();
             pb.enabled = false;

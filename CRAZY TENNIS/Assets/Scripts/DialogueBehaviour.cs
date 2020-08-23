@@ -28,6 +28,8 @@ public class DialogueBehaviour : MonoBehaviour
     private float revealedChars = 0;  // How many characters of the current line/string are visible
     /// <summary> The thing that makes it go whoosh </summary>
     private Animator anim;
+    /// <summary> Little animated picture telling the player to press a button to advance </summary>
+    private GameObject buttonPrompt;
 
     // Start is uhhhh I forget the rest
     void Start()
@@ -44,6 +46,7 @@ public class DialogueBehaviour : MonoBehaviour
         // }
 
         anim = GetComponent<Animator>();
+        buttonPrompt = transform.Find("Parent transform/Button prompt").gameObject;
     }
 
     // Update is called once per frame
@@ -57,6 +60,8 @@ public class DialogueBehaviour : MonoBehaviour
         // if (currentElement isn't LineElement) // darn (don't delete this is funny)
         if (!(currentElement is LineElement) || (Input.GetButtonDown("Submit") && revealedChars >= speech.Length))
         {
+            buttonPrompt.SetActive(false);
+
             // Dequeue an element to serve as the current element
             if (elements.Count != 0)
             {
@@ -93,7 +98,7 @@ public class DialogueBehaviour : MonoBehaviour
                 if (Input.GetButtonDown("Submit") || revealedChars > speech.Length)
                 {
                     revealedChars = speech.Length;
-                    
+                    buttonPrompt.SetActive(true);
                 }
 
                 // Set the displayed text
