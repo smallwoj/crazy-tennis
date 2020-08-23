@@ -123,7 +123,7 @@ public class HumaN : BadThing
         if(phase == 4)
         {
             DestroyAllUFOs();
-            SpawnNextEnemy("redCharacter");
+            SpawnNextEnemy("Cutscene Dennis");
         }
         else
         {

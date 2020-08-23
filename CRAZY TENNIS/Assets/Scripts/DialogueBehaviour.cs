@@ -93,6 +93,7 @@ public class DialogueBehaviour : MonoBehaviour
                 if (Input.GetButtonDown("Submit") || revealedChars > speech.Length)
                 {
                     revealedChars = speech.Length;
+                    
                 }
 
                 // Set the displayed text
@@ -131,8 +132,8 @@ public class DialogueBehaviour : MonoBehaviour
         }
     }
 
-    public void Destroy()
+    public void Deactivate()
     {
-        GameObject.Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

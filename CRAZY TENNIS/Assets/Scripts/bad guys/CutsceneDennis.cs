@@ -36,8 +36,9 @@ public class CutsceneDennis : BadThing
         player = GameObject.FindGameObjectWithTag("Player");
         if (player)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<Move2D>().enabled = false;
-            PlayerBehaviour pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
+            player.GetComponent<Move2D>().enabled = false;
+            player.transform.position = new Vector3(0, player.transform.position.y, player.transform.position.z);
+            PlayerBehaviour pb = player.GetComponent<PlayerBehaviour>();
             pb.enabled = false;
             // Also give them an extra life, since we're about so so meanly shoot them
             pb.lives++;
@@ -53,7 +54,7 @@ public class CutsceneDennis : BadThing
     // Update is called once per frame
     void Update()
     {
-        if (dialogue == null && talking)
+        if (!dialogue.activeSelf && talking)
         {
             talking = false;
             gun();
