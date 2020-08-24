@@ -13,6 +13,8 @@ public class CutsceneDennis : BadThing
     private static readonly Vector2 BULLET_VELOCITY = new Vector2(0, -15);
     /// <summary> Game objects that we mess with in order to make the cutscene work as expected </summary>
     private static GameObject player, bottomBound;
+    /// <summary> For messing with the player even more </summary>
+    private static PlayerBehaviour pb;
     /// <summary> The component that makes Crazy Dennis go whoosh </summary>
     private Animator anim;
     /// <summary> The dialogue box that tells you some straight facts </summary>
@@ -38,8 +40,8 @@ public class CutsceneDennis : BadThing
         {
             player.GetComponent<Move2D>().enabled = false;
             player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            player.transform.position = new Vector3(0, player.transform.position.y, player.transform.position.z);
-            PlayerBehaviour pb = player.GetComponent<PlayerBehaviour>();
+            pb = player.GetComponent<PlayerBehaviour>();
+            player.transform.position = pb.defaultPosition;
             pb.enabled = false;
             // Also give them an extra life, since we're about so so meanly shoot them
             pb.lives++;
@@ -139,7 +141,8 @@ public class CutsceneDennis : BadThing
         if (player)
         {
             player.GetComponent<Move2D>().enabled = true;
-            player.GetComponent<PlayerBehaviour>().enabled = true;
+            pb.enabled = true;
+            player.transform.position = pb.defaultPosition;
         }
         if (bottomBound)
         {
