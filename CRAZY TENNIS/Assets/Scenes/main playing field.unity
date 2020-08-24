@@ -800,7 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abced9fcb4f424c4da8394949ae7430f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lives: 1
+  lives: 5
   bombs: 5
   score: 0
   defaultPosition: {x: 0, y: -2.55}
