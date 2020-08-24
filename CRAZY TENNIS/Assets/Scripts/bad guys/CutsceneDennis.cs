@@ -148,5 +148,11 @@ public class CutsceneDennis : BadThing
         {
             bottomBound.GetComponent<BoxCollider2D>().enabled = true;
         }
+
+        // Set up for the final battle
+        GameObject.Find("Net").SetActive(false);
+        GameObject.Find("Crowd").SetActive(false);
+        GameObject.Find("Court cropped").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Blood court (no stands)");
+        GameObject.Find("Main Camera").GetComponent<Camera>().backgroundColor = new Color((float)106/255, 0, 0);
     }
 }
