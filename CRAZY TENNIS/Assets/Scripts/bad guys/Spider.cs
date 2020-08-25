@@ -147,4 +147,13 @@ public class Spider : BadThing
         anim.SetTrigger("Ouch");
         base.Ouch(ball);
     }
+
+    /// <summary>
+    /// String representing the enemies prefab
+    /// </summary>
+    /// <returns>See: summary</returns>
+    public override string PrefabString()
+    {
+        return "Spider/Spider";
+    }
 }

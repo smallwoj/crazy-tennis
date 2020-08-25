@@ -5,10 +5,9 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public bool hit = false;
-    public Vector2 Velocity;
     public float RotationalVelocity;
     public BadThing Parent;
-    private Rigidbody2D body;
+    public Rigidbody2D body;
     private static bool start = false;
     public bool OutsideCourt = false;
     // Start is called before the first frame update
@@ -31,7 +30,6 @@ public class Ball : MonoBehaviour
     private void FixedUpdate()
     {
         transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + RotationalVelocity);
-        body.velocity = (Vector3)Velocity;
     }
 
     virtual protected void OnCollisionEnter2D(Collision2D other)
