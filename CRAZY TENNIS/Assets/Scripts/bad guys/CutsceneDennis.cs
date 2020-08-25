@@ -129,7 +129,7 @@ public class CutsceneDennis : BadThing
     {
         // 🚮 Garbage 
         DestroyAllBalls();
-        SpawnNextEnemy("redCharacter");
+        SpawnNextEnemy("Crazy Dennis");
     }
 
     /// <summary>
