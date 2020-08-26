@@ -145,4 +145,13 @@ public class MechanicalBallThrower : BadThing
             }
         }
     }
+
+    /// <summary>
+    /// String representing the enemies prefab
+    /// </summary>
+    /// <returns>See: summary</returns>
+    public override string PrefabString()
+    {
+        return "Mechanical ball thrower";
+    }
 }

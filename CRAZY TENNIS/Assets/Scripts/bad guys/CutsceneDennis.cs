@@ -135,7 +135,9 @@ public class CutsceneDennis : BadThing
     /// <summary>
     /// He'll be back...
     /// </summary>
-    private void OnDestroy() {
+    private new void OnDestroy() 
+    {
+        base.OnDestroy();
         // Lift the restrictions we put on the player and the bounds
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player)
@@ -148,5 +150,14 @@ public class CutsceneDennis : BadThing
         {
             bottomBound.GetComponent<BoxCollider2D>().enabled = true;
         }
+    }
+
+    /// <summary>
+    /// String representing the enemy's prefab
+    /// </summary>
+    /// <returns>See: summary</returns>
+    public override string PrefabString()
+    {
+        return "Cutscene Dennis";
     }
 }
