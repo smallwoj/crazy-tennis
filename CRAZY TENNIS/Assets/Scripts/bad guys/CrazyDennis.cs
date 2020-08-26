@@ -23,6 +23,8 @@ public class CrazyDennis : BadThing
     private static float amplitude = 0;
     /// <summary> Starting angle for a hit in the first phase </summary>
     private static float startingAngle = 0;
+    /// <summary> Whether he's currently firing balls during the second phase </summary>
+    private static bool phase2Active = false;
 
     // Start is called before the first frame update
     new void Start()
@@ -60,26 +62,31 @@ public class CrazyDennis : BadThing
             // Constantly spawn balls in a sine wave pattern
             case 2:
             {
-                // Local variables? Wacky
-                // Index in the ball pool to spawn a ball at
-                int index;
-
-                // Adjust the amplitude
-                amplitude = 2 * Mathf.Sin(Mathf.PI * Time.fixedTime);
-
-                // Spawn two balls, one hittable and one not, on opposite sides
-                // Hittable
-                index = findBallIndex();
-                if (index >= 0)
+                // (but only if the phase is active! Doing this continuously would be pretty much unbeatable)
+                if (phase2Active)
                 {
-                    ballPool[index] = SpawnBall(typeof(GenericHittable), transform.position + BALL_OFFSET + new Vector3(amplitude, 0, 0), new Vector2(0, -7), Random.Range(6f, 10f));
-                }
-                // Non-hittable
-                index = findBallIndex();
-                if (index >= 0)
-                {
-                    // Very similar to the above spawn, except it's uhittable and the amplitude is subtracted from the position
-                    ballPool[index] = SpawnBall(typeof(GenericUnhittable), transform.position + BALL_OFFSET + new Vector3(-amplitude, 0, 0), new Vector2(0, -7), Random.Range(6f, 10f));
+                    // Local variables? Wacky
+                    // Index in the ball pool to spawn a ball at
+                    int index;
+
+                    // Adjust the amplitude
+                    amplitude = Mathf.Sin(Mathf.PI * Time.fixedTime);
+
+                    // Spawn two balls, one hittable and one not, on opposite sides
+                    // Hittable
+                    index = findBallIndex();
+                    if (index >= 0)
+                    {
+                        ballPool[index] = SpawnBall(typeof(GenericHittable), transform.position + BALL_OFFSET + new Vector3(amplitude, 0, 0), new Vector2(0, -7), Random.Range(6f, 10f));
+                    }
+                    // Non-hittable
+                    index = findBallIndex();
+                    if (index >= 0)
+                    {
+                        // Very similar to the above spawn, except it's uhittable and the amplitude is subtracted from the position
+                        
+                        ballPool[index] = SpawnBall(typeof(GenericUnhittable), transform.position + BALL_OFFSET + new Vector3(-amplitude, 0, 0), new Vector2(0, -7), Random.Range(6f, 10f));
+                    }
                 }
                 break;
             }
@@ -107,6 +114,7 @@ public class CrazyDennis : BadThing
     public override void NextPhase()
     {
         phase++;
+        anim.SetInteger("Phase", phase);
 
         switch (phase)
         {
@@ -115,13 +123,32 @@ public class CrazyDennis : BadThing
                 maxhits = 20;
                 break;
             }
+            case 2:
+            {
+                maxhits = 50;
+                togglePhase2Active();
+                break;
+            }
+            case 3:
+            {
+                if (phase2Active)
+                    togglePhase2Active();
+                break;
+            }
         }
+    }
+
+    public void OnTriggerEnter2D(Collider2D other) {
+        Ball ball = other.gameObject.GetComponent<Ball>();
+        if (ball)
+            if (ball.hit)
+                print("ouch?");
     }
 
     /// <summary>
     /// Hits a ball!!!
     /// </summary>
-    public void Hit()
+    public void HitBall()
     {
         switch (phase)
         {
@@ -193,5 +220,15 @@ public class CrazyDennis : BadThing
 
         // If we got to the end of the loop, then there are no free spaces :(
         return -1;
+    }
+
+    /// <summary>
+    /// Toggles phase2Active.
+    /// Remember the autocommenter? That woulda been perfect for this :(
+    /// </summary>
+    private void togglePhase2Active()
+    {
+        phase2Active = !phase2Active;
+        anim.SetBool("Phase 2 active", phase2Active);
     }
 }
