@@ -1,0 +1,16 @@
+<Stalling>
+    <Speaker>
+        <Name>Crazy Dennis</Name>
+        <Font></Font>
+        <!-- <Bust>redCharacter</Bust> -->
+        <Speed>Medium</Speed>
+        <Voice></Voice>
+    </Speaker>
+
+    <Line>*cough* *wheeze* *hack* *cough*</Line>
+    <Line>How could this happen!?</Line>
+    <Line>Even after revealing my true form, I...</Line>
+    <Line>No! This isn't over.</Line>
+    <Line>I have one more attack lined up for you.</Line>
+    <Line>It's time for your final test, kid.</Line>
+</Stalling>

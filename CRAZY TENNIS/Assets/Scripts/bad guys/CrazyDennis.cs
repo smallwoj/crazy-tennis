@@ -25,6 +25,8 @@ public class CrazyDennis : BadThing
     private static float startingAngle = 0;
     /// <summary> Whether he's currently firing balls during the second phase </summary>
     private static bool phase2Active = false;
+    /// <summary> The dialogue box that conveniently stalls in phase 3 while the phase 2 movement finishes </summary>
+    private GameObject dialogue;
 
     // Start is called before the first frame update
     new void Start()
@@ -39,6 +41,9 @@ public class CrazyDennis : BadThing
         
         // Dummy value for maxhits, so the health circle can display right away
         maxhits = 1;
+        
+        // Get the dialogue
+        dialogue = transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -84,7 +89,6 @@ public class CrazyDennis : BadThing
                     if (index >= 0)
                     {
                         // Very similar to the above spawn, except it's uhittable and the amplitude is subtracted from the position
-                        
                         ballPool[index] = SpawnBall(typeof(GenericUnhittable), transform.position + BALL_OFFSET + new Vector3(-amplitude, 0, 0), new Vector2(0, -7), Random.Range(6f, 10f));
                     }
                 }
@@ -133,6 +137,9 @@ public class CrazyDennis : BadThing
             {
                 if (phase2Active)
                     togglePhase2Active();
+
+                dialogue.SetActive(true);
+                
                 break;
             }
         }
