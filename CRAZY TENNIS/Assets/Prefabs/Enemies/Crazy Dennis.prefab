@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TipList: {fileID: 11400000, guid: 46218c1a08b882045bbed95e2c926fcc, type: 2}
-  HealthRadius: 0
+  HealthRadius: 1.5
 --- !u!95 &84601513747252449
 Animator:
   serializedVersion: 3
