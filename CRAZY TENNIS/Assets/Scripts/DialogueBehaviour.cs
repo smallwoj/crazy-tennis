@@ -8,17 +8,16 @@ DialogueBehaviour: This one defines the  蠟 behaviour for the  蠟  dialo
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using TMPro;
+using UnityEngine.UI;
 using System;
 using System.Xml;
 
 public class DialogueBehaviour : MonoBehaviour
 {
     public TextAsset script; // XML file containing the script for this dialogue
-    public TMP_Text speakerName; // The name of the character who is talking (the "speaker")
+    public Text speakerName; // The name of the character who is talking (the "speaker")
     public string speech; // The text to be displayed (whatever the speaker is speaking)
-    public TMP_Text displayedSpeech;    // The text currently being displayed
+    public Text displayedSpeech;    // The text currently being displayed
     public Image bust;  // The image of the talking character
     public Font font;   // The font the speakers's speech is rendered in. Defaults to size-25 Arial
     public AudioSource voice;   // The speaker's voice
@@ -27,6 +26,10 @@ public class DialogueBehaviour : MonoBehaviour
     private Queue<IDialogueElement> elements;    // The elements (lines, busts, sounds, etc.) of the dialogue
     private IDialogueElement currentElement;    // The dialogue element current applying its changes to the dialogue canvas
     private float revealedChars = 0;  // How many characters of the current line/string are visible
+    /// <summary> The thing that makes it go whoosh </summary>
+    private Animator anim;
+    /// <summary> Little animated picture telling the player to press a button to advance </summary>
+    private GameObject buttonPrompt;
 
     // Start is uhhhh I forget the rest
     void Start()
@@ -41,27 +44,35 @@ public class DialogueBehaviour : MonoBehaviour
         // {
         //     currentElement = elements.Dequeue();
         // }
+
+        anim = GetComponent<Animator>();
+        buttonPrompt = transform.Find("Parent transform/Button prompt").gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Epic workaround for the fact that I didn't understand time back when I wrote this
+        if (Time.deltaTime == 0)
+            return;
+
         // Advance the current element if the current element isn't a line or the player presses the button at the end of a line
         // if (currentElement isn't LineElement) // darn (don't delete this is funny)
         if (!(currentElement is LineElement) || (Input.GetButtonDown("Submit") && revealedChars >= speech.Length))
         {
-            revealedChars = 0;
+            buttonPrompt.SetActive(false);
 
             // Dequeue an element to serve as the current element
             if (elements.Count != 0)
             {
+                revealedChars = 0;
                 currentElement = elements.Dequeue();
             }
             // If there are no more elements, end the dialogue
             else
             {
                 // End the dialogue
-                GameObject.Destroy(gameObject);
+                anim.SetTrigger("Exit");
             }
 
             // Have the current element apply its changes to the dialogue canvas
@@ -72,22 +83,6 @@ public class DialogueBehaviour : MonoBehaviour
             // Reveal dat speech
             if (revealedChars < speech.Length)
             {
-                // Detect the emogies  (lol jk)
-                /*
-                if (speech[Convert.ToInt32(revealedChars + speed)] == '<')
-                {string inbetween = "";
-                    int extraChars = 0;
-                    while (speech[Convert.ToInt32(revealedChars + speed + extraChars)] != '>')
-                    {
-                        inbetween += speech[Convert.ToInt32(revealedChars + speed + extraChars)];
-                        extraChars++;
-                    }
-
-
-                    revealedChars += extraChars;
-                }
-                */
-
                 // Determine whether to play the sound effect for the character's voice
                 if (Convert.ToInt32(revealedChars + speed) > Convert.ToInt32(revealedChars))
                 {
@@ -96,13 +91,14 @@ public class DialogueBehaviour : MonoBehaviour
                 }
 
                 // Reveal text incrementally
-                revealedChars += speed;
+                revealedChars += speed * Time.deltaTime;
                 
                 // If the player presses the button while speec text is currently being revealed,
                 // or revealedChars exceeds the length of the speech, go ahead and reveal the whole thing
                 if (Input.GetButtonDown("Submit") || revealedChars > speech.Length)
                 {
                     revealedChars = speech.Length;
+                    buttonPrompt.SetActive(true);
                 }
 
                 // Set the displayed text
@@ -121,7 +117,6 @@ public class DialogueBehaviour : MonoBehaviour
         // The fun part - create CutsceneElement objects for each element contained in dialogueInfo
         foreach (XmlNode currentElement in dialogueInfo.FirstChild.ChildNodes)
         {
-
             // (this is funny)
             switch (currentElement.Name.ToString().ToUpper())
             {
@@ -135,8 +130,15 @@ public class DialogueBehaviour : MonoBehaviour
                 //case "STRING": elements.Enqueue(new StringElement(currentElement));	  break;
                 //case "CLEAR": elements.Enqueue(new ClearElement(currentElement));     break;
                 //case "CHOICE": elements.Enqueue(new ChoiceElement(currentElement));	  break;
+                case "#COMMENT": break;
+
                 default: throw new Exception("Sorry to inconvenience you but you probably misspelt something :(");
             }
         }
+    }
+
+    public void Deactivate()
+    {
+        gameObject.SetActive(false);
     }
 }

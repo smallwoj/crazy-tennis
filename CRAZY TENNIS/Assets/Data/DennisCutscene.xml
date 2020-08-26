@@ -1,0 +1,21 @@
+<DennisCutscene>
+    <Speaker>
+        <Name>Crazy Dennis</Name>
+        <Font></Font>
+        <!-- <Bust>redCharacter</Bust> -->
+        <Speed>Medium</Speed>
+        <Voice></Voice>
+    </Speaker>
+
+    <Line>Well well well.</Line>
+
+    <Line>You've done well to get this far!</Line>
+
+    <Line>But there's something you should know.</Line>
+
+    <Line>Truth is...</Line>
+    
+    <!-- <Bust>redCharacter has a gun</Bust> -->
+    <Speed>Slow</Speed>
+    <Line>The tennis was crazy from the start.</Line>
+</DennisCutscene>
