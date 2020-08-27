@@ -218,7 +218,7 @@ public class HumaN : BadThing
         // Otherwise, send the existing one back
         else
         {
-            ball.body.velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
+            ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
         }
     }
 

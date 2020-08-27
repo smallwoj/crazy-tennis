@@ -17,14 +17,14 @@ public class GenericHittable : GenericUnhittable
                 if(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>().Breakout)
                 {
                     //this one is kinda like breakout
-                    body.velocity = (transform.position - other.transform.position).normalized*8;
-                    if(body.velocity.y < 0)
-                        body.velocity = new Vector2(body.velocity.x, 0f).normalized*8;
+                    Velocity = (transform.position - other.transform.position).normalized*8;
+                    if(Velocity.y < 0)
+                        Velocity = new Vector2(Velocity.x, 0f).normalized*8;
                 }
                 else
                 {
                     //this one just go 
-                    body.velocity = (Parent.transform.position - transform.position).normalized*8;
+                    Velocity = (Parent.transform.position - transform.position).normalized*8;
                 }
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), Parent.GetComponent<Collider2D>(), false);
                 // You hit the ball!!!!!! You get a point
