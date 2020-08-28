@@ -94,7 +94,7 @@ public abstract class BadThing : MonoBehaviour
 		ball = (GameObject)PrefabUtility.InstantiatePrefab(ball);
         Ball comp = (Ball)ball.AddComponent(type);
         comp.body = ball.GetComponent<Rigidbody2D>();
-        comp.body.velocity = initVel;
+        comp.Velocity = initVel;
         comp.RotationalVelocity = initRotVel;
         comp.Parent = this;
         comp.transform.position = initPos;

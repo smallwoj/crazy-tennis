@@ -7,6 +7,7 @@ public class Ball : MonoBehaviour
     public bool hit = false;
     public float RotationalVelocity;
     public BadThing Parent;
+    public Vector2 Velocity;
     public Rigidbody2D body;
     private static bool start = false;
     public bool OutsideCourt = false;
@@ -30,6 +31,7 @@ public class Ball : MonoBehaviour
     private void FixedUpdate()
     {
         transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + RotationalVelocity);
+        body.velocity = (Vector3)Velocity;
     }
 
     virtual protected void OnCollisionEnter2D(Collision2D other)
