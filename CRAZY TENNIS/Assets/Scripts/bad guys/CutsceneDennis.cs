@@ -81,16 +81,6 @@ public class CutsceneDennis : BadThing
         // Spawn a dialogue box (TODOne)
         dialogue.SetActive(true);
         talking = true;
-
-        /*
-        As mentioned in the onenote, try giving DialogueBehaviour a public 
-        field that lets it communicate with other entities (either a list of 
-        actors or just a reference to the entity that created it). Also, maybe 
-        make an interface for things that the dialogue interacts with, to 
-        facilitate making a dialogue element for interacting with said things. 
-        Maybe.
-        dialogue.GetComponent<DialogueBehaviour>().
-        */
     }
 
     /// <summary>
@@ -110,16 +100,6 @@ public class CutsceneDennis : BadThing
         // Don't tell anyone!
         bullet = SpawnBall(typeof(GenericUnhittable), transform.position + BULLET_OFFSET, BULLET_VELOCITY, 0);
         bullet.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Literal bullet");
-
-        /*
-        To-dos:
-        - Reverse bullet velocity
-        - Make the line renderer invisible at first
-        - Augment the animation
-            - Make the line renderer e x p a n d very briefly
-            - Call NextPhase at a later frame (might be doable without overriding NextPhase haha)
-        - Say it's done for now; it'll be complete once we have a death animation
-        */
     }
 
     /// <summary>

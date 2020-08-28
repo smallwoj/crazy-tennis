@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SpectatorBehaviour : MonoBehaviour, Spectator
 {
-    private static readonly string[] OUTFITS = { "Generic crowd person", "Cocky bastard fan", "Surfer dude fan" };
+    private static readonly string[] OUTFITS = { "Generic crowd person", "Cocky bastard fan", "Surfer dude fan", "Mechanical ball thrower fan" };
     private static readonly string[] SKIN_COLOURS = { "Pale", "Fair", "Tan", "Dark" };
     /// <summary> How many times the spectator may jump during a cheer </summary>
     private static readonly float MAX_JUMPS = 16; // (note: if the variable hype stuff doesn't work out and we decide to just have constant hype, set this to 7. Makes the crowd look less... crazy)
