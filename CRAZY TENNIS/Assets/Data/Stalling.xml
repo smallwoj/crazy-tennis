@@ -1,4 +1,8 @@
 <Stalling>
+<!-- This cutscene only exists because I couldn't find an elegant way to 
+interrupt the second phase's movement (which is implemented as an animation). 
+Thus, this cutscene distracts the player while the animation finishes, hehe -->
+
     <Speaker>
         <Name>Crazy Dennis</Name>
         <Font></Font>
@@ -11,6 +15,5 @@
     <Line>How could this happen!?</Line>
     <Line>Even after revealing my true form, I...</Line>
     <Line>No! This isn't over.</Line>
-    <Line>I have one more attack lined up for you.</Line>
     <Line>It's time for your final test, kid.</Line>
 </Stalling>

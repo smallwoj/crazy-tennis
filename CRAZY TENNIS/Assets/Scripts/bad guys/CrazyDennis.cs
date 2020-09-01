@@ -8,8 +8,16 @@ public class CrazyDennis : BadThing
 {
     /// <summary> How many balls can be on-screen at once </summary>
     private static readonly int MAX_BALLS = 128;
+    /// <summary> How many times you gotta rally with him in phase 4 </summary>
+    private static readonly int INITIAL_RALLY_COUNT = 5;
+    /// <summary> Initial value for ballSpeed </summary>
+    private static readonly float INITIAL_BALL_SPEED = 1;
+    /// <summary> How fast the ball speed increases every hit in phase 4 </summary>
+    private static readonly float BALL_SPEED_INCREASE = 0.5f;
     /// <summary> The displacement Between the enemy's position and a new ball's position </summary>
     private static readonly Vector3 BALL_OFFSET = Vector3.zero;
+    /// <summary> How many unhittable balls to spawn in phase 4 </summary>
+    private static readonly int PHASE_4_BALLS = MAX_BALLS / 2;
 
     /// <summary> Current phase of the battle </summary>
     private int phase;
@@ -19,14 +27,24 @@ public class CrazyDennis : BadThing
     private PlayerBehaviour pb;
     /// <summary> Object pool for spawning and despawning a whole bunch of balls </summary>
     private Ball[] ballPool = new Ball[MAX_BALLS];
+    /// <summary> The ball he rallies during phase 4 </summary>
+    private Ball rallyBall = null;
+    /// <summary> How fast the ball goes in phase 4 </summary>
+    private float ballSpeed = INITIAL_BALL_SPEED;
     /// <summary> Current horizontal ball spawn displacement during the first phase </summary>
-    private static float amplitude = 0;
+    private float amplitude = 0;
     /// <summary> Starting angle for a hit in the first phase </summary>
-    private static float startingAngle = 0;
+    private float startingAngle = 0;
     /// <summary> Whether he's currently firing balls during the second phase </summary>
-    private static bool phase2Active = false;
+    private bool phase2Active = false;
     /// <summary> The dialogue box that conveniently stalls in phase 3 while the phase 2 movement finishes </summary>
     private GameObject dialogue;
+    /// <summary> Whether the aforementioned dialogue box is active </summary>
+    private bool talking = false;
+    /// <summary> How many times he can rally before taking a hit </summary>
+    private int rallyCount = INITIAL_RALLY_COUNT;
+    /// <summary> Whether it's time to spawn a bunch of balls in phase 4 </summary>
+    private bool phase4Ready = false;
 
     // Start is called before the first frame update
     new void Start()
@@ -51,15 +69,37 @@ public class CrazyDennis : BadThing
     {
         switch (phase)
         {
+            // Swing the racket as soon as the previous swing animation ends
             case 1:
             {
                 anim.SetTrigger("Swing");
                 break;
             }
+            // Check for the dialogue ending
+            case 3:
+            {
+                if (!dialogue.activeSelf && talking)
+                {   
+                    talking = false;
+                    NextPhase();
+                }
+                break;
+            }
+            // Check for the rallying ball going out of the court 
+            case 4:
+            {
+                if(rallyBall != null && rallyBall.OutsideCourt)
+                {
+                    Destroy(rallyBall.gameObject);
+                    rallyBall = null;
+                    Serve();
+                }
+                break;
+            }
         }
     }
 
-    // FixedUpdate is, by deduction, called once per fixed frame
+    // FixedUpdate is probably called once per fixed frame
     void FixedUpdate()
     {
         switch (phase)
@@ -88,25 +128,36 @@ public class CrazyDennis : BadThing
                     index = findBallIndex();
                     if (index >= 0)
                     {
-                        // Very similar to the above spawn, except it's uhittable and the amplitude is subtracted from the position
+                        // Very similar to the above spawn, except it's unhittable and the amplitude is subtracted from the position
                         ballPool[index] = SpawnBall(typeof(GenericUnhittable), transform.position + BALL_OFFSET + new Vector3(-amplitude, 0, 0), new Vector2(0, -7), Random.Range(6f, 10f));
                     }
                 }
                 break;
             }
-
-            // Move around the court randomly while shooting 'lasers' (lines of balls)
-            case 3:
-            {
-                // Interpolate to a point, and generate a new point when we reach a point
-
-                break;
-            }
-
-            // A completely normal round of tennis, with the ball getting faster each rally
+            // After a short delay, use red character's behaviour
             case 4:
             {
-                // Feel free to decide against any of these haha
+                if (phase4Ready)
+                {
+                    for (int i = 0; i < PHASE_4_BALLS; i++)
+                    {
+                        if (ballPool[i] != null && ballPool[i].OutsideCourt)
+                        {
+                            Destroy(ballPool[i].gameObject);
+                            ballPool[i] = null;
+                        }
+
+                        if (ballPool[i] == null)
+                        {
+                            ballPool[i] = SpawnBall(
+                                typeof(GenericUnhittable), 
+                                transform.position + BALL_OFFSET, 
+                                new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 3,
+                                Random.Range(6f, 10f)
+                                );
+                        }
+                    }
+                }
                 break;
             }
         }
@@ -139,17 +190,50 @@ public class CrazyDennis : BadThing
                     togglePhase2Active();
 
                 dialogue.SetActive(true);
-                
+                talking = true;
+                maxhits = 999;
+                break;
+            }
+            case 4:
+            {
+                maxhits = 2;
+                Serve();
+                pb.PlayerHurt += Serve;
+                break;
+            }
+            case 5:
+            {
+                pb.PlayerHurt -= Serve;
+                SpawnNextEnemy("redCharacter");
                 break;
             }
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D other) {
-        Ball ball = other.gameObject.GetComponent<Ball>();
-        if (ball)
-            if (ball.hit)
-                print("ouch?");
+    /// <summary>
+    /// Reacts to getting hit by a ball
+    /// </summary>
+    /// <param name="hitBall"> The ball that hit the enemy </param>
+    public override void Ouch(Ball hitBall)
+    {
+        // No rallying until phase 4
+        if (phase < 4 || rallyCount <= 0)
+        {
+            anim.SetTrigger("Hurt");
+            if (phase == 4)
+            {
+                Serve();
+            }
+            base.Ouch(hitBall);
+        }
+        else
+        {
+            // Rallying time!
+            anim.SetTrigger("Swing");
+            rallyCount--;
+            hitBall.hit = false;
+            Physics2D.IgnoreCollision(hitBall.GetComponent<Collider2D>(), this.GetComponent<Collider2D>(), true);
+        }
     }
 
     /// <summary>
@@ -200,6 +284,27 @@ public class CrazyDennis : BadThing
 
                 break;
             }
+            // Just a good ol plain simple serve
+            case 4:
+            {
+                // If there isn't already a ball, spawn a new one
+                if (rallyBall == null)
+                {
+                    ballSpeed = INITIAL_BALL_SPEED;
+                    rallyBall = base.SpawnBall(
+                        typeof(GenericHittable),
+                        transform.position + BALL_OFFSET,
+                        new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * ballSpeed,
+                        Random.Range(6f, 10f));
+                }
+                // Otherwise, send the existing one back
+                else
+                {
+                    ballSpeed += BALL_SPEED_INCREASE;
+                    rallyBall.Velocity = new Vector2(Random.Range(-2.5f, 2.5f), Random.Range(-3f, -4f)).normalized * ballSpeed;
+                }
+                break;
+            }
         }
     }
 
@@ -237,5 +342,24 @@ public class CrazyDennis : BadThing
     {
         phase2Active = !phase2Active;
         anim.SetBool("Phase 2 active", phase2Active);
+    }
+
+    /// <summary>
+    /// Toggles phase4Ready
+    /// </summary>
+    private void togglePhase4Ready()
+    {
+        phase4Ready = !phase4Ready;
+    }
+
+    /// <summary>
+    /// Serves a ball in phase 4
+    /// </summary>
+    public void Serve()
+    {
+        phase4Ready = false;
+        anim.SetTrigger("Phase 4 delay");
+        anim.SetTrigger("Swing");
+        rallyCount = INITIAL_RALLY_COUNT;
     }
 }
