@@ -5,10 +5,10 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public bool hit = false;
-    public Vector2 Velocity;
     public float RotationalVelocity;
     public BadThing Parent;
-    private Rigidbody2D body;
+    public Vector2 Velocity;
+    public Rigidbody2D body;
     private static bool start = false;
     public bool OutsideCourt = false;
     // Start is called before the first frame update

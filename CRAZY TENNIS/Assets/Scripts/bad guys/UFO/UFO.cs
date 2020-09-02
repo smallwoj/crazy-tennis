@@ -65,6 +65,8 @@ public class UFO : BadThing
         t = 0;
         from = transform.position;
         to = path[0];
+
+        pb.PlayerGameOver -= SpawnRecoveryEnemy;
     }
 
     // Update is called once per frame
@@ -283,7 +285,22 @@ public class UFO : BadThing
     }
 
     // This function is called when the MonoBehaviour will be destroyed. (Unity Code Snippets)
-    private void OnDestroy() {
+    protected new void OnDestroy() 
+    {
         pb.PlayerHurt -= ResetUFO;
+    }
+
+    // public new BadThing SpawnNextEnemy(string nextEnemy) 
+    // {
+    //     return null;
+    // }
+
+    /// <summary>
+    /// String representing the enemies prefab
+    /// </summary>
+    /// <returns>See: summary</returns>
+    public override string PrefabString()
+    {
+        return "Huma N/UFO";
     }
 }

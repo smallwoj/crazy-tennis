@@ -69,6 +69,16 @@ public class PlayerBehaviour : MonoBehaviour
     public event ouchohgod PlayerHurt;
 
     /// <summary>
+    /// Fires when the player experiences the threat known as "game over"
+    /// </summary>
+    public event ouchohgod PlayerGameOver;
+
+    /// <summary>
+    /// Tells if the player is in 'recovery mode'
+    /// </summary>
+    public bool inRecovery;
+
+    /// <summary>
     /// Reference to the rigidbody component
     /// </summary>
     public Rigidbody2D rb;
@@ -107,14 +117,30 @@ public class PlayerBehaviour : MonoBehaviour
     public void Die()
     {
         lives--;
+        BadThing.DestroyAllBalls();
+        if(PlayerHurt != null)
+            PlayerHurt();
         if(lives > 0)
         {
             bombs = defaultBombs;
             GetComponent<Rigidbody2D>().position = defaultPosition;
         }
-        BadThing.DestroyAllBalls();
-        if(PlayerHurt != null)
-            PlayerHurt();
+        else
+        {
+            bombs = defaultBombs;
+            GetComponent<Rigidbody2D>().position = defaultPosition;
+            if(!inRecovery)
+            {
+                inRecovery = true;
+                lives = 5;
+            }
+            else
+            {
+                // TODO: Actual game over screen thabk
+            }
+            if(PlayerGameOver != null)
+                PlayerGameOver();
+        }
     }
 
     /// <summary>

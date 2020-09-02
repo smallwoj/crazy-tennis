@@ -183,9 +183,19 @@ public class CockyBastard : BadThing
     /// 
     /// when the game object die remove the rally from the delegate palyer hurt ouch
     /// </summary>
-    void OnDestroy()
+    new void OnDestroy()
     {
+        base.OnDestroy();
         // remove this
         pb.PlayerHurt -= Rally;
+    }
+
+    /// <summary>
+    /// String representing the enemies prefab
+    /// </summary>
+    /// <returns>See: summary</returns>
+    public override string PrefabString()
+    {
+        return "CockyBastard";
     }
 }

@@ -67,4 +67,9 @@ public class TestBadGuy : BadThing
             balls = new Ball[balls.Length*2];
         }
     }
+
+    public override string PrefabString()
+    {
+        return "redCharacter";
+    }
 }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16a5d95f477611e488f5e7aa99b872b1, type: 3}
+  m_Name: Dog
+  m_EditorClassIdentifier: 
+  Tips:
+  - haha lol lmao doggy
+  - dog_bark_1.wav
+  - lol look at this funny doggy
+  - bork :))))))))))))))))))))))))))))))))))
+  - wow hahahahaha what a good dog
+  - he's just a little boy.
+  - Play fetch with the dog to go back to the game.
+  - This is a "Recovery Fight", if you win, you get to challenge the player you lost
+    to again!
+  - If you lose this battle, it's a ruff day for you!
+  - Sometimes, the ball can go into the audience! They don't mind, the dog is kinda
+    cute though.

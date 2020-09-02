@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GenericHittable : GenericUnhittable
 {
+    public delegate void HitEvent();
+    public event HitEvent OnHit;
     void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "player child")
@@ -16,6 +18,8 @@ public class GenericHittable : GenericUnhittable
                 {
                     //this one is kinda like breakout
                     Velocity = (transform.position - other.transform.position).normalized*8;
+                    if(Velocity.y < 0)
+                        Velocity = new Vector2(Velocity.x, 0f).normalized*8;
                 }
                 else
                 {
@@ -25,6 +29,9 @@ public class GenericHittable : GenericUnhittable
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), Parent.GetComponent<Collider2D>(), false);
                 // You hit the ball!!!!!! You get a point
                 GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().BallHit();
+                // Fire the on hit event
+                if(OnHit != null)
+                    OnHit();
             }
         }
     }
