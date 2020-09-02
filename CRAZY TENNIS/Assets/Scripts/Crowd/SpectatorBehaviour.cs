@@ -1,4 +1,4 @@
-﻿// Script for instantiating and animating a single spectator in the crowd
+// Script for instantiating and animating a single spectator in the crowd
 
 using System.Collections;
 using System.Collections.Generic;

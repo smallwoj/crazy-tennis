@@ -164,9 +164,9 @@ public class CockyBastard : BadThing
         else
         {
             if(phase == 2)
-                ball.body.velocity = Quaternion.AngleAxis(Random.Range(-angleOffset, angleOffset), Vector3.up) * (pb.CenterPos - ((Vector2)transform.position + new Vector2(-0.7f, -0.2f))).normalized * 4;
+                ball.Velocity = Quaternion.AngleAxis(Random.Range(-angleOffset, angleOffset), Vector3.up) * (pb.CenterPos - ((Vector2)transform.position + new Vector2(-0.7f, -0.2f))).normalized * 4;
             else if(phase == 3)
-                ball.body.velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
+                ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
         }
     }
 

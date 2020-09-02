@@ -317,7 +317,7 @@ public class Dog : GoodBoy
             break;
             case 3: // go fetch!!
                 from = rb.position;
-                to = ball.body.position + ball.body.velocity * 0.75f;
+                to = ball.body.position + ball.Velocity * 0.75f;
                 t = 0;
                 waiting = false;
                 anim.ResetTrigger("drop ball");
