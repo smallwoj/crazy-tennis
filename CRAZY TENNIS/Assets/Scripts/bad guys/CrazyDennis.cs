@@ -362,4 +362,13 @@ public class CrazyDennis : BadThing
         anim.SetTrigger("Swing");
         rallyCount = INITIAL_RALLY_COUNT;
     }
+
+    /// <summary>
+    /// String representing the enemy's prefab
+    /// </summary>
+    /// <returns>See: summary</returns>
+    public override string PrefabString()
+    {
+        return "Crazy Dennis";
+    }
 }
