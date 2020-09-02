@@ -103,6 +103,7 @@ public class Dog : GoodBoy
         NextPhase();
         pb.PlayerHurt += ReplaceBall;
         pb.PlayerGameOver -= SpawnRecoveryEnemy;
+        pb.PlayerGameOver += toGameOverScreen;
     }
 
     // Update is called once per frame
@@ -347,5 +348,13 @@ public class Dog : GoodBoy
     public override string PrefabString() 
     {
         return "dogy";
+    }
+
+    /// <summary>
+    /// Switches scenes to the game over screen :(
+    /// </summary>
+    private void toGameOverScreen()
+    {
+        SceneLoader.instance.LoadLevel("Game over", null);
     }
 }
