@@ -170,6 +170,7 @@ public class CrazyDennis : BadThing
     {
         phase++;
         anim.SetInteger("Phase", phase);
+        DestroyAllBalls();
 
         switch (phase)
         {
