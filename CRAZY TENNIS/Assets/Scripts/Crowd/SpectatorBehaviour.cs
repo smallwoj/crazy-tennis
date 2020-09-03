@@ -1,4 +1,4 @@
-﻿// Script for instantiating and animating a single spectator in the crowd
+// Script for instantiating and animating a single spectator in the crowd
 
 using System.Collections;
 using System.Collections.Generic;
@@ -6,16 +6,21 @@ using UnityEngine;
 
 public class SpectatorBehaviour : MonoBehaviour, Spectator
 {
-    private static readonly string[] OUTFITS = { "Generic crowd person", "Cocky bastard fan", "Surfer dude fan" };
+    /// <summary> File names for spectators' skin colours </summary>
     private static readonly string[] SKIN_COLOURS = { "Pale", "Fair", "Tan", "Dark" };
     /// <summary> How many times the spectator may jump during a cheer </summary>
-    private static readonly float MAX_JUMPS = 16; // (note: if the variable hype stuff doesn't work out and we decide to just have constant hype, set this to 7. Makes the crowd look less... crazy)
+    private static readonly float MAX_JUMPS = 16;
     /// <summary> How many (world space?) distance units high the spectator can jump </summary>
     private static readonly float MAX_HEIGHT = 0.5f;
     /// <summary> The least amount of times the spectator can jump per second </summary>
     private static readonly float MIN_SPEED = 3;
     /// <summary> How many times the spectator can jump per second </summary>
     private static readonly float MAX_SPEED = 6;
+    /// <summary> How many of the sprites in the list up above are fans of a 
+    /// particular enemy (this value is used to make sure that the cameo sprites spawn at most once) </summary>
+    private static readonly int FANS = 6;
+    /// <summary> File names for spectators' sprites </summary>
+    private static List<string> sprites = new List<string> { "Generic crowd person", "Cocky bastard fan", "Surfer dude fan", "Mechanical ball thrower fan", "Spider fan", "Huma N. fan", "Skyla", "Yar", "Alex", "Josh" };
     /// <summary> Whether the spectator is currently cheering </summary>
     private bool hyped = false;
     /// <summary> How many seconds are left in the cheer </summary>
@@ -31,12 +36,27 @@ public class SpectatorBehaviour : MonoBehaviour, Spectator
     void Start()
     {
         // Local variables
-        SpriteRenderer outfit = transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();    // Sprite renderer for the outfit sprite
+        SpriteRenderer mainSprite = transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();    // Sprite renderer for the main sprite
         SpriteRenderer skinColour = transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();    // Sprite renderer for the skin colour sprite
+        int spriteIndex = (int)(Random.value * sprites.Count);  // Index of the chosen sprite
+        string spriteName = sprites[spriteIndex];   // Name of the chosen sprite (necessary since cameos are removed from the list once they're chosen)
+        string path = "Assets/images/Crowd/";   // Where to find the sprites
 
-        // Randomly choose an outfit and skin colour
-        outfit.sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/images/Crowd/Outfits/" + OUTFITS[(int)(Random.value * OUTFITS.Length)] + ".png");
-        skinColour.sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/images/Crowd/Skin colours/" + SKIN_COLOURS[(int)(Random.value * SKIN_COLOURS.Length)] + ".png");
+        // It's a fan, so we randomly choose the skin colour too
+        if (spriteIndex < FANS)
+        {
+            path += "Outfits/";
+            skinColour.sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/images/Crowd/Skin colours/" + SKIN_COLOURS[(int)(Random.value * SKIN_COLOURS.Length)] + ".png");
+        }
+        // It's a cameo, so we also make sure that it doesn't appear a second time
+        else
+        {
+            path += "Cameos/";
+            sprites.RemoveAt(spriteIndex);
+        }
+
+        // Choose the sprite!
+        mainSprite.sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(path + spriteName + ".png");
     }
 
     // Update is called once per frame
