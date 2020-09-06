@@ -163,6 +163,8 @@ public class CockyBastard : BadThing
         }
         else
         {
+            print("hey");
+            FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.down);
             if(phase == 2)
                 ball.Velocity = Quaternion.AngleAxis(Random.Range(-angleOffset, angleOffset), Vector3.up) * (pb.CenterPos - ((Vector2)transform.position + new Vector2(-0.7f, -0.2f))).normalized * 4;
             else if(phase == 3)

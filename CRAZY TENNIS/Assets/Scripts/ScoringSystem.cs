@@ -69,5 +69,6 @@ public class ScoringSystem : MonoBehaviour
         score += OPPONENT_BEAT;
         scoreTextbox.text = score.ToString().PadLeft(DIGITS, '0');
         crowd.Cheer((float)OPPONENT_BEAT / MAX_POINT_VALUE);
+        GameObject.FindObjectOfType<CameraBehaviour>().Impact(0.8f, Vector2.right);
     }
 }
