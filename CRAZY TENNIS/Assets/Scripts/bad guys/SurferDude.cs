@@ -147,6 +147,8 @@ public class SurferDude : BadThing
 			float T = (float)(1f - System.Math.Cos(t * System.Math.PI))/2f;
 			if(t >= 1f)
 			{
+                // Impact a lil
+                FindObjectOfType<CameraBehaviour>().Impact(0.05f, (to - from).normalized);
                 // if we need a ball, then simply we swing
 				if (anim.GetBool("NeedBall"))
 					anim.SetTrigger("swing");

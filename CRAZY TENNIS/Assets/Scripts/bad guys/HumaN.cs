@@ -219,6 +219,7 @@ public class HumaN : BadThing
         else
         {
             ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
+            FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.left);
         }
     }
 

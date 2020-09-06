@@ -246,6 +246,7 @@ public class UFO : BadThing
         if (shipAnim.GetBool("Spinning"))
         {
             balls.Add(newBall);
+            FindObjectOfType<CameraBehaviour>().ShakeScreen(0.2f);
         }
         else
         {
