@@ -14,6 +14,10 @@ public class CameraBehaviour : MonoBehaviour
 
     private Vector3 INIT_POS;
 
+    private Vector2 dir;
+
+    private bool isImpact;
+
     public void Start()
     {
         INIT_POS = transform.position;
@@ -24,7 +28,10 @@ public class CameraBehaviour : MonoBehaviour
         Vector3 pos = transform.position;
         if(length > 0)
         {
-            Vector2 dir = Random.insideUnitCircle;
+            if(!isImpact)
+                dir = Random.insideUnitCircle;
+            else
+                isImpact = false;
             transform.position += (Vector3) dir * baseMagnitude * Random.Range(0.95f, 1.05f);
             length--;
         }
@@ -34,10 +41,12 @@ public class CameraBehaviour : MonoBehaviour
         }
     }
 
-    public void Impact(float intensity) 
+    public void Impact(float intensity, Vector2 dir) 
     {
         length = 1;
         baseMagnitude = intensity;
+        this.dir = dir;
+        isImpact = true;
     }
 
     public void ShakeScreen(float intensity) 
