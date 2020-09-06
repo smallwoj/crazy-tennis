@@ -55,7 +55,6 @@ public class CrazyDennis : BadThing
         phase = 0;
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         pb.Breakout = false;
-        anim = GetComponent<Animator>();
         
         // Dummy value for maxhits, so the health circle can display right away
         maxhits = 1;
@@ -204,7 +203,6 @@ public class CrazyDennis : BadThing
             }
             case 5:
             {
-                pb.PlayerHurt -= Serve;
                 SpawnNextEnemy("redCharacter");
                 break;
             }
@@ -359,9 +357,21 @@ public class CrazyDennis : BadThing
     public void Serve()
     {
         phase4Ready = false;
+
+        // I never destroyed the animator I swear
+        if (!anim) anim = GetComponent<Animator>();
+        
         anim.SetTrigger("Phase 4 delay");
         anim.SetTrigger("Swing");
         rallyCount = INITIAL_RALLY_COUNT;
+    }
+
+    /// <summary>
+    /// Called when he dies :(
+    /// </summary>
+    new void OnDestroy() {
+        base.OnDestroy();
+        pb.PlayerHurt -= Serve;
     }
 
     /// <summary>
