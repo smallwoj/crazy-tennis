@@ -336,7 +336,10 @@ public class Dog : GoodBoy
     private IEnumerator GoToNextEnemy()
     {
         yield return new WaitForSeconds(2.5f);
-        FindObjectOfType<PlayerBehaviour>().PlayerHurt -= ReplaceBall;
+        PlayerBehaviour pb = FindObjectOfType<PlayerBehaviour>();
+        pb.PlayerHurt -= ReplaceBall;
+        pb.PlayerGameOver -= toGameOverScreen;
+
         FindObjectOfType<PlayerBehaviour>().inRecovery = false;
         SpawnNextEnemy(nextEnemy);
     }
