@@ -159,6 +159,7 @@ public class CockyBastard : BadThing
             if(maxhits == 0)
                 maxhits = 3;
             ball = SpawnBallPhase(phase);
+            FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.down);
             rallyCount = phase - 1;
         }
         else

@@ -100,6 +100,7 @@ public class CutsceneDennis : BadThing
         // Don't tell anyone!
         bullet = SpawnBall(typeof(GenericUnhittable), transform.position + BULLET_OFFSET, BULLET_VELOCITY, 0);
         bullet.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Literal bullet");
+        FindObjectOfType<CameraBehaviour>().Impact(0.1f, Vector2.down);
     }
 
     /// <summary>

@@ -145,6 +145,7 @@ public class MechanicalBallThrower : BadThing
                         FindObjectOfType<CameraBehaviour>().Impact(0.01f, Vector2.down);
                 }
             }
+            FindObjectOfType<CameraBehaviour>().Impact(0.4f, Vector2.down);
         }
     }
 

@@ -236,6 +236,7 @@ public class SurferDude : BadThing
     /// <returns>round spherical object tennis</returns>
     private Ball SpawnTheBall()
     {
+        FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.left);
         Ball b = SpawnBall(
             typeof(GenericHittable),
             rb.position + new Vector2(0, 0),
