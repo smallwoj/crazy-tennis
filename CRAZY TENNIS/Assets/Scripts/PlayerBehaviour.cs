@@ -100,6 +100,8 @@ public class PlayerBehaviour : MonoBehaviour
         {
             anim.SetTrigger("space pressed");
         }
+        anim.SetFloat("xVel", rb.velocity.x);
+        anim.SetFloat("yVel", rb.velocity.y);
     }
 
     void OnTriggerEnter2D(Collider2D other)
