@@ -112,6 +112,7 @@ public class MechanicalBallThrower : BadThing
                 new Vector2(0, -BALL_SPEEDS[phase]),
                 Random.Range(6f, 10f)
                 );
+            FindObjectOfType<CameraBehaviour>().Impact(0.4f, Vector2.down);
         }
         else
         {
@@ -141,9 +142,16 @@ public class MechanicalBallThrower : BadThing
                         velocity,
                         velocity.magnitude * 2
                         );
+                        FindObjectOfType<CameraBehaviour>().Impact(0.01f, Vector2.down);
                 }
             }
+            FindObjectOfType<CameraBehaviour>().Impact(0.4f, Vector2.down);
         }
+    }
+
+    public void Shake()
+    {
+        FindObjectOfType<CameraBehaviour>().ShakeScreen(0.1f);
     }
 
     /// <summary>

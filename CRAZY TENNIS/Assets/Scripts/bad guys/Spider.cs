@@ -64,7 +64,7 @@ public class Spider : BadThing
         for (int i = 0; i < activeRackets; i++)
         {
             // Along the way, see if all balls are offscreen
-            if (!rackets[i].DespawnBallIfOffscreen())
+            if (!rackets[i].DespawnBallIfOffscreen() || rackets[i].Anim.GetAnimatorTransitionInfo(0).IsName("Idle -> Swing") || rackets[i].Anim.GetCurrentAnimatorStateInfo(0).IsName("Swing"))
             {
                 allBallsOffscreen = false;
             }

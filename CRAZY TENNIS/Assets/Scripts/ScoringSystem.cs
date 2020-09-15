@@ -50,6 +50,7 @@ public class ScoringSystem : MonoBehaviour
         score += BALL_HIT;
         scoreTextbox.text = score.ToString().PadLeft(DIGITS, '0');
         crowd.Cheer((float)BALL_HIT / MAX_POINT_VALUE);
+        GameObject.FindObjectOfType<CameraBehaviour>().Impact(0.3f, Vector2.right);
     }
     public void OpponentHit()
     {
@@ -68,5 +69,6 @@ public class ScoringSystem : MonoBehaviour
         score += OPPONENT_BEAT;
         scoreTextbox.text = score.ToString().PadLeft(DIGITS, '0');
         crowd.Cheer((float)OPPONENT_BEAT / MAX_POINT_VALUE);
+        GameObject.FindObjectOfType<CameraBehaviour>().Impact(0.8f, Vector2.right);
     }
 }

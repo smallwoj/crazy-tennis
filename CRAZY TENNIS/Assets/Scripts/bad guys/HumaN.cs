@@ -218,7 +218,9 @@ public class HumaN : BadThing
         // Otherwise, send the existing one back
         else
         {
+            FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.left);
             ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
+            FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.left);
         }
     }
 
@@ -250,6 +252,7 @@ public class HumaN : BadThing
         case 1: 
             // Identical to Cocky Bastard phase 3, but the ball is unhittable 
             // because this guy's a jerk.
+            FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.left);
             return base.SpawnBall(
                 typeof(GenericUnhittable),
                 transform.position + HEAD_OFFSET,
@@ -259,6 +262,7 @@ public class HumaN : BadThing
         case 2: 
             // Very similar to the previous phase, but the ball is hittable and 
             // a bit faster
+            FindObjectOfType<CameraBehaviour>().Impact(0.25f, Vector2.left);
             return base.SpawnBall(
                 typeof(GenericHittable),
                 transform.position + HEAD_OFFSET,
