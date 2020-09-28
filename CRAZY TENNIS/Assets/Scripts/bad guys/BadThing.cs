@@ -71,6 +71,11 @@ public abstract class BadThing : MonoBehaviour
     /// </summary>
     private LineRenderer HealthCircle;
 
+    /// <summary>
+    /// this where doot
+    /// </summary>
+    public AudioClip music;
+    
     // Start isn't called before the first frame update this time...
     // nvm
     protected void Start()
