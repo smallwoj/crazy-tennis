@@ -83,15 +83,16 @@ public class DialogueBehaviour : MonoBehaviour
             // Reveal dat speech
             if (revealedChars < speech.Length)
             {
+                float displacement = speed * Time.deltaTime;
                 // Determine whether to play the sound effect for the character's voice
-                if (Convert.ToInt32(revealedChars + speed) > Convert.ToInt32(revealedChars))
+                if (Convert.ToInt32(revealedChars + displacement) > Convert.ToInt32(revealedChars))
                 {
                     // "bork"
 			        voice.Play();
                 }
 
                 // Reveal text incrementally
-                revealedChars += speed * Time.deltaTime;
+                revealedChars += displacement;
                 
                 // If the player presses the button while speec text is currently being revealed,
                 // or revealedChars exceeds the length of the speech, go ahead and reveal the whole thing
