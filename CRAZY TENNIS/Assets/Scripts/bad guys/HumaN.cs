@@ -302,6 +302,7 @@ public class HumaN : BadThing
     {
         base.OnDestroy();
         pb.PlayerHurt -= Serve;
+        pb.PlayerGameOver -= SpawnRecoveryEnemy;
     }
 
     /// <summary>
