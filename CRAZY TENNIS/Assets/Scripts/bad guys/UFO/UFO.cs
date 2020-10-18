@@ -227,7 +227,7 @@ public class UFO : BadThing
             (pb.CenterPos - new Vector2(transform.position.x, transform.position.y)).normalized * 4,
             Random.Range(6f, 10f)
         );
-
+        
         toReturn.Parent = Commander;
 
         return toReturn;
@@ -246,9 +246,11 @@ public class UFO : BadThing
         if (shipAnim.GetBool("Spinning"))
         {
             balls.Add(newBall);
+            FindObjectOfType<CameraBehaviour>().ShakeScreen(0.2f);
         }
         else
         {
+            FindObjectOfType<CameraBehaviour>().Impact(0.1f, newBall.Velocity.normalized);
             Ball = newBall;
         }
 

@@ -159,10 +159,12 @@ public class CockyBastard : BadThing
             if(maxhits == 0)
                 maxhits = 3;
             ball = SpawnBallPhase(phase);
+            FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.down);
             rallyCount = phase - 1;
         }
         else
         {
+            FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.down);
             if(phase == 2)
                 ball.Velocity = Quaternion.AngleAxis(Random.Range(-angleOffset, angleOffset), Vector3.up) * (pb.CenterPos - ((Vector2)transform.position + new Vector2(-0.7f, -0.2f))).normalized * 4;
             else if(phase == 3)

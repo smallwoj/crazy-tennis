@@ -335,6 +335,7 @@ public class Dog : GoodBoy
     /// <returns>i dont even know</returns>
     private IEnumerator GoToNextEnemy()
     {
+        FindObjectOfType<CameraBehaviour>().ShakeScreen(5f);
         yield return new WaitForSeconds(2.5f);
         PlayerBehaviour pb = FindObjectOfType<PlayerBehaviour>();
         pb.PlayerHurt -= ReplaceBall;
