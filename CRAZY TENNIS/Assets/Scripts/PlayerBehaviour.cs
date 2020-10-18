@@ -17,7 +17,7 @@ public class PlayerBehaviour : MonoBehaviour
     /// (note that the invincibility starts at the same time as the hurt 
     /// animation and time accordingly)
     /// </summary>
-    private static readonly float RESPAWN_TIME = 1.5f;
+    private static readonly float RESPAWN_TIME = 2f;
 
     /// <summary>
     /// How many lives the player has, hit 0 and uh oh
