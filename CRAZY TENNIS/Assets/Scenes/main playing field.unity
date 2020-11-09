@@ -1321,7 +1321,7 @@ GameObject:
   m_Component:
   - component: {fileID: 800630946}
   - component: {fileID: 800630947}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: swang
   m_TagString: player child
   m_Icon: {fileID: 0}
