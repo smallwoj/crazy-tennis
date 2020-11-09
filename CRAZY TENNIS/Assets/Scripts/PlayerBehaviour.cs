@@ -204,6 +204,22 @@ public class PlayerBehaviour : MonoBehaviour
     /// <summary>
     /// Enables the swing component hitbox yes
     /// </summary>
+    public void EnableSwang()
+    {
+        swang.enabled = true;
+    }
+
+    /// <summary>
+    /// Disables the swing component hitbox no
+    /// </summary>
+    public void DisableSwang()
+    {
+        swang.enabled = false;
+    }
+
+    /// <summary>
+    /// Toggles the swing component hitbox maybe
+    /// </summary>
     public void ToggleSwang()
     {
         swang.enabled = !swang.enabled;
