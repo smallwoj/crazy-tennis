@@ -40,6 +40,9 @@ public class CutsceneDennis : BadThing
         {
             player.GetComponent<Move2D>().enabled = false;
             player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            Animator anim = player.GetComponent<Animator>();
+            anim.SetFloat("xVel", 0);
+            anim.SetFloat("yVel", 0);
             pb = player.GetComponent<PlayerBehaviour>();
             player.transform.position = pb.defaultPosition;
             pb.enabled = false;
@@ -110,7 +113,7 @@ public class CutsceneDennis : BadThing
     {
         // 🚮 Garbage 
         DestroyAllBalls();
-        SpawnNextEnemy("redCharacter");
+        SpawnNextEnemy("Crazy Dennis");
     }
 
     /// <summary>
@@ -131,6 +134,12 @@ public class CutsceneDennis : BadThing
         {
             bottomBound.GetComponent<BoxCollider2D>().enabled = true;
         }
+        
+        // Set up for the final battle
+        GameObject.Find("Net").SetActive(false);
+        // GameObject.Find("Crowd").SetActive(false);
+        GameObject.Find("Court cropped").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Blood court");
+        GameObject.Find("Main Camera").GetComponent<Camera>().backgroundColor = new Color((float)106/255, 0, 0);
     }
 
     /// <summary>

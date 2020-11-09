@@ -15,7 +15,10 @@ public class Ball : MonoBehaviour
     void Start()
     {
         if(!start)
+        {
             Physics2D.IgnoreLayerCollision(8,8,true);
+            Physics2D.IgnoreLayerCollision(8,11,true);
+        }
         body = GetComponent<Rigidbody2D>();
     }
 

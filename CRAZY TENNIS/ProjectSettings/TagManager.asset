@@ -20,9 +20,9 @@ TagManager:
   - 
   - ball
   - HUD
-  - 
-  - 
-  - 
+  - Player
+  - Court bounds
+  - Swang
   - 
   - 
   - 
