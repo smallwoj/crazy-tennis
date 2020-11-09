@@ -203,6 +203,7 @@ public class CrazyDennis : BadThing
             }
             case 5:
             {
+                // Instead of dying the usual way (i.e. using SpawnNextEnemy), transition to the outro scene
                 DestroyAllBalls();
                 Destroy(this.gameObject);
                 SceneLoader.instance.LoadLevel("Outro", null);
