@@ -476,7 +476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 133287427}
   - component: {fileID: 133287428}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Left court bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +631,7 @@ GameObject:
   - component: {fileID: 262442369}
   - component: {fileID: 262442367}
   - component: {fileID: 262442370}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1279,7 +1279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 756378091}
   - component: {fileID: 756378092}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Bottom court bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1336,7 +1336,7 @@ GameObject:
   m_Component:
   - component: {fileID: 800630946}
   - component: {fileID: 800630947}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: swang
   m_TagString: player child
   m_Icon: {fileID: 0}
@@ -2047,7 +2047,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1095480832}
   - component: {fileID: 1095480833}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Right court bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2345,7 +2345,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1221074276}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Court bounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3022,7 +3022,7 @@ GameObject:
   - component: {fileID: 1596399760}
   - component: {fileID: 1596399759}
   - component: {fileID: 1596399761}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Net
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3129,7 +3129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1727958733}
   - component: {fileID: 1727958734}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Top court bound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
