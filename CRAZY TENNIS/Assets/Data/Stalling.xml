@@ -8,7 +8,7 @@ Thus, this cutscene distracts the player while the animation finishes, hehe -->
         <Font></Font>
         <!-- <Bust>redCharacter</Bust> -->
         <Speed>Medium</Speed>
-        <Voice></Voice>
+        <Voice>Audio/Sound Effects/Cutscene Dennis/voice</Voice>
     </Speaker>
 
     <Line>*cough* *wheeze* *hack* *cough*</Line>
