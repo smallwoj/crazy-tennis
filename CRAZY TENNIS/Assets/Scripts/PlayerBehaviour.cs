@@ -166,12 +166,14 @@ public class PlayerBehaviour : MonoBehaviour
         if(lives > 0)
         {
             bombs = defaultBombs;
+            FindObjectOfType<CameraBehaviour>().ShakeScreen(0.3f);
             GetComponent<Rigidbody2D>().position = defaultPosition;
         }
         else
         {
             bombs = defaultBombs;
             GetComponent<Rigidbody2D>().position = defaultPosition;
+            FindObjectOfType<CameraBehaviour>().ShakeScreen(0.3f);
             if(!inRecovery)
             {
                 inRecovery = true;

@@ -103,6 +103,7 @@ public class CutsceneDennis : BadThing
         // Don't tell anyone!
         bullet = SpawnBall(typeof(GenericUnhittable), transform.position + BULLET_OFFSET, BULLET_VELOCITY, 0);
         bullet.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Literal bullet");
+        FindObjectOfType<CameraBehaviour>().Impact(0.1f, Vector2.down);
     }
 
     /// <summary>
@@ -112,7 +113,7 @@ public class CutsceneDennis : BadThing
     {
         // 🚮 Garbage 
         DestroyAllBalls();
-        SpawnNextEnemy("redCharacter");
+        SpawnNextEnemy("Crazy Dennis");
     }
 
     /// <summary>
@@ -133,6 +134,12 @@ public class CutsceneDennis : BadThing
         {
             bottomBound.GetComponent<BoxCollider2D>().enabled = true;
         }
+        
+        // Set up for the final battle
+        GameObject.Find("Net").SetActive(false);
+        // GameObject.Find("Crowd").SetActive(false);
+        GameObject.Find("Court cropped").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Blood court");
+        GameObject.Find("Main Camera").GetComponent<Camera>().backgroundColor = new Color((float)106/255, 0, 0);
     }
 
     /// <summary>

@@ -164,7 +164,12 @@ public abstract class BadThing : MonoBehaviour
         Destroy(ball.gameObject);
         hits--;
         if(hits <= 0)
+        {
             NextPhase();
+            FindObjectOfType<CameraBehaviour>().ShakeScreen(0.6f);
+        }
+        else
+            FindObjectOfType<CameraBehaviour>().ShakeScreen(0.4f);
 
         // Award some points to the player
         GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentHit();

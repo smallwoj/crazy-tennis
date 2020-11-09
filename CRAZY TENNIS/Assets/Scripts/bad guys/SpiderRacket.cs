@@ -85,6 +85,8 @@ public class SpiderRacket : MonoBehaviour
             ); 
 
             BallType = null;
+
+            FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.down);
         }
 
         // Also, reset the trigger so there aren't redundant swings
