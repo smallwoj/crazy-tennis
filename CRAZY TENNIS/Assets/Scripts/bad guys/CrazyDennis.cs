@@ -203,7 +203,9 @@ public class CrazyDennis : BadThing
             }
             case 5:
             {
-                SpawnNextEnemy("redCharacter");
+                DestroyAllBalls();
+                Destroy(this.gameObject);
+                SceneLoader.instance.LoadLevel("Outro", null);
                 break;
             }
         }
