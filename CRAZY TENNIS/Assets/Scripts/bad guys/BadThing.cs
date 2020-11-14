@@ -103,7 +103,8 @@ public abstract class BadThing : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawns the next enemy, denoted by the name of a prefab in Assets/Prefabs/Enemies
+    /// Brings up a prompt to make the layer press space to transition to the next enemy, 
+    /// denoted by the name of a prefab in Assets/Prefabs/Enemies
     /// </summary>
     /// <param name="nextEnemy">prefab of the next enemy</param>
     public BadThing SpawnNextEnemy(string nextEnemy)
@@ -119,15 +120,10 @@ public abstract class BadThing : MonoBehaviour
             GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentBeat();
         }
 
-        if(this != null) //??????
-            Destroy(this.gameObject);
-        if(GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
-        {
-            DestroyAllBalls();
-            GameObject enemy = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/"+nextEnemy+".prefab");
-            enemy = PrefabUtility.InstantiatePrefab(enemy) as GameObject;
-            return enemy.GetComponent<BadThing>();
-        }
+        DestroyAllBalls();
+        enabled = false;
+        GameObject.FindGameObjectWithTag("Enemy transition").GetComponent<EnemyTransitionControl>().StartTransition(this, nextEnemy);
+
         return null;
     }
 
