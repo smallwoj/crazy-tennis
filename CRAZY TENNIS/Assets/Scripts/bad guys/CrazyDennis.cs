@@ -130,6 +130,7 @@ public class CrazyDennis : BadThing
                         // Very similar to the above spawn, except it's unhittable and the amplitude is subtracted from the position
                         ballPool[index] = SpawnBall(typeof(GenericUnhittable), transform.position + BALL_OFFSET + new Vector3(-amplitude, 0, 0), new Vector2(0, -7), Random.Range(6f, 10f));
                     }
+                    FindObjectOfType<CameraBehaviour>().Impact(0.05f, Random.insideUnitCircle.normalized);
                 }
                 break;
             }
@@ -281,6 +282,7 @@ public class CrazyDennis : BadThing
                 startingAngle += Mathf.PI/12;
                 if (startingAngle >= 2*Mathf.PI) startingAngle = 0;
 
+                FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.left);
                 break;
             }
             // Just a good ol plain simple serve
@@ -302,6 +304,8 @@ public class CrazyDennis : BadThing
                     ballSpeed += BALL_SPEED_INCREASE;
                     rallyBall.Velocity = new Vector2(Random.Range(-2.5f, 2.5f), Random.Range(-3f, -4f)).normalized * ballSpeed;
                 }
+                // Make this one hit a little harder to further emphasize the Final Phase
+                FindObjectOfType<CameraBehaviour>().Impact(0.3f, Vector2.left);
                 break;
             }
         }
@@ -381,5 +385,13 @@ public class CrazyDennis : BadThing
     public override string PrefabString()
     {
         return "Crazy Dennis";
+    }
+
+    /// <summary>
+    /// Shakes the screen for the length of the aura reveal animation
+    /// </summary>
+    public void AuraShake()
+    {
+        FindObjectOfType<CameraBehaviour>().ShakeScreen(0.2f, 105);
     }
 }
