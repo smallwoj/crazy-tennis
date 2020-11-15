@@ -103,7 +103,7 @@ public abstract class BadThing : MonoBehaviour
     }
 
     /// <summary>
-    /// Brings up a prompt to make the layer press space to transition to the next enemy, 
+    /// Transitions to the next enemy, 
     /// denoted by the name of a prefab in Assets/Prefabs/Enemies
     /// </summary>
     /// <param name="nextEnemy">prefab of the next enemy</param>
@@ -122,9 +122,27 @@ public abstract class BadThing : MonoBehaviour
 
         DestroyAllBalls();
         enabled = false;
-        GameObject.FindGameObjectWithTag("Enemy transition").GetComponent<EnemyTransitionControl>().StartTransition(this, nextEnemy);
 
+        if(this != null) //??????
+            Destroy(this.gameObject);
+        if(GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
+        {
+            GameObject enemy = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/"+nextEnemy+".prefab");
+            enemy = PrefabUtility.InstantiatePrefab(enemy) as GameObject;
+            return enemy.GetComponent<BadThing>();
+        }
         return null;
+    }
+
+    /// <summary>
+    /// Brings up a prompt to make the layer press space to transition to the next enemy, 
+    /// denoted by the name of a prefab in Assets/Prefabs/Enemies
+    /// </summary>
+    /// <param name="nextEnemy">prefab of the next enemy</param>
+    public void TransitionToNextEnemy(string nextEnemy)
+    {
+        // (note that this will eventually call SpawnNextEnemy)
+        GameObject.FindGameObjectWithTag("Enemy transition").GetComponent<EnemyTransitionControl>().StartTransition(this, nextEnemy);
     }
 
     /// <summary>

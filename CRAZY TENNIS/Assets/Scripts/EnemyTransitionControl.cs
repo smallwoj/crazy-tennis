@@ -28,7 +28,7 @@ public class EnemyTransitionControl : MonoBehaviour
             // Spawn the next enemy when the player presses the button
             if(Input.GetButtonDown("Submit"))
             {
-                ActuallySpawnNextEnemy();
+                FinishTransition();
                 transition.SetActive(false);
             }
         }
@@ -49,16 +49,8 @@ public class EnemyTransitionControl : MonoBehaviour
     /// <summary>
     /// Actually spawns the next enemy (I still miss the autocommenter)
     /// </summary>
-    private BadThing ActuallySpawnNextEnemy()
+    private void FinishTransition()
     {        
-        if(currentEnemy != null) //??????
-            Destroy(currentEnemy.gameObject);
-        if(GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
-        {
-            GameObject enemy = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/"+nextEnemy+".prefab");
-            enemy = PrefabUtility.InstantiatePrefab(enemy) as GameObject;
-            return enemy.GetComponent<BadThing>();
-        }
-        return null;
+        currentEnemy.SpawnNextEnemy(nextEnemy);
     }
 }

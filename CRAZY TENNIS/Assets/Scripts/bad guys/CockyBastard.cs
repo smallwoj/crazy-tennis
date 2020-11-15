@@ -76,7 +76,7 @@ public class CockyBastard : BadThing
         {
             // Just sorta dies
             anim.SetTrigger("Dead");
-            SpawnNextEnemy("Surfer dude");
+            TransitionToNextEnemy("Surfer dude");
         }
         else
         {

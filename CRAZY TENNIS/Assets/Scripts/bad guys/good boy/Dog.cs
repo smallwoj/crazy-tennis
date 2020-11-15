@@ -338,7 +338,7 @@ public class Dog : GoodBoy
         yield return new WaitForSeconds(2.5f);
         FindObjectOfType<PlayerBehaviour>().PlayerHurt -= ReplaceBall;
         FindObjectOfType<PlayerBehaviour>().inRecovery = false;
-        SpawnNextEnemy(nextEnemy);
+        TransitionToNextEnemy(nextEnemy);
     }
 
     /// <summary>
