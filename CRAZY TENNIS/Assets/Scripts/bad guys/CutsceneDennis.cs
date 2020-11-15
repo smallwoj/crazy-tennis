@@ -55,6 +55,7 @@ public class CutsceneDennis : BadThing
         {
             bottomBound.GetComponent<BoxCollider2D>().enabled = false;
         }
+        FindObjectOfType<PlayerBehaviour>().DeathCoroutine = "CutsceneDennisDie";
     }
 
     // Update is called once per frame
@@ -129,6 +130,7 @@ public class CutsceneDennis : BadThing
             player.GetComponent<Move2D>().enabled = true;
             pb.enabled = true;
             player.transform.position = pb.defaultPosition;
+            player.GetComponent<PlayerBehaviour>().DeathCoroutine = "WaitAndRespawn";
         }
         if (bottomBound)
         {
