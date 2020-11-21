@@ -286,16 +286,23 @@ public class UFO : BadThing
         }
     }
 
+    /// <summary>
+    /// UFOs don't die, they-
+    /// </summary>
+    public void DeathAnimation()
+    {
+        print("ship");
+        shipAnim.SetBool("Spinning", false);
+        shipAnim.SetTrigger("Dead");
+        // Hide the shadow during the death animation
+        transform.GetChild(1).gameObject.SetActive(false);
+    }
+
     // This function is called when the MonoBehaviour will be destroyed. (Unity Code Snippets)
     protected new void OnDestroy() 
     {
         pb.PlayerHurt -= ResetUFO;
     }
-
-    // public new BadThing SpawnNextEnemy(string nextEnemy) 
-    // {
-    //     return null;
-    // }
 
     /// <summary>
     /// String representing the enemies prefab

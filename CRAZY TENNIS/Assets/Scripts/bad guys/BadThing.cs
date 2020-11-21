@@ -141,6 +141,7 @@ public abstract class BadThing : MonoBehaviour
     /// <param name="nextEnemy">prefab of the next enemy</param>
     public void TransitionToNextEnemy(string nextEnemy)
     {
+        DestroyAllBalls();
         // (note that this will eventually call SpawnNextEnemy)
         GameObject.FindGameObjectWithTag("Enemy transition").GetComponent<EnemyTransitionControl>().StartTransition(this, nextEnemy);
     }
