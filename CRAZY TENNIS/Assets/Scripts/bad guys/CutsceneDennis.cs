@@ -131,6 +131,7 @@ public class CutsceneDennis : BadThing
             pb.enabled = true;
             player.transform.position = pb.defaultPosition;
             player.GetComponent<PlayerBehaviour>().DeathCoroutine = "WaitAndRespawn";
+            player.GetComponent<Animator>().SetBool("Dead x_x", false);
         }
         if (bottomBound)
         {
