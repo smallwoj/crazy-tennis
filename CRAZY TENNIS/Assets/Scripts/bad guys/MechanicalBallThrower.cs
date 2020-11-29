@@ -50,15 +50,18 @@ public class MechanicalBallThrower : BadThing
     void Update()
     {
         // Keep time and (maybe, just maybe) move to the next animation
-        chargeTimeRemaining -= Time.deltaTime;
-        if (chargeTimeRemaining <= 0)
+        if (phase < 4)
         {
-            anim.SetTrigger("Next charge");
-            chargeTimeRemaining = CHARGE_ANIM_TIMES[phase];
-        }
-        else
-        {
-            anim.ResetTrigger("Next charge");
+            chargeTimeRemaining -= Time.deltaTime;
+            if (chargeTimeRemaining <= 0)
+            {
+                anim.SetTrigger("Next charge");
+                chargeTimeRemaining = CHARGE_ANIM_TIMES[phase];
+            }
+            else
+            {
+                anim.ResetTrigger("Next charge");
+            }
         }
     }
 
@@ -71,8 +74,8 @@ public class MechanicalBallThrower : BadThing
         phase++;
         if (phase == 4)
         {
-            DestroyAllBalls();
-            SpawnNextEnemy("Spider/Spider");
+            anim.SetTrigger("Dead");
+            TransitionToNextEnemy("Spider/Spider");
         }
         else
         {
