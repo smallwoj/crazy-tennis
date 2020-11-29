@@ -111,7 +111,7 @@ public class MechanicalBallThrower : BadThing
     {
         GameObject hitEffect = transform.GetChild(0).gameObject;
         hitEffect.SetActive(true);
-        yield return new WaitForSeconds(0.5);
+        yield return new WaitForSeconds(0.5f);
         hitEffect.SetActive(false);
     }
 
