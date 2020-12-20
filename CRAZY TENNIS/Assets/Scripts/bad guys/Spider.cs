@@ -70,10 +70,11 @@ public class Spider : BadThing
             }
         }
 
-        // If all balls are offscreen, and the spider is not hurt, rally!
+        // If all balls are offscreen, the spider is not hurt, and the spider hasn't been defeated, rally!
         if (allBallsOffscreen 
             && !anim.GetAnimatorTransitionInfo(0).IsName("Hurt -> Idle") 
-            && anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            && anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")
+            && phase < 4)
         {
             SpawnBalls();
         }
@@ -89,7 +90,14 @@ public class Spider : BadThing
         if (phase == 4)
         {
             DestroyAllBalls();
-            SpawnNextEnemy("Huma N/Huma N.");
+            // Make em spin!!! And immediately fall off the screen and die
+            HingeJoint2D silkHinge = GetComponent<HingeJoint2D>();
+            silkHinge.useMotor = true;
+            GetComponent<Collider2D>().enabled = false;
+            transform.Find("Silk").GetComponent<SpriteRenderer>().enabled = false;
+            anim.SetTrigger("Ouch");
+            
+            TransitionToNextEnemy("Huma N/Huma N.");
         }
         else
         {
@@ -115,7 +123,7 @@ public class Spider : BadThing
     /// </summary>
     private void SpawnBalls()
     {
-        // Randomly decide which racket gets the priviledge of throwing a 
+        // Randomly decide which racket gets the privilege of throwing a 
         // hittable ball
         int hittableIndex = Random.Range(0, activeRackets);
 
