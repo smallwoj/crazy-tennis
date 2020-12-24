@@ -94,6 +94,9 @@ public class PlayerBehaviour : MonoBehaviour
     /// Reference to the rigidbody component
     /// </summary>
     public Rigidbody2D rb;
+
+    public string DeathCoroutine = "WaitAndRespawn";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -127,12 +130,13 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     /// <summary>
-    /// Die
+    /// Gamers don't die, they-
     /// </summary>
     public void Die()
     {
         anim.SetBool("Dead x_x", true);
-        StartCoroutine("WaitAndRespawn");   
+        FindObjectOfType<CameraBehaviour>().ShakeScreen(0.3f);
+        StartCoroutine(DeathCoroutine);
     }
 
     /// <summary>
@@ -166,14 +170,12 @@ public class PlayerBehaviour : MonoBehaviour
         if(lives > 0)
         {
             bombs = defaultBombs;
-            FindObjectOfType<CameraBehaviour>().ShakeScreen(0.3f);
             GetComponent<Rigidbody2D>().position = defaultPosition;
         }
         else
         {
             bombs = defaultBombs;
             GetComponent<Rigidbody2D>().position = defaultPosition;
-            FindObjectOfType<CameraBehaviour>().ShakeScreen(0.3f);
             if(!inRecovery)
             {
                 inRecovery = true;
@@ -186,6 +188,16 @@ public class PlayerBehaviour : MonoBehaviour
             if(PlayerGameOver != null)
                 PlayerGameOver();
         }
+    }
+
+    /// <summary>
+    /// Gamers don't die, they-
+    /// </summary>
+    /// <returns>All the time you could've spent playing the game if you didn't get SHOT BY A GUN</returns>
+    private IEnumerable CutsceneDennisDie()
+    {
+        yield return new WaitForSeconds(HURT_TIME);
+        anim.SetBool("Dead x_x", false);
     }
 
     /// <summary>
