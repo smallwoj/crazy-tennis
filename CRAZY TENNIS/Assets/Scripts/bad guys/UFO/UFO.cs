@@ -291,7 +291,6 @@ public class UFO : BadThing
     /// </summary>
     public void DeathAnimation()
     {
-        print("ship");
         shipAnim.SetBool("Spinning", false);
         shipAnim.SetTrigger("Dead");
         // Hide the shadow during the death animation

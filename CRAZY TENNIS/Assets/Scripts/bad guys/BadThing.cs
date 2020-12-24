@@ -135,7 +135,7 @@ public abstract class BadThing : MonoBehaviour
     }
 
     /// <summary>
-    /// Brings up a prompt to make the layer press space to transition to the next enemy, 
+    /// Brings up a prompt to make the player press space to transition to the next enemy, 
     /// denoted by the name of a prefab in Assets/Prefabs/Enemies
     /// </summary>
     /// <param name="nextEnemy">prefab of the next enemy</param>
@@ -143,6 +143,7 @@ public abstract class BadThing : MonoBehaviour
     {
         DestroyAllBalls();
         // (note that this will eventually call SpawnNextEnemy)
+        // TODO: FADE OUT CURRENT MUSIC
         GameObject.FindGameObjectWithTag("Enemy transition").GetComponent<EnemyTransitionControl>().StartTransition(this, nextEnemy);
     }
 

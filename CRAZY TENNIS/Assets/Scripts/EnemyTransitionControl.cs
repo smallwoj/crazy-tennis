@@ -51,6 +51,7 @@ public class EnemyTransitionControl : MonoBehaviour
     /// </summary>
     private void FinishTransition()
     {        
+        // TODO: PUT NEW MUSIC PLAY HERE
         currentEnemy.SpawnNextEnemy(nextEnemy);
     }
 }
