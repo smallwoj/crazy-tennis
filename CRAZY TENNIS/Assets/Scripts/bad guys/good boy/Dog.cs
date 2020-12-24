@@ -103,6 +103,7 @@ public class Dog : GoodBoy
         NextPhase();
         pb.PlayerHurt += ReplaceBall;
         pb.PlayerGameOver -= SpawnRecoveryEnemy;
+        pb.PlayerGameOver += toGameOverScreen;
     }
 
     // Update is called once per frame
@@ -336,7 +337,10 @@ public class Dog : GoodBoy
     {
         FindObjectOfType<CameraBehaviour>().ShakeScreen(5f);
         yield return new WaitForSeconds(2.5f);
-        FindObjectOfType<PlayerBehaviour>().PlayerHurt -= ReplaceBall;
+        PlayerBehaviour pb = FindObjectOfType<PlayerBehaviour>();
+        pb.PlayerHurt -= ReplaceBall;
+        pb.PlayerGameOver -= toGameOverScreen;
+
         FindObjectOfType<PlayerBehaviour>().inRecovery = false;
         TransitionToNextEnemy(nextEnemy);
     }
@@ -348,5 +352,13 @@ public class Dog : GoodBoy
     public override string PrefabString() 
     {
         return "dogy";
+    }
+
+    /// <summary>
+    /// Switches scenes to the game over screen :(
+    /// </summary>
+    private void toGameOverScreen()
+    {
+        SceneLoader.instance.LoadLevel("Game over", null);
     }
 }

@@ -134,6 +134,7 @@ public class CrazyDennis : BadThing
                         // Very similar to the above spawn, except it's unhittable and the amplitude is subtracted from the position
                         ballPool[index] = SpawnBall(typeof(GenericUnhittable), transform.position + BALL_OFFSET + new Vector3(-amplitude, 0, 0), new Vector2(0, -7), Random.Range(6f, 10f));
                     }
+                    FindObjectOfType<CameraBehaviour>().Impact(0.05f, Random.insideUnitCircle.normalized);
                 }
                 break;
             }
@@ -152,12 +153,14 @@ public class CrazyDennis : BadThing
 
                         if (ballPool[i] == null)
                         {
+                            Vector2 velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 3;
                             ballPool[i] = SpawnBall(
                                 typeof(GenericUnhittable), 
                                 transform.position + BALL_OFFSET, 
-                                new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 3,
+                                velocity,
                                 Random.Range(6f, 10f)
-                                );
+                            );
+                            FindObjectOfType<CameraBehaviour>().Impact(0.05f, velocity.normalized);
                         }
                     }
                 }
@@ -207,9 +210,9 @@ public class CrazyDennis : BadThing
             }
             case 5:
             {
+                DestroyAllBalls();
                 FindObjectOfType<CameraBehaviour>().ShakeScreen(1f);
                 anim.SetTrigger("Dead");
-                TransitionToNextEnemy("redCharacter");
                 break;
             }
         }
@@ -287,6 +290,7 @@ public class CrazyDennis : BadThing
                 startingAngle += Mathf.PI/12;
                 if (startingAngle >= 2*Mathf.PI) startingAngle = 0;
 
+                FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.left);
                 break;
             }
             // Just a good ol plain simple serve
@@ -308,6 +312,8 @@ public class CrazyDennis : BadThing
                     ballSpeed += BALL_SPEED_INCREASE;
                     rallyBall.Velocity = new Vector2(Random.Range(-2.5f, 2.5f), Random.Range(-3f, -4f)).normalized * ballSpeed;
                 }
+                // Make this one hit a little harder to further emphasize the Final Phase
+                FindObjectOfType<CameraBehaviour>().Impact(0.3f, Vector2.left);
                 break;
             }
         }
@@ -355,6 +361,7 @@ public class CrazyDennis : BadThing
     private void togglePhase4Ready()
     {
         phase4Ready = !phase4Ready;
+        FindObjectOfType<CameraBehaviour>().Impact(0.3f, Random.insideUnitCircle.normalized);
     }
 
     /// <summary>
@@ -373,6 +380,17 @@ public class CrazyDennis : BadThing
     }
 
     /// <summary>
+    /// Called at the end of the death explosion animation
+    /// (obligatory "gamers don't die, they-")
+    /// </summary>
+    void Die() 
+    {
+        // Instead of dying the usual way (i.e. using SpawnNextEnemy), transition to the outro scene
+        Destroy(this.gameObject);
+        SceneLoader.instance.LoadLevel("Outro", null);
+    }
+
+    /// <summary>
     /// Called when he dies :(
     /// </summary>
     new void OnDestroy() {
@@ -387,5 +405,13 @@ public class CrazyDennis : BadThing
     public override string PrefabString()
     {
         return "Crazy Dennis";
+    }
+
+    /// <summary>
+    /// Shakes the screen for the length of the aura reveal animation
+    /// </summary>
+    public void AuraShake()
+    {
+        FindObjectOfType<CameraBehaviour>().ShakeScreen(0.2f, 105);
     }
 }
