@@ -95,6 +95,10 @@ public class CrazyDennis : BadThing
                 }
                 break;
             }
+            case 5:
+            {
+                break;
+            }
         }
     }
 
@@ -203,7 +207,9 @@ public class CrazyDennis : BadThing
             }
             case 5:
             {
-                SpawnNextEnemy("redCharacter");
+                FindObjectOfType<CameraBehaviour>().ShakeScreen(1f);
+                anim.SetTrigger("Dead");
+                TransitionToNextEnemy("redCharacter");
                 break;
             }
         }
