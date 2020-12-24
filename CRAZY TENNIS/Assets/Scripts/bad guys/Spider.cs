@@ -32,6 +32,8 @@ public class Spider : BadThing
     private SpiderRacket[] rackets = new SpiderRacket[8];
     /// <summary> How many of the rackets the spider is using </summary>
     private int activeRackets = 0;
+    /// <summary> How much force is applied to the hinge joint's motor upon defeat </summary>
+    public int motorForce = 200;
 
     // Start is called before the first frame update
     new void Start()
@@ -93,6 +95,8 @@ public class Spider : BadThing
             // Make em spin!!! And immediately fall off the screen and die
             HingeJoint2D silkHinge = GetComponent<HingeJoint2D>();
             silkHinge.useMotor = true;
+            silkHinge.breakForce = motorForce;
+            // silkHinge.enabled = false;
             GetComponent<Collider2D>().enabled = false;
             transform.Find("Silk").GetComponent<SpriteRenderer>().enabled = false;
             anim.SetTrigger("Ouch");
