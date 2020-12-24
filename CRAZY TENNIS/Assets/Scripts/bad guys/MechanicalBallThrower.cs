@@ -50,15 +50,18 @@ public class MechanicalBallThrower : BadThing
     void Update()
     {
         // Keep time and (maybe, just maybe) move to the next animation
-        chargeTimeRemaining -= Time.deltaTime;
-        if (chargeTimeRemaining <= 0)
+        if (phase < 4)
         {
-            anim.SetTrigger("Next charge");
-            chargeTimeRemaining = CHARGE_ANIM_TIMES[phase];
-        }
-        else
-        {
-            anim.ResetTrigger("Next charge");
+            chargeTimeRemaining -= Time.deltaTime;
+            if (chargeTimeRemaining <= 0)
+            {
+                anim.SetTrigger("Next charge");
+                chargeTimeRemaining = CHARGE_ANIM_TIMES[phase];
+            }
+            else
+            {
+                anim.ResetTrigger("Next charge");
+            }
         }
     }
 
@@ -71,8 +74,8 @@ public class MechanicalBallThrower : BadThing
         phase++;
         if (phase == 4)
         {
-            DestroyAllBalls();
-            SpawnNextEnemy("Spider/Spider");
+            anim.SetTrigger("Dead");
+            TransitionToNextEnemy("Spider/Spider");
         }
         else
         {
@@ -87,7 +90,29 @@ public class MechanicalBallThrower : BadThing
             chargeTimeRemaining = CHARGE_ANIM_TIMES[phase];
             anim.SetTrigger("Reset charge");
         }
+    }
 
+    /// <summary>
+    /// Overridden method that is fired when the enemy takes damage.
+    /// Activates the hurt effect
+    /// </summary>
+    /// <param name="ball"> The causer of the ouch </param>
+    public override void Ouch(Ball ball)
+    {
+        base.Ouch(ball);
+        // Coroutines are so great :)
+        StartCoroutine("HurtEffect");
+    }
+    /// <summary>
+    /// Briefly shows an effect for getting hurt
+    /// </summary>
+    /// <returns> An IEnumerator, obviously </returns>
+    private IEnumerator HurtEffect()
+    {
+        GameObject hitEffect = transform.GetChild(0).gameObject;
+        hitEffect.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        hitEffect.SetActive(false);
     }
 
     /// <summary>

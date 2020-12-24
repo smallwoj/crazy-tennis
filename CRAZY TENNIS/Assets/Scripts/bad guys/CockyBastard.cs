@@ -74,7 +74,9 @@ public class CockyBastard : BadThing
         maxhits = 0;
         if(phase == 4)
         {
-            SpawnNextEnemy("Surfer dude");
+            // Just sorta dies
+            anim.SetTrigger("Dead");
+            TransitionToNextEnemy("Surfer dude");
         }
         else
         {

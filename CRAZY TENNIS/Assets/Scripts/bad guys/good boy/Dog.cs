@@ -342,7 +342,7 @@ public class Dog : GoodBoy
         pb.PlayerGameOver -= toGameOverScreen;
 
         FindObjectOfType<PlayerBehaviour>().inRecovery = false;
-        SpawnNextEnemy(nextEnemy);
+        TransitionToNextEnemy(nextEnemy);
     }
 
     /// <summary>

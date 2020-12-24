@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Score
   - bounds false
+  - Enemy transition
   layers:
   - Default
   - TransparentFX
@@ -20,9 +21,9 @@ TagManager:
   - 
   - ball
   - HUD
-  - Player
-  - Court bounds
-  - Swang
+  - 
+  - 
+  - 
   - 
   - 
   - 

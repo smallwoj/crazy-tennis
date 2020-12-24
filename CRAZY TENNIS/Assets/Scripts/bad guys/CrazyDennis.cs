@@ -95,6 +95,10 @@ public class CrazyDennis : BadThing
                 }
                 break;
             }
+            case 5:
+            {
+                break;
+            }
         }
     }
 
@@ -206,10 +210,9 @@ public class CrazyDennis : BadThing
             }
             case 5:
             {
-                // Instead of dying the usual way (i.e. using SpawnNextEnemy), transition to the outro scene
                 DestroyAllBalls();
-                Destroy(this.gameObject);
-                SceneLoader.instance.LoadLevel("Outro", null);
+                FindObjectOfType<CameraBehaviour>().ShakeScreen(1f);
+                anim.SetTrigger("Dead");
                 break;
             }
         }
@@ -374,6 +377,17 @@ public class CrazyDennis : BadThing
         anim.SetTrigger("Phase 4 delay");
         anim.SetTrigger("Swing");
         rallyCount = INITIAL_RALLY_COUNT;
+    }
+
+    /// <summary>
+    /// Called at the end of the death explosion animation
+    /// (obligatory "gamers don't die, they-")
+    /// </summary>
+    void Die() 
+    {
+        // Instead of dying the usual way (i.e. using SpawnNextEnemy), transition to the outro scene
+        Destroy(this.gameObject);
+        SceneLoader.instance.LoadLevel("Outro", null);
     }
 
     /// <summary>
