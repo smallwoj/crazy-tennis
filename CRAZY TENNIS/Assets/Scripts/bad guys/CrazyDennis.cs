@@ -149,13 +149,14 @@ public class CrazyDennis : BadThing
 
                         if (ballPool[i] == null)
                         {
+                            Vector2 velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 3;
                             ballPool[i] = SpawnBall(
                                 typeof(GenericUnhittable), 
                                 transform.position + BALL_OFFSET, 
-                                new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 3,
+                                velocity,
                                 Random.Range(6f, 10f)
                                 );
-                            FindObjectOfType<CameraBehaviour>().Impact(0.05f, Random.insideUnitCircle.normalized);
+                            FindObjectOfType<CameraBehaviour>().Impact(0.05f, velocity.normalized);
                         }
                     }
                 }
