@@ -155,7 +155,7 @@ public class CrazyDennis : BadThing
                                 transform.position + BALL_OFFSET, 
                                 velocity,
                                 Random.Range(6f, 10f)
-                                );
+                            );
                             FindObjectOfType<CameraBehaviour>().Impact(0.05f, velocity.normalized);
                         }
                     }
