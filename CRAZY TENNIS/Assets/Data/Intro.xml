@@ -1,0 +1,14 @@
+<Intro>
+    <Speaker>
+        <Name>Crazy Dennis</Name>
+        <Font></Font>
+        <!-- <Bust>redCharacter</Bust> -->
+        <Speed>Medium</Speed>
+        <Voice></Voice>
+    </Speaker>
+
+    <Line>Hey kid! Wanna play some CRAZY TENNIS?</Line>
+    <Line>If you win, you get to pet this here dog!</Line>
+    <Line>The controls are simple: Use the arrow keys to move, the space bar to swing ya racket, and, uh, that's it.</Line>
+    <Line>Good luck, whippersnapper!</Line>
+</Intro>

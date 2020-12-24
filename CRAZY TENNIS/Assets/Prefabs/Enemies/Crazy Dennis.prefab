@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 84601513747252448}
   - component: {fileID: 84601513747252449}
   - component: {fileID: 84601513747252450}
+  - component: {fileID: 4194255112073803110}
   m_Layer: 0
   m_Name: Crazy Dennis
   m_TagString: Enemy
@@ -221,6 +222,20 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!114 &4194255112073803110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84601513747252463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5776cec723007c94e8ca502a63b7d8fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObj: {fileID: 84601513747252463}
+  sceneName: Outro
 --- !u!1 &2834195481719454223
 GameObject:
   m_ObjectHideFlags: 0
