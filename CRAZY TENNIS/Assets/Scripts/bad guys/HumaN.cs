@@ -282,8 +282,11 @@ public class HumaN : BadThing
     {     
         foreach (UFO ufo in ufoFleet)
         {
-            /// TODO: Decide whether to keep this (and if so, debug it)
-            ufo.DeathAnimation();
+            // Play the UFO's death animation if Huma N. is dead, otherwise just unceremoniously destroy the ufo
+            if (phase == 4)
+                ufo.DeathAnimation();
+            else
+                Destroy(ufo.gameObject);
         }
         ufoFleet.Clear();
     }
