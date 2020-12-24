@@ -85,7 +85,18 @@ public class CameraBehaviour : MonoBehaviour
     /// <param name="intensity">Float to determine the intensity. Affects length and magnitude</param>
     public void ShakeScreen(float intensity) 
     {
-        length = (int) (BASE_LENGTH * intensity);
+        int length = (int) (BASE_LENGTH * intensity);
+        ShakeScreen(intensity, length);
+    }
+
+    /// <summary>
+    /// Shakes the screen with a set amount of length, helpful for animations (60 frames per second)
+    /// </summary>
+    /// <param name="intensity">Float to determine the intensity.</param>
+    /// <param name="length">Length in frames to shake for.</param>
+    public void ShakeScreen(float intensity, int length)
+    {
+        this.length = length;
         baseMagnitude = (float) System.Math.Log10(intensity + 1);
     }
 }
