@@ -155,6 +155,7 @@ public class CrazyDennis : BadThing
                                 new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * 3,
                                 Random.Range(6f, 10f)
                                 );
+                            FindObjectOfType<CameraBehaviour>().Impact(0.05f, Random.insideUnitCircle.normalized);
                         }
                     }
                 }
@@ -353,6 +354,7 @@ public class CrazyDennis : BadThing
     private void togglePhase4Ready()
     {
         phase4Ready = !phase4Ready;
+        FindObjectOfType<CameraBehaviour>().Impact(0.3f, Random.insideUnitCircle.normalized);
     }
 
     /// <summary>
