@@ -208,6 +208,8 @@ public abstract class BadThing : MonoBehaviour
 
     protected void OnDestroy()
     {
-        FindObjectOfType<PlayerBehaviour>().PlayerGameOver -= SpawnRecoveryEnemy;
+        PlayerBehaviour pb = FindObjectOfType<PlayerBehaviour>();
+        if(pb != null)
+            FindObjectOfType<PlayerBehaviour>().PlayerGameOver -= SpawnRecoveryEnemy;
     }
 }

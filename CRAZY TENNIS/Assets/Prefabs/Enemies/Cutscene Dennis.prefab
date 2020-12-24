@@ -442,6 +442,21 @@ PrefabInstance:
       propertyPath: script
       value: 
       objectReference: {fileID: 4900000, guid: 56cf6bf45d2a0054ca9c74cfd8f3ad17, type: 3}
+    - target: {fileID: 8499275492506987557, guid: 4b27d5862786fcb48b4ed1124c593fb1,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499275492506987557, guid: 4b27d5862786fcb48b4ed1124c593fb1,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499275492506987557, guid: 4b27d5862786fcb48b4ed1124c593fb1,
+        type: 3}
+      propertyPath: m_Pitch
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b27d5862786fcb48b4ed1124c593fb1, type: 3}
 --- !u!224 &6552678917247068375 stripped
