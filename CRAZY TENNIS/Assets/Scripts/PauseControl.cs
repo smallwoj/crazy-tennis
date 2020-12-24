@@ -13,11 +13,19 @@ public class PauseControl : MonoBehaviour
     /// <summary> The pause menu that this script enables </summary>
     private GameObject menu;
 
+    /// <summary> The pause/unpause sound </summary>
+    private AudioClip sound;
+
+    /// <summary> Plays some cool sound </summary>
+    private AudioSource player;
+
     // Start is called before the first frame update
     void Start()
     {
         // Menu! Where are you???
         menu = transform.GetChild(0).gameObject;
+        // pLAYER! wHERE ARE YOU???
+        player = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,15 +36,19 @@ public class PauseControl : MonoBehaviour
         {
             Paused = !Paused;
             menu.SetActive(Paused);
-            // If this were C(++) I'd be able to say Time.timeScale = paused 😤
+            // If this were C(++) I'd be able to say Time.timeScale = !paused 😤
             if (Paused)
             {
                 Time.timeScale = 0;
+                sound = Resources.Load<AudioClip>("Audio/Sound Effects/UI/pause");
             }
             else
             {
                 Time.timeScale = 1;
+                sound = Resources.Load<AudioClip>("Audio/Sound Effects/UI/unpause");
             }
+            player.clip = sound;
+            player.Play();
 
             // This block is part of the more complicated pausing algorithm, 
             // ranted about below
