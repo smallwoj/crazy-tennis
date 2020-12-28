@@ -100,7 +100,7 @@ public class MechanicalBallThrower : BadThing
             anim.SetTrigger("Dead");
             TransitionToNextEnemy("Spider/Spider");
         }
-        else
+        else if (phase < 4)
         {
             // Award points (the if is there to avoid awarding points when the guy spawns)
             if (phase > 1)
