@@ -95,6 +95,11 @@ public class PlayerBehaviour : MonoBehaviour
     /// </summary>
     public Rigidbody2D rb;
 
+    /// <summary>
+    /// 🔊
+    /// </summary>
+    private AudioSource audioSource;
+
     public string DeathCoroutine = "WaitAndRespawn";
 
     // Start is called before the first frame update
@@ -106,6 +111,7 @@ public class PlayerBehaviour : MonoBehaviour
         defaultBombs = bombs;
         swang = GameObject.Find("Player/swang").GetComponent<PolygonCollider2D>();
         swang.enabled = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -115,6 +121,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             swang.enabled = false;
             anim.SetTrigger("space pressed");
+            audioSource.Play();
         }
         anim.SetFloat("xVel", rb.velocity.x);
         anim.SetFloat("yVel", rb.velocity.y);
