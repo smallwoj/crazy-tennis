@@ -72,9 +72,6 @@ public class UFO : BadThing
 
         hitBall = Resources.Load<AudioClip>("Audio/Sound Effects/Huma N/Alien machine short");
         fall = Resources.Load<AudioClip>("Audio/Sound Effects/Huma N/Banana peel slip slow");
-
-        print(hitBall);
-        print(fall);
     }
 
     // Update is called once per frame
