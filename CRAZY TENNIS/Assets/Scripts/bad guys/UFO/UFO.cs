@@ -46,6 +46,8 @@ public class UFO : BadThing
     private Vector2 to;
     /// <summary> Progress (from 0 to 1) from 'from' to 'to' (thank you SurferDude.cs) </summary>
     private float t;
+    /// <summary> Sound effect for die </summary>
+    private AudioClip fall;
 
     // Start is called before the first frame update
     new void Start()
@@ -67,6 +69,12 @@ public class UFO : BadThing
         to = path[0];
 
         pb.PlayerGameOver -= SpawnRecoveryEnemy;
+
+        hitBall = Resources.Load<AudioClip>("Audio/Sound Effects/Huma N/Alien machine short");
+        fall = Resources.Load<AudioClip>("Audio/Sound Effects/Huma N/Banana peel slip slow");
+
+        print(hitBall);
+        print(fall);
     }
 
     // Update is called once per frame
@@ -230,6 +238,10 @@ public class UFO : BadThing
         
         toReturn.Parent = Commander;
 
+        // Also play the sound effect
+        audioSource.clip = hitBall;
+        audioSource.Play();
+
         return toReturn;
     }
 
@@ -295,6 +307,9 @@ public class UFO : BadThing
         shipAnim.SetTrigger("Dead");
         // Hide the shadow during the death animation
         transform.GetChild(1).gameObject.SetActive(false);
+        // Also play the sound effect
+        audioSource.clip = fall;
+        audioSource.Play();
     }
 
     // This function is called when the MonoBehaviour will be destroyed. (Unity Code Snippets)
