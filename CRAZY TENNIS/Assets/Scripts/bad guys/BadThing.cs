@@ -131,17 +131,6 @@ public abstract class BadThing : MonoBehaviour
     /// <param name="nextEnemy">prefab of the next enemy</param>
     public BadThing SpawnNextEnemy(string nextEnemy)
     {
-        //this is self documenting code
-        if(this is Dog)
-        {
-            //it's a dog!
-        }
-        else
-        {
-            // Yay they did it
-            GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentBeat();
-        }
-
         DestroyAllBalls();
         enabled = false;
 
@@ -167,6 +156,17 @@ public abstract class BadThing : MonoBehaviour
         // (note that this will eventually call SpawnNextEnemy)
         // TODO: FADE OUT CURRENT MUSIC
         GameObject.FindGameObjectWithTag("Enemy transition").GetComponent<EnemyTransitionControl>().StartTransition(this, nextEnemy);
+
+        //this is self documenting code
+        if(this is Dog)
+        {
+            //it's a dog!
+        }
+        else
+        {
+            // Yay they did it
+            GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentBeat();
+        }
     }
 
     /// <summary>

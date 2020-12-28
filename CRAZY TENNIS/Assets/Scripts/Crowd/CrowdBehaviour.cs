@@ -9,13 +9,18 @@ public class CrowdBehaviour : MonoBehaviour
     // A reference to each side
     private CrowdSideBehaviour left, right;
 
+    // Tells whether a point is on screen, used to place spectators (I think)
     public Collider2D screenTrigger;
+
+    // Plays the cool sound effect
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         left = transform.GetChild(0).gameObject.GetComponent<CrowdSideBehaviour>();
         right = transform.GetChild(1).gameObject.GetComponent<CrowdSideBehaviour>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -33,6 +38,10 @@ public class CrowdBehaviour : MonoBehaviour
     {
         left.Cheer(hype);
         right.Cheer(hype);
+
+        // Also, if the crowd is at max hype (or even further beyond!!!!), play a sound
+        if (hype >= 1)
+            audioSource.Play();
     }
 
     private bool isOnScreen(Vector2 point)
