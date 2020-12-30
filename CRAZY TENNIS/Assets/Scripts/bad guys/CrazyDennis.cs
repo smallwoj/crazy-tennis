@@ -18,6 +18,8 @@ public class CrazyDennis : BadThing
     private static readonly Vector3 BALL_OFFSET = Vector3.zero;
     /// <summary> How many unhittable balls to spawn in phase 4 </summary>
     private static readonly int PHASE_4_BALLS = MAX_BALLS / 2;
+    /// <summary> How quiet he gets when he starts rapid-firing </summary>
+    private static readonly float SPAM_VOLUME = 0.05f;
 
     /// <summary> Current phase of the battle </summary>
     private int phase;
@@ -204,7 +206,7 @@ public class CrazyDennis : BadThing
             {
                 maxhits = 50;
                 togglePhase2Active();
-                audioSource.volume = 0.3f;
+                audioSource.volume = SPAM_VOLUME;
                 break;
             }
             case 3:
