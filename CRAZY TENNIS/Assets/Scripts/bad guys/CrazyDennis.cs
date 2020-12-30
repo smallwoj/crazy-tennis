@@ -1,4 +1,4 @@
-﻿// It's the final boss baybee!
+// It's the final boss baybee!
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,11 +9,11 @@ public class CrazyDennis : BadThing
     /// <summary> How many balls can be on-screen at once </summary>
     private static readonly int MAX_BALLS = 128;
     /// <summary> How many times you gotta rally with him in phase 4 </summary>
-    private static readonly int INITIAL_RALLY_COUNT = 5;
+    private static readonly int INITIAL_RALLY_COUNT = 3;
     /// <summary> Initial value for ballSpeed </summary>
     private static readonly float INITIAL_BALL_SPEED = 1;
     /// <summary> How fast the ball speed increases every hit in phase 4 </summary>
-    private static readonly float BALL_SPEED_INCREASE = 0.5f;
+    private static readonly float BALL_SPEED_INCREASE = 0.83f;
     /// <summary> The displacement Between the enemy's position and a new ball's position </summary>
     private static readonly Vector3 BALL_OFFSET = Vector3.zero;
     /// <summary> How many unhittable balls to spawn in phase 4 </summary>
@@ -77,7 +77,9 @@ public class CrazyDennis : BadThing
             // Check for the dialogue ending
             case 3:
             {
-                if (!dialogue.activeSelf && talking)
+                // That last condition is to make sure that he finishes up the 
+                // phase 2 movement before transitioning to phase 4
+                if (!dialogue.activeSelf && talking && anim.GetCurrentAnimatorStateInfo(0).IsName("None"))
                 {   
                     talking = false;
                     NextPhase();
@@ -203,7 +205,7 @@ public class CrazyDennis : BadThing
             }
             case 4:
             {
-                maxhits = 2;
+                maxhits = 3;
                 Serve();
                 pb.PlayerHurt += Serve;
                 break;
@@ -228,6 +230,8 @@ public class CrazyDennis : BadThing
         if (phase < 4 || rallyCount <= 0)
         {
             anim.SetTrigger("Hurt");
+            
+            // Start the rally if this ouch caused a transition to phase 4
             if (phase == 4)
             {
                 Serve();
