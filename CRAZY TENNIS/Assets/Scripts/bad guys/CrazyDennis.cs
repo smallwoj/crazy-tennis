@@ -77,7 +77,9 @@ public class CrazyDennis : BadThing
             // Check for the dialogue ending
             case 3:
             {
-                if (!dialogue.activeSelf && talking)
+                // That last condition is to make sure that he finishes up the 
+                // phase 2 movement before transitioning to phase 4
+                if (!dialogue.activeSelf && talking && anim.GetCurrentAnimatorStateInfo(0).IsName("None"))
                 {   
                     talking = false;
                     NextPhase();
