@@ -9,11 +9,11 @@ public class CrazyDennis : BadThing
     /// <summary> How many balls can be on-screen at once </summary>
     private static readonly int MAX_BALLS = 128;
     /// <summary> How many times you gotta rally with him in phase 4 </summary>
-    private static readonly int INITIAL_RALLY_COUNT = 5;
+    private static readonly int INITIAL_RALLY_COUNT = 3;
     /// <summary> Initial value for ballSpeed </summary>
     private static readonly float INITIAL_BALL_SPEED = 1;
     /// <summary> How fast the ball speed increases every hit in phase 4 </summary>
-    private static readonly float BALL_SPEED_INCREASE = 0.5f;
+    private static readonly float BALL_SPEED_INCREASE = 0.83f;
     /// <summary> The displacement Between the enemy's position and a new ball's position </summary>
     private static readonly Vector3 BALL_OFFSET = Vector3.zero;
     /// <summary> How many unhittable balls to spawn in phase 4 </summary>
