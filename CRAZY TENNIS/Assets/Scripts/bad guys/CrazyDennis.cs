@@ -1,4 +1,4 @@
-﻿// It's the final boss baybee!
+// It's the final boss baybee!
 
 using System.Collections;
 using System.Collections.Generic;
@@ -205,7 +205,7 @@ public class CrazyDennis : BadThing
             }
             case 4:
             {
-                maxhits = 2;
+                maxhits = 3;
                 Serve();
                 pb.PlayerHurt += Serve;
                 break;
