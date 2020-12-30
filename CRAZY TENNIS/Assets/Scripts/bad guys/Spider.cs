@@ -134,6 +134,7 @@ public class Spider : BadThing
             for (int i = 0; i < activeRackets; i++)
             {
                 rackets[i].gameObject.SetActive(true);
+                rackets[i].GetComponent<AudioSource>().volume = 1f / (float)activeRackets;
             }
             maxhits = activeRackets;
         }
