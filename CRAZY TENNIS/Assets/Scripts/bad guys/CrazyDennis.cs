@@ -230,6 +230,8 @@ public class CrazyDennis : BadThing
         if (phase < 4 || rallyCount <= 0)
         {
             anim.SetTrigger("Hurt");
+            
+            // Start the rally if this ouch caused a transition to phase 4
             if (phase == 4)
             {
                 Serve();
