@@ -12,8 +12,11 @@ public class CrowdBehaviour : MonoBehaviour
     // Tells whether a point is on screen, used to place spectators (I think)
     public Collider2D screenTrigger;
 
-    // Plays the cool sound effect
+    // Plays the cool sound effect(s)
     private AudioSource audioSource;
+    
+    // The cool sound effects
+    private AudioClip cheer, bigCheer;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,8 @@ public class CrowdBehaviour : MonoBehaviour
         left = transform.GetChild(0).gameObject.GetComponent<CrowdSideBehaviour>();
         right = transform.GetChild(1).gameObject.GetComponent<CrowdSideBehaviour>();
         audioSource = GetComponent<AudioSource>();
+        cheer = Resources.Load<AudioClip>("Audio/Sound Effects/Cheering no toot");
+        bigCheer = Resources.Load<AudioClip>("Audio/Sound Effects/Cheering");
     }
 
     // Update is called once per frame
@@ -39,9 +44,13 @@ public class CrowdBehaviour : MonoBehaviour
         left.Cheer(hype);
         right.Cheer(hype);
 
-        // Also, if the crowd is at max hype (or even further beyond!!!!), play a sound
+        // Also, cheer based on the hype
+        audioSource.volume = hype;
         if (hype >= 1)
-            audioSource.Play();
+            audioSource.clip = bigCheer;
+        else
+            audioSource.clip = cheer;
+        audioSource.Play();
     }
 
     private bool isOnScreen(Vector2 point)
