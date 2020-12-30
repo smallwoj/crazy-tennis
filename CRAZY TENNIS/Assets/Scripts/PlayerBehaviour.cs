@@ -95,6 +95,16 @@ public class PlayerBehaviour : MonoBehaviour
     /// </summary>
     public Rigidbody2D rb;
 
+    /// <summary>
+    /// 🔊
+    /// </summary>
+    private AudioSource audioSource;
+
+    /// <summary>
+    /// Sound effects for swinging the racket and dying, respectively
+    /// </summary>
+    private AudioClip whoosh, dead;
+
     public string DeathCoroutine = "WaitAndRespawn";
 
     // Start is called before the first frame update
@@ -106,6 +116,9 @@ public class PlayerBehaviour : MonoBehaviour
         defaultBombs = bombs;
         swang = GameObject.Find("Player/swang").GetComponent<PolygonCollider2D>();
         swang.enabled = false;
+        audioSource = GetComponent<AudioSource>();
+        whoosh = Resources.Load<AudioClip>("Audio/Sound Effects/Player/Whoosh");
+        dead = Resources.Load<AudioClip>("Audio/Sound Effects/Player/Losing drums");
     }
 
     // Update is called once per frame
@@ -115,6 +128,8 @@ public class PlayerBehaviour : MonoBehaviour
         {
             swang.enabled = false;
             anim.SetTrigger("space pressed");
+            audioSource.clip = whoosh;
+            audioSource.Play();
         }
         anim.SetFloat("xVel", rb.velocity.x);
         anim.SetFloat("yVel", rb.velocity.y);
@@ -134,6 +149,8 @@ public class PlayerBehaviour : MonoBehaviour
     /// </summary>
     public void Die()
     {
+        audioSource.clip = dead;
+        audioSource.Play();
         anim.SetBool("Dead x_x", true);
         FindObjectOfType<CameraBehaviour>().ShakeScreen(0.3f);
         StartCoroutine(DeathCoroutine);

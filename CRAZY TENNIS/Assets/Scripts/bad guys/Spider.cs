@@ -34,6 +34,8 @@ public class Spider : BadThing
     private int activeRackets = 0;
     /// <summary> How much force is applied to the hinge joint's motor upon defeat </summary>
     public int motorForce = 200;
+    /// <summary> Sound effects! </summary>
+    private AudioClip buzz1, buzz2, buzz3;
 
     // Start is called before the first frame update
     new void Start()
@@ -50,6 +52,11 @@ public class Spider : BadThing
             racket.Spider = this;
             racket.gameObject.SetActive(false);
         }
+
+        // Override sound effects
+        ouch = Resources.Load<AudioClip>("Audio/Sound Effects/Spider/Robotic insect buzz short 1");
+        nextPhase = Resources.Load<AudioClip>("Audio/Sound Effects/Spider/Robotic insect buzz short 2");
+        dead = Resources.Load<AudioClip>("Audio/Sound Effects/Spider/Robotic insect buzz short 3");
         
         // Other initialization stuff
         anim = GetComponent<Animator>();
@@ -104,10 +111,13 @@ public class Spider : BadThing
             HingeJoint2D silkHinge = GetComponent<HingeJoint2D>();
             silkHinge.useMotor = true;
             silkHinge.breakForce = motorForce;
-            // silkHinge.enabled = false;
             GetComponent<Collider2D>().enabled = false;
             transform.Find("Silk").GetComponent<SpriteRenderer>().enabled = false;
             anim.SetTrigger("Ouch");
+
+            // Also play the sound effect
+            audioSource.clip = dead;
+            audioSource.Play();
             
             TransitionToNextEnemy("Huma N/Huma N.");
         }
@@ -124,6 +134,7 @@ public class Spider : BadThing
             for (int i = 0; i < activeRackets; i++)
             {
                 rackets[i].gameObject.SetActive(true);
+                rackets[i].GetComponent<AudioSource>().volume = 1f / (float)activeRackets;
             }
             maxhits = activeRackets;
         }

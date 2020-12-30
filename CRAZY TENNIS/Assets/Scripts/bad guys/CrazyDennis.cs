@@ -18,6 +18,8 @@ public class CrazyDennis : BadThing
     private static readonly Vector3 BALL_OFFSET = Vector3.zero;
     /// <summary> How many unhittable balls to spawn in phase 4 </summary>
     private static readonly int PHASE_4_BALLS = MAX_BALLS / 2;
+    /// <summary> How quiet he gets when he starts rapid-firing </summary>
+    private static readonly float SPAM_VOLUME = 0.05f;
 
     /// <summary> Current phase of the battle </summary>
     private int phase;
@@ -45,6 +47,8 @@ public class CrazyDennis : BadThing
     private int rallyCount = INITIAL_RALLY_COUNT;
     /// <summary> Whether it's time to spawn a bunch of balls in phase 4 </summary>
     private bool phase4Ready = false;
+    /// <summary> Sound effects! </summary>
+    private AudioClip auraSound, explosionSound;
 
     // Start is called before the first frame update
     new void Start()
@@ -61,6 +65,10 @@ public class CrazyDennis : BadThing
         
         // Get the dialogue
         dialogue = transform.GetChild(0).gameObject;
+
+        // Get the sound effects
+        auraSound = Resources.Load<AudioClip>("Audio/Sound Effects/Crazy Dennis/Instrument echo swell short");
+        explosionSound = Resources.Load<AudioClip>("Audio/Sound Effects/Crazy Dennis/Glitch arcade explosion short");
     }
 
     // Update is called once per frame
@@ -137,6 +145,13 @@ public class CrazyDennis : BadThing
                         ballPool[index] = SpawnBall(typeof(GenericUnhittable), transform.position + BALL_OFFSET + new Vector3(-amplitude, 0, 0), new Vector2(0, -7), Random.Range(6f, 10f));
                     }
                     FindObjectOfType<CameraBehaviour>().Impact(0.05f, Random.insideUnitCircle.normalized);
+                    
+                    // Only playing the sound effect a certain proportion of the time helps reduce the unpleasant RRRRRRRRR of a sound effect being played over and over
+                    if (Random.value < 0.33f)
+                    {
+                        audioSource.clip = hitBall;
+                        audioSource.Play();
+                    }
                 }
                 break;
             }
@@ -163,6 +178,8 @@ public class CrazyDennis : BadThing
                                 Random.Range(6f, 10f)
                             );
                             FindObjectOfType<CameraBehaviour>().Impact(0.05f, velocity.normalized);
+                            audioSource.clip = hitBall;
+                            audioSource.Play();
                         }
                     }
                 }
@@ -191,6 +208,7 @@ public class CrazyDennis : BadThing
             {
                 maxhits = 50;
                 togglePhase2Active();
+                audioSource.volume = SPAM_VOLUME;
                 break;
             }
             case 3:
@@ -214,6 +232,8 @@ public class CrazyDennis : BadThing
             {
                 DestroyAllBalls();
                 FindObjectOfType<CameraBehaviour>().ShakeScreen(1f);
+                audioSource.volume = 1;
+                AuraSound();
                 anim.SetTrigger("Dead");
                 break;
             }
@@ -295,6 +315,8 @@ public class CrazyDennis : BadThing
                 if (startingAngle >= 2*Mathf.PI) startingAngle = 0;
 
                 FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.left);
+                audioSource.PlayOneShot(hitBall);
+
                 break;
             }
             // Just a good ol plain simple serve
@@ -318,6 +340,7 @@ public class CrazyDennis : BadThing
                 }
                 // Make this one hit a little harder to further emphasize the Final Phase
                 FindObjectOfType<CameraBehaviour>().Impact(0.3f, Vector2.left);
+                audioSource.PlayOneShot(hitBall);
                 break;
             }
         }
@@ -417,5 +440,21 @@ public class CrazyDennis : BadThing
     public void AuraShake()
     {
         FindObjectOfType<CameraBehaviour>().ShakeScreen(0.2f, 105);
+    }
+
+    /// <summary>
+    /// Plays a sound for the aura reveal animation
+    /// </summary>
+    public void AuraSound()
+    {
+        audioSource.PlayOneShot(auraSound);
+    }
+
+    /// <summary>
+    /// Plays a sound for the explosion animation
+    /// </summary>
+    public void ExplosionSound()
+    {
+        audioSource.PlayOneShot(explosionSound);
     }
 }

@@ -86,6 +86,11 @@ public class Dog : GoodBoy
     /// </summary>
     public String nextEnemy;
 
+    /// <summary>
+    /// Sounds for jumping and barking, respectively
+    /// </summary>
+    private AudioClip jump, bark;
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -94,6 +99,8 @@ public class Dog : GoodBoy
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
+        jump = Resources.Load<AudioClip>("Audio/Sound Effects/Dog/Banana peel slip");
+        bark = Resources.Load<AudioClip>("Audio/Sound Effects/Dog/Dog woof");
         PlayerBehaviour pb = FindObjectOfType<PlayerBehaviour>();
         pb.Breakout = true;
         phase = 0;
@@ -214,6 +221,8 @@ public class Dog : GoodBoy
             JumpOver = other.collider;
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), JumpOver, true);
             anim.SetTrigger("jump");
+            audioSource.clip = jump;
+            audioSource.Play();
         }
     }
 
@@ -247,6 +256,9 @@ public class Dog : GoodBoy
         from = rb.position;
         to = rb.position + new Vector2(-2f, -1f);
         t = 0;
+        // Bark :)
+        audioSource.PlayOneShot(bark);
+
     }
 
     /// <summary>
@@ -324,6 +336,7 @@ public class Dog : GoodBoy
                 anim.ResetTrigger("drop ball");
             break;
             case 4: // win!
+                audioSource.PlayOneShot(bark);
                 StartCoroutine("GoToNextEnemy");
             break;
         }
