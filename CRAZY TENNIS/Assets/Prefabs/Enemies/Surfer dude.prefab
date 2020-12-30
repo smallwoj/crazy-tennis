@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 820883293
-  m_SortingLayer: -2
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 5001381990602509530, guid: 10f95c144ec66ac45b8329c40da7133f,
     type: 3}
@@ -143,7 +143,7 @@ LineRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1091973181
-  m_SortingLayer: -3
+  m_SortingLayer: -4
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -254,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TipList: {fileID: 11400000, guid: caf733a9d5e7f574485f09fa1541c01c, type: 2}
   HealthRadius: 1.5
+  music: {fileID: 8300000, guid: 2c473722b14d78746a7657f639827cac, type: 3}
   path1:
   - {x: -2.77, y: 3.14}
   - {x: 2.31, y: 3.14}

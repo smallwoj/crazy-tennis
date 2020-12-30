@@ -147,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TipList: {fileID: 11400000, guid: f1cffb353530a2f49aa85ce522f8f4fd, type: 2}
   HealthRadius: 2
+  music: {fileID: 8300000, guid: ab864892b08d2374d88fdd2a19a0a76d, type: 3}
   motorForce: 200
 --- !u!120 &4360084919547396294
 LineRenderer:

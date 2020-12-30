@@ -49,6 +49,7 @@ public class CockyBastard : BadThing
         pb.Breakout = false;
         // add rally function to player hurt event
         pb.PlayerHurt += Rally;
+        FindObjectOfType<MusicManager>().Play(base.music);
     }
 
     // Update is called once per frame

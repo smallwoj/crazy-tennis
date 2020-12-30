@@ -118,6 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TipList: {fileID: 11400000, guid: 5307fe3becce71f4bb2625d4552e8695, type: 2}
   HealthRadius: 0
+  music: {fileID: 8300000, guid: 092da9efa5e48c34db387de162e0e4e9, type: 3}
   nextEnemy: 
 --- !u!50 &3043566562298257101
 Rigidbody2D:

@@ -39,6 +39,8 @@ public class MechanicalBallThrower : BadThing
     new void Start()
     {
         base.Start();
+        FindObjectOfType<MusicManager>().Play(base.music);
+        
         anim = GetComponent<Animator>();
         NextPhase();
         

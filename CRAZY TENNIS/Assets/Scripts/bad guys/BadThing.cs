@@ -148,7 +148,7 @@ public abstract class BadThing : MonoBehaviour
     {
         DestroyAllBalls();
         // (note that this will eventually call SpawnNextEnemy)
-        // TODO: FADE OUT CURRENT MUSIC
+        GameObject.FindObjectOfType<MusicManager>().Stop();
         GameObject.FindGameObjectWithTag("Enemy transition").GetComponent<EnemyTransitionControl>().StartTransition(this, nextEnemy);
     }
 

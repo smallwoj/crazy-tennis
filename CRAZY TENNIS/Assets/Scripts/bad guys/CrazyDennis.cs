@@ -46,12 +46,15 @@ public class CrazyDennis : BadThing
     /// <summary> Whether it's time to spawn a bunch of balls in phase 4 </summary>
     private bool phase4Ready = false;
 
+    public AudioClip music2;
+
     // Start is called before the first frame update
     new void Start()
     {
         // Good ol' badthing
         base.Start();
         anim = GetComponent<Animator>();
+        FindObjectOfType<MusicManager>().Play(base.music);
         phase = 0;
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         pb.Breakout = false;
@@ -195,6 +198,7 @@ public class CrazyDennis : BadThing
             {
                 if (phase2Active)
                     togglePhase2Active();
+                FindObjectOfType<MusicManager>().Stop();
 
                 dialogue.SetActive(true);
                 talking = true;
@@ -206,6 +210,7 @@ public class CrazyDennis : BadThing
                 maxhits = 2;
                 Serve();
                 pb.PlayerHurt += Serve;
+                FindObjectOfType<MusicManager>().Play(music2);
                 break;
             }
             case 5:
@@ -213,6 +218,7 @@ public class CrazyDennis : BadThing
                 DestroyAllBalls();
                 FindObjectOfType<CameraBehaviour>().ShakeScreen(1f);
                 anim.SetTrigger("Dead");
+                FindObjectOfType<MusicManager>().Stop();
                 break;
             }
         }
