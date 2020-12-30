@@ -147,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TipList: {fileID: 11400000, guid: f1cffb353530a2f49aa85ce522f8f4fd, type: 2}
   HealthRadius: 2
+  motorForce: 200
 --- !u!120 &4360084919547396294
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -259,10 +260,10 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0.020906448, y: 3.188127}
-  m_ConnectedAnchor: {x: -4.4132147, y: 1.1088848}
+  m_ConnectedAnchor: {x: 0.020906448, y: 5.398127}
   m_UseMotor: 0
   m_Motor:
-    m_MotorSpeed: 0
+    m_MotorSpeed: 200
     m_MaximumMotorForce: 10000
   m_UseLimits: 0
   m_AngleLimits:

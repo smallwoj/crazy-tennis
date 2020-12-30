@@ -108,7 +108,8 @@ public abstract class BadThing : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawns the next enemy, denoted by the name of a prefab in Assets/Prefabs/Enemies
+    /// Transitions to the next enemy, 
+    /// denoted by the name of a prefab in Assets/Prefabs/Enemies
     /// </summary>
     /// <param name="nextEnemy">prefab of the next enemy</param>
     public BadThing SpawnNextEnemy(string nextEnemy)
@@ -124,16 +125,31 @@ public abstract class BadThing : MonoBehaviour
             GameObject.FindGameObjectWithTag("Score").GetComponent<ScoringSystem>().OpponentBeat();
         }
 
+        DestroyAllBalls();
+        enabled = false;
+
         if(this != null) //??????
             Destroy(this.gameObject);
         if(GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
         {
-            DestroyAllBalls();
             GameObject enemy = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/"+nextEnemy+".prefab");
             enemy = PrefabUtility.InstantiatePrefab(enemy) as GameObject;
             return enemy.GetComponent<BadThing>();
         }
         return null;
+    }
+
+    /// <summary>
+    /// Brings up a prompt to make the player press space to transition to the next enemy, 
+    /// denoted by the name of a prefab in Assets/Prefabs/Enemies
+    /// </summary>
+    /// <param name="nextEnemy">prefab of the next enemy</param>
+    public void TransitionToNextEnemy(string nextEnemy)
+    {
+        DestroyAllBalls();
+        // (note that this will eventually call SpawnNextEnemy)
+        // TODO: FADE OUT CURRENT MUSIC
+        GameObject.FindGameObjectWithTag("Enemy transition").GetComponent<EnemyTransitionControl>().StartTransition(this, nextEnemy);
     }
 
     /// <summary>
@@ -198,6 +214,8 @@ public abstract class BadThing : MonoBehaviour
 
     protected void OnDestroy()
     {
-        FindObjectOfType<PlayerBehaviour>().PlayerGameOver -= SpawnRecoveryEnemy;
+        PlayerBehaviour pb = FindObjectOfType<PlayerBehaviour>();
+        if(pb != null)
+            FindObjectOfType<PlayerBehaviour>().PlayerGameOver -= SpawnRecoveryEnemy;
     }
 }

@@ -38,4 +38,12 @@ public class UFOShip : MonoBehaviour
     {
         mainScript.ResetUFO();
     }
+
+    /// <summary>
+    /// Destroys the UFO
+    /// </summary>
+    public void DestroyUFO()
+    {
+        Destroy(mainScript.gameObject);
+    }
 }

@@ -32,6 +32,8 @@ public class Spider : BadThing
     private SpiderRacket[] rackets = new SpiderRacket[8];
     /// <summary> How many of the rackets the spider is using </summary>
     private int activeRackets = 0;
+    /// <summary> How much force is applied to the hinge joint's motor upon defeat </summary>
+    public int motorForce = 200;
 
     // Start is called before the first frame update
     new void Start()
@@ -63,17 +65,26 @@ public class Spider : BadThing
         // Tell each racket to despawn their ball if applicable
         for (int i = 0; i < activeRackets; i++)
         {
-            // Along the way, see if all balls are offscreen
-            if (!rackets[i].DespawnBallIfOffscreen() || rackets[i].Anim.GetAnimatorTransitionInfo(0).IsName("Idle -> Swing") || rackets[i].Anim.GetCurrentAnimatorStateInfo(0).IsName("Swing"))
+            // Check if the animator has been created yet
+            if(rackets[i].Anim == null)
             {
                 allBallsOffscreen = false;
             }
+            else
+            {
+                // Along the way, see if all balls are offscreen
+                if (!rackets[i].DespawnBallIfOffscreen() || rackets[i].Anim.GetAnimatorTransitionInfo(0).IsName("Idle -> Swing") || rackets[i].Anim.GetCurrentAnimatorStateInfo(0).IsName("Swing"))
+                {
+                    allBallsOffscreen = false;
+                }
+            }
         }
 
-        // If all balls are offscreen, and the spider is not hurt, rally!
+        // If all balls are offscreen, the spider is not hurt, and the spider hasn't been defeated, rally!
         if (allBallsOffscreen 
             && !anim.GetAnimatorTransitionInfo(0).IsName("Hurt -> Idle") 
-            && anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            && anim.GetCurrentAnimatorStateInfo(0).IsName("Idle")
+            && phase < 4)
         {
             SpawnBalls();
         }
@@ -89,7 +100,16 @@ public class Spider : BadThing
         if (phase == 4)
         {
             DestroyAllBalls();
-            SpawnNextEnemy("Huma N/Huma N.");
+            // Make em spin!!! And immediately fall off the screen and die
+            HingeJoint2D silkHinge = GetComponent<HingeJoint2D>();
+            silkHinge.useMotor = true;
+            silkHinge.breakForce = motorForce;
+            // silkHinge.enabled = false;
+            GetComponent<Collider2D>().enabled = false;
+            transform.Find("Silk").GetComponent<SpriteRenderer>().enabled = false;
+            anim.SetTrigger("Ouch");
+            
+            TransitionToNextEnemy("Huma N/Huma N.");
         }
         else
         {
@@ -115,7 +135,7 @@ public class Spider : BadThing
     /// </summary>
     private void SpawnBalls()
     {
-        // Randomly decide which racket gets the priviledge of throwing a 
+        // Randomly decide which racket gets the privilege of throwing a 
         // hittable ball
         int hittableIndex = Random.Range(0, activeRackets);
 

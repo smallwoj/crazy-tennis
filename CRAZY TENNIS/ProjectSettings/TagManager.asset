@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Score
   - bounds false
+  - Enemy transition
   layers:
   - Default
   - TransparentFX

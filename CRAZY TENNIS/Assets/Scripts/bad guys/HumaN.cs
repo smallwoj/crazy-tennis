@@ -125,7 +125,8 @@ public class HumaN : BadThing
         if(phase == 4)
         {
             DestroyAllUFOs();
-            SpawnNextEnemy("Cutscene Dennis");
+            anim.SetTrigger("Dead");
+            TransitionToNextEnemy("Cutscene Dennis");
         }
         else
         {
@@ -281,7 +282,11 @@ public class HumaN : BadThing
     {     
         foreach (UFO ufo in ufoFleet)
         {
-            Destroy(ufo.gameObject);
+            // Play the UFO's death animation if Huma N. is dead, otherwise just unceremoniously destroy the ufo
+            if (phase == 4)
+                ufo.DeathAnimation();
+            else
+                Destroy(ufo.gameObject);
         }
         ufoFleet.Clear();
     }
@@ -302,6 +307,7 @@ public class HumaN : BadThing
     {
         base.OnDestroy();
         pb.PlayerHurt -= Serve;
+        pb.PlayerGameOver -= SpawnRecoveryEnemy;
     }
 
     /// <summary>

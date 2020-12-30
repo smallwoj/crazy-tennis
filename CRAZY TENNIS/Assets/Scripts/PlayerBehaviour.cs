@@ -8,6 +8,18 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     /// <summary>
+    /// How long the player hurt animation takes
+    /// </summary>
+    private static readonly float HURT_TIME = 0.5f;
+
+    /// <summary>
+    /// How long the respawn invincibility lasts 
+    /// (note that the invincibility starts at the same time as the hurt 
+    /// animation and time accordingly)
+    /// </summary>
+    private static readonly float RESPAWN_TIME = 2f;
+
+    /// <summary>
     /// How many lives the player has, hit 0 and uh oh
     /// </summary>
     public int lives = 5;
@@ -82,6 +94,9 @@ public class PlayerBehaviour : MonoBehaviour
     /// Reference to the rigidbody component
     /// </summary>
     public Rigidbody2D rb;
+
+    public string DeathCoroutine = "WaitAndRespawn";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -96,10 +111,13 @@ public class PlayerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Submit") && !PauseControl.Paused)
+        if(Input.GetButtonDown("Submit") && !PauseControl.Paused && !anim.GetBool("Dead x_x"))
         {
+            swang.enabled = false;
             anim.SetTrigger("space pressed");
         }
+        anim.SetFloat("xVel", rb.velocity.x);
+        anim.SetFloat("yVel", rb.velocity.y);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -112,25 +130,52 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     /// <summary>
-    /// Die
+    /// Gamers don't die, they-
     /// </summary>
     public void Die()
     {
+        anim.SetBool("Dead x_x", true);
+        FindObjectOfType<CameraBehaviour>().ShakeScreen(0.3f);
+        StartCoroutine(DeathCoroutine);
+    }
+
+    /// <summary>
+    /// Gamers don't die, they-
+    /// </summary>
+    /// <returns>All the time you could've spent playing the game if you didn't get hit</returns>
+    private IEnumerator WaitAndRespawn()
+    {
+        // Activate respawn invincibility (we do this before respawning because 
+        // dying again during the death animation would be, like, the worst)
+        Physics2D.IgnoreLayerCollision(10, 8, true);
+
+        // Restrict movement until the death animation ends
+        GetComponent<Move2D>().enabled = false;
+        rb.velocity = Vector2.zero;
+
+        // Let the death animation loop for a while 
+        yield return new WaitForSeconds(HURT_TIME);
+
+        // The "respawn" part of "wait and respawn"
+        anim.SetBool("Dead x_x", false);
+        GetComponent<Move2D>().enabled = true;
+        StartCoroutine("RespawnInvincibility");
+
+        // Stuff that was originally in the Die method
         lives--;
         BadThing.DestroyAllBalls();
         if(PlayerHurt != null)
             PlayerHurt();
+
         if(lives > 0)
         {
             bombs = defaultBombs;
-            FindObjectOfType<CameraBehaviour>().ShakeScreen(0.3f);
             GetComponent<Rigidbody2D>().position = defaultPosition;
         }
         else
         {
             bombs = defaultBombs;
             GetComponent<Rigidbody2D>().position = defaultPosition;
-            FindObjectOfType<CameraBehaviour>().ShakeScreen(0.3f);
             if(!inRecovery)
             {
                 inRecovery = true;
@@ -146,7 +191,48 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     /// <summary>
+    /// Gamers don't die, they-
+    /// </summary>
+    /// <returns>All the time you could've spent playing the game if you didn't get SHOT BY A GUN</returns>
+    private IEnumerable CutsceneDennisDie()
+    {
+        yield return new WaitForSeconds(HURT_TIME);
+        anim.SetBool("Dead x_x", false);
+    }
+
+    /// <summary>
+    /// Makes the player invincible after respawning, and stops the 
+    /// invincibility after some time
+    /// </summary>
+    /// <returns>A brand-new WaitForSeconds object (don't worry about it)</returns>
+    private IEnumerator RespawnInvincibility()
+    {   
+        // Start the animation
+        anim.SetBool("Respawn invincibility active", true);
+        yield return new WaitForSeconds(RESPAWN_TIME);
+        // Descend the player back into the mortal realm
+        anim.SetBool("Respawn invincibility active", false);
+        Physics2D.IgnoreLayerCollision(10, 8, false);
+    }
+
+    /// <summary>
     /// Enables the swing component hitbox yes
+    /// </summary>
+    public void EnableSwang()
+    {
+        swang.enabled = true;
+    }
+
+    /// <summary>
+    /// Disables the swing component hitbox no
+    /// </summary>
+    public void DisableSwang()
+    {
+        swang.enabled = false;
+    }
+
+    /// <summary>
+    /// Toggles the swing component hitbox maybe
     /// </summary>
     public void ToggleSwang()
     {

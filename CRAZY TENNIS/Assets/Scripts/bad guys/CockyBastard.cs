@@ -74,7 +74,9 @@ public class CockyBastard : BadThing
         maxhits = 0;
         if(phase == 4)
         {
-            SpawnNextEnemy("Surfer dude");
+            // Just sorta dies
+            anim.SetTrigger("Dead");
+            TransitionToNextEnemy("Surfer dude");
         }
         else
         {
@@ -99,7 +101,7 @@ public class CockyBastard : BadThing
             return SpawnBall(
                 typeof(GenericHittable), 
                 transform.position + new Vector3(-0.7f, -0.2f, 0),
-                (pb.CenterPos - ((Vector2)transform.position + new Vector2(-0.7f, -0.2f))).normalized * 3,
+                (pb.CenterPos - ((Vector2)transform.position + new Vector2(-0.7f, -0.2f))).normalized * 2,
                 Random.Range(6f, 10f)
             );
         }

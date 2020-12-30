@@ -1,0 +1,14 @@
+<Intro>
+    <Speaker>
+        <Name>Crazy Dennis</Name>
+        <Font></Font>
+        <!-- <Bust>redCharacter</Bust> -->
+        <Speed>Medium</Speed>
+        <Voice></Voice>
+    </Speaker>
+
+    <Line>Now that was some CRAAAAZY TENNIS!</Line>
+    <Line>Nice work out there! You defeated every opponent who stood in your way, and the money I made sellin' tickets is gonna help me pay for gas!</Line>
+    <Line>You really are a tennis master.</Line>
+    <Line>See ya!</Line>
+</Intro>

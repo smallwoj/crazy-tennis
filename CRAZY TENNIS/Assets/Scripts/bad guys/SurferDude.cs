@@ -135,9 +135,9 @@ public class SurferDude : BadThing
 	// FixedUpdate is called?? who even knows about its frequency 
 	void FixedUpdate()
     {
-        // check if the animator is not in the state 'swing' or 'Ouch!'
+        // check if the animator is not in the state 'swing' or 'Ouch!'... and the phase indicates that he's not dead yet
         // note: This would prolly be better as an extension method 👀
-		if(!anim.GetCurrentAnimatorStateInfo(0).IsName("swing") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Ouch!"))
+		if(!anim.GetCurrentAnimatorStateInfo(0).IsName("swing") && !anim.GetCurrentAnimatorStateInfo(0).IsName("Ouch!") && phase < 4)
 		{
             //set previous position
 			prev = rb.position;
@@ -197,7 +197,8 @@ public class SurferDude : BadThing
         }
         else if(phase == 4)
         {
-            SpawnNextEnemy("Mechanical ball thrower");
+            anim.SetTrigger("Dead");
+            TransitionToNextEnemy("Mechanical ball thrower");
         }
         t = 0;
         target = 0;
