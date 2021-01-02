@@ -1,4 +1,4 @@
-// It's the final boss baybee!
+﻿// It's the final boss baybee!
 
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ public class CrazyDennis : BadThing
     /// <summary> How many unhittable balls to spawn in phase 4 </summary>
     private static readonly int PHASE_4_BALLS = MAX_BALLS / 2;
     /// <summary> How quiet he gets when he starts rapid-firing </summary>
-    private static readonly float SPAM_VOLUME = 0.05f;
+    private static readonly float SPAM_VOLUME = 0.2f;
 
     /// <summary> Current phase of the battle </summary>
     private int phase;
@@ -346,7 +346,8 @@ public class CrazyDennis : BadThing
                 }
                 // Make this one hit a little harder to further emphasize the Final Phase
                 FindObjectOfType<CameraBehaviour>().Impact(0.3f, Vector2.left);
-                audioSource.PlayOneShot(hitBall);
+                audioSource.PlayOneShot(hitBall, 2/SPAM_VOLUME);
+
                 break;
             }
         }
