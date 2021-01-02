@@ -24,6 +24,8 @@ public class CutsceneDennis : BadThing
     /// <summary> If I remember correctly, we started development calling balls 
     /// bullets, so this bullet categorized as a ball brings us full circle </summary>
     private Ball bullet;
+    /// <summary> The "BANG!" sound that plays when he shoots you </summary>
+    private AudioClip gunshot;
 
     // Start is called before the first frame update
     new void Start()
@@ -56,6 +58,8 @@ public class CutsceneDennis : BadThing
             bottomBound.GetComponent<BoxCollider2D>().enabled = false;
         }
         FindObjectOfType<PlayerBehaviour>().DeathCoroutine = "CutsceneDennisDie";
+
+        gunshot = Resources.Load<AudioClip>("Audio/Sound Effects/Cutscene Dennis/Shotgun");
     }
 
     // Update is called once per frame
@@ -105,6 +109,8 @@ public class CutsceneDennis : BadThing
         bullet = SpawnBall(typeof(GenericUnhittable), transform.position + BULLET_OFFSET, BULLET_VELOCITY, 0);
         bullet.gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Literal bullet");
         FindObjectOfType<CameraBehaviour>().Impact(0.1f, Vector2.down);
+        audioSource.clip = gunshot;
+        audioSource.Play();
     }
 
     /// <summary>

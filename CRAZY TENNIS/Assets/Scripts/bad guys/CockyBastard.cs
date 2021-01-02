@@ -36,6 +36,7 @@ public class CockyBastard : BadThing
     /// How many degrees off the center the direction for the second phase is.
     /// </summary>
     private float angleOffset = 135;
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -76,6 +77,8 @@ public class CockyBastard : BadThing
         if(phase == 4)
         {
             // Just sorta dies
+            audioSource.clip = dead;
+            audioSource.Play();
             anim.SetTrigger("Dead");
             TransitionToNextEnemy("Surfer dude");
         }
@@ -173,6 +176,10 @@ public class CockyBastard : BadThing
             else if(phase == 3)
                 ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
         }
+
+        // Also play the sound effect
+        audioSource.clip = hitBall;
+        audioSource.Play();
     }
 
     /// <summary>

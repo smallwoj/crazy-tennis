@@ -86,6 +86,10 @@ public class SurferDude : BadThing
     /// reference to the ridid body of surfer dude
     /// </summary>
     private Rigidbody2D rb;
+    /// <summary>
+    /// Sound effect for when he's shredding epic waves
+    /// </summary>
+    private AudioClip sploosh;
 
     // Start is called before the first frame update!!!!! im so proud of it
     new void Start()
@@ -108,6 +112,11 @@ public class SurferDude : BadThing
 		anim.SetBool("NeedBall", true);
         rb = GetComponent<Rigidbody2D>();
         NextPhase();
+
+        // Override sound effects (and load an original one)
+        dead = Resources.Load<AudioClip>("Audio/Sound Effects/Surfer dude/Water balloon");
+        ouch = Resources.Load<AudioClip>("Audio/Sound Effects/Surfer dude/Slime splash");
+        sploosh = Resources.Load<AudioClip>("Audio/Sound Effects/Surfer dude/Water splash delayed");
 	}
 
 	// Update is called once per frame
@@ -165,6 +174,9 @@ public class SurferDude : BadThing
                     to = currPath[currPath.Count - 1 + target];
                 else
                     to = currPath[target];
+
+                // Play sound as we move
+                audioSource.PlayOneShot(sploosh);
 			}
 			else // just lerp
 			    rb.position = Vector3.Lerp(from, to, T);
@@ -188,18 +200,26 @@ public class SurferDude : BadThing
         {
             currPath = path1;
         }
-        else if(phase == 2)
+        else 
         {
-            currPath = path2;
-        }
-        else if(phase == 3)
-        {
-            currPath = path3;
-        }
-        else if(phase == 4)
-        {
-            anim.SetTrigger("Dead");
-            TransitionToNextEnemy("Mechanical ball thrower");
+            // Award points 
+            base.NextPhase();
+            
+            if(phase == 2)
+            {
+                currPath = path2;
+            }
+            else if(phase == 3)
+            {
+                currPath = path3;
+            }
+            else if(phase == 4)
+            {
+                audioSource.clip = dead;
+                audioSource.Play();
+                anim.SetTrigger("Dead");
+                TransitionToNextEnemy("Mechanical ball thrower");
+            }
         }
         t = 0;
         target = 0;
@@ -215,12 +235,6 @@ public class SurferDude : BadThing
         {
             pathStep = -1;
             to = currPath[currPath.Count - 1 + target];
-        }
-
-        // Award points (the if is there to avoid awarding points when the guy spawns)
-        if (phase > 1)
-        {
-            base.NextPhase();
         }
     }
 
@@ -258,6 +272,9 @@ public class SurferDude : BadThing
 		ball = SpawnTheBall();
         // we do NOT need the ball
 		anim.SetBool("NeedBall", false);
+
+        // Play the sound
+        audioSource.PlayOneShot(hitBall);
     }
 
     /// <summary>

@@ -20,12 +20,20 @@ public class SpiderRacket : MonoBehaviour
     public System.Type BallType = null;
     /// <summary> The ball spawned by this racket </summary>
     private Ball ball;
+    /// <summary> Plays sound effects </summary>
+    private AudioSource audioSource;
+    /// <summary> Sound effect for hitting a ball </summary>
+    private AudioClip hitBall;
 
     // Start is called before the first frame update
     void Start()
     {
         // Get the animator
         Anim = GetComponent<Animator>();
+
+        // Load the sound stuff
+        audioSource = GetComponent<AudioSource>();
+        hitBall = Resources.Load<AudioClip>("Audio/Sound Effects/BadThing defaults/Axe swing");
     }
 
     // Update is called once per frame
@@ -87,6 +95,10 @@ public class SpiderRacket : MonoBehaviour
             BallType = null;
 
             FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.down);
+
+            // Also play the sound effect
+            audioSource.clip = hitBall;
+            audioSource.Play();
         }
 
         // Also, reset the trigger so there aren't redundant swings

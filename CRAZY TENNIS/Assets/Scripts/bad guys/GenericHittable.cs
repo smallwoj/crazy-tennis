@@ -32,6 +32,8 @@ public class GenericHittable : GenericUnhittable
                 // Fire the on hit event
                 if(OnHit != null)
                     OnHit();
+                // And finally, the sound effect
+                GetComponent<AudioSource>().Play();
             }
         }
     }

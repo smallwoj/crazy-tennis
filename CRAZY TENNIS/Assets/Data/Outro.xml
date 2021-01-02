@@ -4,7 +4,7 @@
         <Font></Font>
         <!-- <Bust>redCharacter</Bust> -->
         <Speed>Medium</Speed>
-        <Voice></Voice>
+        <Voice>Audio/Sound Effects/Cutscene Dennis/voice</Voice>
     </Speaker>
 
     <Line>Now that was some CRAAAAZY TENNIS!</Line>

@@ -34,6 +34,10 @@ public class MechanicalBallThrower : BadThing
     /// <summary> How many seconds remain in the current charging animation.
     /// Starts at chargeAnimTime and goes down to 0 </summary>
     private float chargeTimeRemaining = 0;
+    /// <summary>
+    /// Sound effects that play when it starts a charging animation
+    /// </summary>
+    private AudioClip charge, chargeShort;
 
     // Start is called before the first frame update
     new void Start()
@@ -46,6 +50,12 @@ public class MechanicalBallThrower : BadThing
         
         // Set the player's ball rules to breakoutn't
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>().Breakout = false;
+
+        // Override sounds
+        hitBall = Resources.Load<AudioClip>("Audio/Sound Effects/Mechanical ball thrower/Laser cannon short");
+        dead = Resources.Load<AudioClip>("Audio/Sound Effects/Mechanical ball thrower/Computer error");
+        charge = Resources.Load<AudioClip>("Audio/Sound Effects/Mechanical ball thrower/Retro car engine glitch");
+        chargeShort = Resources.Load<AudioClip>("Audio/Sound Effects/Mechanical ball thrower/Retro car engine glitch short");
     }
 
     // Update is called once per frame
@@ -59,6 +69,17 @@ public class MechanicalBallThrower : BadThing
             {
                 anim.SetTrigger("Next charge");
                 chargeTimeRemaining = CHARGE_ANIM_TIMES[phase];
+
+                // Play a sound effect depending on the phase
+                if (phase == 2)
+                {
+                    audioSource.clip = chargeShort;
+                    audioSource.Play();
+                }
+                else if (phase == 3)
+                {
+                    audioSource.PlayOneShot(charge);
+                }
             }
             else
             {
@@ -76,10 +97,12 @@ public class MechanicalBallThrower : BadThing
         phase++;
         if (phase == 4)
         {
+            audioSource.clip = dead;
+            audioSource.Play();
             anim.SetTrigger("Dead");
             TransitionToNextEnemy("Spider/Spider");
         }
-        else
+        else if (phase < 4)
         {
             // Award points (the if is there to avoid awarding points when the guy spawns)
             if (phase > 1)
@@ -174,6 +197,9 @@ public class MechanicalBallThrower : BadThing
             }
             FindObjectOfType<CameraBehaviour>().Impact(0.4f, Vector2.down);
         }
+        // Also play the sound effect
+        audioSource.clip = hitBall;
+        audioSource.Play();
     }
 
     public void Shake()

@@ -125,6 +125,9 @@ public class HumaN : BadThing
 
         if(phase == 4)
         {
+            // Also play the sound effect
+            audioSource.clip = dead;
+            audioSource.Play();
             DestroyAllUFOs();
             anim.SetTrigger("Dead");
             TransitionToNextEnemy("Cutscene Dennis");
@@ -224,6 +227,10 @@ public class HumaN : BadThing
             ball.Velocity = new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, -4f)).normalized * 5;
             FindObjectOfType<CameraBehaviour>().Impact(0.2f, Vector2.left);
         }
+
+        // Also play the sound effect
+        audioSource.clip = hitBall;
+        audioSource.Play();
     }
 
     /// <summary>
