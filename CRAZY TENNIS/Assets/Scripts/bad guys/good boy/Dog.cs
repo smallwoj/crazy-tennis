@@ -10,6 +10,11 @@ using UnityEngine;
 public class Dog : GoodBoy
 {
     /// <summary>
+    /// How many times louder the bark is compared to the jump sound
+    /// </summary>
+    private static readonly float BARK_SCALE = 10f;
+
+    /// <summary>
     /// Positions that dog started from, and is going to
     /// </summary>
     private Vector2 to, from;
@@ -258,8 +263,7 @@ public class Dog : GoodBoy
         to = rb.position + new Vector2(-2f, -1f);
         t = 0;
         // Bark :)
-        audioSource.PlayOneShot(bark);
-
+        audioSource.PlayOneShot(bark, BARK_SCALE);
     }
 
     /// <summary>
@@ -337,7 +341,7 @@ public class Dog : GoodBoy
                 anim.ResetTrigger("drop ball");
             break;
             case 4: // win!
-                audioSource.PlayOneShot(bark);
+                audioSource.PlayOneShot(bark, BARK_SCALE);
                 StartCoroutine("GoToNextEnemy");
             break;
         }
