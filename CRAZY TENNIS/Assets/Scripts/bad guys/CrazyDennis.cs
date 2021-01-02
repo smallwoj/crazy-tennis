@@ -1,4 +1,4 @@
-// It's the final boss baybee!
+﻿// It's the final boss baybee!
 
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ public class CrazyDennis : BadThing
     /// <summary> Current phase of the battle </summary>
     private int phase;
     /// <summary> Makes the sprites go whee (we're planning to add whoosh functionality in the next version) </summary>
-    private Animator anim;
+    public Animator anim;
     /// <summary> Lets us communicate with the player </summary>
     private PlayerBehaviour pb;
     /// <summary> Object pool for spawning and despawning a whole bunch of balls </summary>
@@ -239,7 +239,7 @@ public class CrazyDennis : BadThing
                 FindObjectOfType<CameraBehaviour>().ShakeScreen(1f);
                 audioSource.volume = 1;
                 AuraSound();
-                anim.SetTrigger("Dead");
+                anim.SetBool("Dead", true);
                 FindObjectOfType<MusicManager>().Stop();
                 break;
             }

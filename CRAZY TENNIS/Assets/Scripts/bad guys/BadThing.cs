@@ -179,11 +179,20 @@ public abstract class BadThing : MonoBehaviour
     /// </summary>
     public void SpawnRecoveryEnemy()
     {
-        //TODO: make this be a lookup table for when we have different recovery enemies and not just Dog
-        BadThing enemy = SpawnNextEnemy("dogy");
-        if(enemy is Dog dog) //that a funny line
+        bool transitionActive = FindObjectOfType<EnemyTransitionControl>().transition.activeSelf;
+        bool dennisDie = false;
+        if (FindObjectOfType<CrazyDennis>())
         {
-            dog.nextEnemy = this.PrefabString();
+            dennisDie = FindObjectOfType<CrazyDennis>().anim.GetBool("Dead");
+        }
+        if (!transitionActive && !dennisDie)
+        {
+            //TODO: make this be a lookup table for when we have different recovery enemies and not just Dog
+            BadThing enemy = SpawnNextEnemy("dogy");
+            if(enemy is Dog dog) //that a funny line
+            {
+                dog.nextEnemy = this.PrefabString();
+            }
         }
     }
 

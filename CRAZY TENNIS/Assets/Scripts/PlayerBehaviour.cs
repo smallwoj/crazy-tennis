@@ -193,19 +193,32 @@ public class PlayerBehaviour : MonoBehaviour
         }
         else
         {
-            bombs = defaultBombs;
-            GetComponent<Rigidbody2D>().position = defaultPosition;
-            if(!inRecovery)
+            bool transitionActive = FindObjectOfType<EnemyTransitionControl>().transition.activeSelf;
+            bool dennisDie = false;
+            if (FindObjectOfType<CrazyDennis>())
             {
-                inRecovery = true;
-                lives = 5;
+                dennisDie = FindObjectOfType<CrazyDennis>().anim.GetBool("Dead");
             }
-            else
+            if (!transitionActive && !dennisDie)
+            {            
+                bombs = defaultBombs;
+                GetComponent<Rigidbody2D>().position = defaultPosition;
+                if(!inRecovery)
+                {
+                    inRecovery = true;
+                    lives = 5;
+                }
+                else
+                {
+                    // TODO: Actual game over screen thabk
+                }
+                if(PlayerGameOver != null)
+                    PlayerGameOver();
+            }
+            else 
             {
-                // TODO: Actual game over screen thabk
+                lives = 1;
             }
-            if(PlayerGameOver != null)
-                PlayerGameOver();
         }
     }
 
