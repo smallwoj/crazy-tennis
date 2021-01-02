@@ -13,6 +13,8 @@ public class EnemyTransitionControl : MonoBehaviour
     BadThing currentEnemy;
     /// <summary> The enemy to transition to </summary>
     string nextEnemy;
+    /// <summary> If we are waiting before transitioning </summary>
+    bool waiting;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +28,7 @@ public class EnemyTransitionControl : MonoBehaviour
         if (transition.activeSelf)
         {
             // Spawn the next enemy when the player presses the button
-            if(Input.GetButtonDown("Submit"))
+            if(Input.GetButtonDown("Submit") && !waiting)
             {
                 FinishTransition();
                 transition.SetActive(false);
@@ -42,8 +44,23 @@ public class EnemyTransitionControl : MonoBehaviour
     public void StartTransition(BadThing currentEnemy, string nextEnemy)
     {
         transition.SetActive(true);
+        transition.transform.GetChild(0).gameObject.SetActive(false);
         this.currentEnemy = currentEnemy;
         this.nextEnemy = nextEnemy;
+        StartCoroutine("WaitToContinue");
+    }
+
+    /// <summary>
+    /// Sets the waiting and active stuff yeah
+    /// </summary>
+    /// <returns> It sure does </returns>
+    private IEnumerator WaitToContinue()
+    {
+        waiting = true;
+        yield return new WaitForSeconds(2);
+        
+        transition.transform.GetChild(0).gameObject.SetActive(true);
+        waiting = false;
     }
 
     /// <summary>
