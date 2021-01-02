@@ -79,7 +79,7 @@ public class CockyBastard : BadThing
             // Just sorta dies
             audioSource.clip = dead;
             audioSource.Play();
-            anim.SetTrigger("Dead");
+            anim.SetBool("Dead", true);
             TransitionToNextEnemy("Surfer dude");
         }
         else

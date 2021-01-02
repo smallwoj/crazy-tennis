@@ -8,7 +8,7 @@ using UnityEditor;
 public class EnemyTransitionControl : MonoBehaviour
 {
     /// <summary> The object containing the enemy transition canvas </summary>
-    GameObject transition;
+    public GameObject transition;
     /// <summary> The current enemy's script </summary>
     BadThing currentEnemy;
     /// <summary> The enemy to transition to </summary>
@@ -43,6 +43,7 @@ public class EnemyTransitionControl : MonoBehaviour
     /// <param name="nextEnemy"> The name of the next enemy's prefab </param>
     public void StartTransition(BadThing currentEnemy, string nextEnemy)
     {
+        Physics2D.IgnoreLayerCollision(10, 8, true);
         transition.SetActive(true);
         transition.transform.GetChild(0).gameObject.SetActive(false);
         this.currentEnemy = currentEnemy;
@@ -67,8 +68,8 @@ public class EnemyTransitionControl : MonoBehaviour
     /// Actually spawns the next enemy (I still miss the autocommenter)
     /// </summary>
     private void FinishTransition()
-    {        
-        // TODO: PUT NEW MUSIC PLAY HERE
+    {
+        Physics2D.IgnoreLayerCollision(10, 8, false);
         currentEnemy.SpawnNextEnemy(nextEnemy);
     }
 }

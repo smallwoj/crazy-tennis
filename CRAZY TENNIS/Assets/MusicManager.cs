@@ -37,7 +37,8 @@ public class MusicManager : MonoBehaviour
     {
         startVolume = source.volume;
  
-        while (source.volume > 0) {
+        while (source.volume > 0) 
+        {
             source.volume -= startVolume * Time.deltaTime / FadeTime;
  
             yield return null;
