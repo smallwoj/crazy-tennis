@@ -346,7 +346,8 @@ public class CrazyDennis : BadThing
                 }
                 // Make this one hit a little harder to further emphasize the Final Phase
                 FindObjectOfType<CameraBehaviour>().Impact(0.3f, Vector2.left);
-                audioSource.PlayOneShot(hitBall);
+                audioSource.PlayOneShot(hitBall, 2/SPAM_VOLUME);
+
                 break;
             }
         }
