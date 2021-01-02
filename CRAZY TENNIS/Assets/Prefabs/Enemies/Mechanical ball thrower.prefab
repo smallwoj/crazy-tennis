@@ -240,6 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TipList: {fileID: 11400000, guid: 758ea990e80c4c140bf2ca02be6fe8d3, type: 2}
   HealthRadius: 1.25
+  music: {fileID: 8300000, guid: 25416c694805bdd46b40143ccc035383, type: 3}
 --- !u!95 &7918874903402662467
 Animator:
   serializedVersion: 3

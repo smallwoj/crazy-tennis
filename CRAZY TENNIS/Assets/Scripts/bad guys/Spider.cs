@@ -42,6 +42,8 @@ public class Spider : BadThing
     {
         base.Start();
         
+        FindObjectOfType<MusicManager>().Play(base.music);
+
         // Set the player's ball rules to breakoutn't
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>().Breakout = false;
 

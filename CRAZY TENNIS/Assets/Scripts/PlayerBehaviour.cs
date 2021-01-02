@@ -162,6 +162,8 @@ public class PlayerBehaviour : MonoBehaviour
     /// <returns>All the time you could've spent playing the game if you didn't get hit</returns>
     private IEnumerator WaitAndRespawn()
     {
+        if(lives == 1)
+            FindObjectOfType<MusicManager>().Stop();
         // Activate respawn invincibility (we do this before respawning because 
         // dying again during the death animation would be, like, the worst)
         Physics2D.IgnoreLayerCollision(10, 8, true);

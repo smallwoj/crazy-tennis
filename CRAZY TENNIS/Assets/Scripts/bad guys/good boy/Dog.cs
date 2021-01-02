@@ -96,6 +96,7 @@ public class Dog : GoodBoy
     {
         // set references
         base.Start();
+        FindObjectOfType<MusicManager>().Play(music);
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();

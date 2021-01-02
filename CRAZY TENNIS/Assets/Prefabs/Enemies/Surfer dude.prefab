@@ -255,6 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TipList: {fileID: 11400000, guid: caf733a9d5e7f574485f09fa1541c01c, type: 2}
   HealthRadius: 1.5
+  music: {fileID: 8300000, guid: 2c473722b14d78746a7657f639827cac, type: 3}
   path1:
   - {x: -2.77, y: 3.14}
   - {x: 2.31, y: 3.14}

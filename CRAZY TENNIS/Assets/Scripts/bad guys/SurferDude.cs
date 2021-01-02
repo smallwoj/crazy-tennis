@@ -96,6 +96,7 @@ public class SurferDude : BadThing
     {
         // the base class has to start too you know
         base.Start();
+        FindObjectOfType<MusicManager>().Play(base.music);
         // initialize some good ol starting variables
         anim = GetComponent<Animator>();
         phase = 0;

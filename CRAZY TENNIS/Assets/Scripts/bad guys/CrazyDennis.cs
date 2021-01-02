@@ -50,12 +50,15 @@ public class CrazyDennis : BadThing
     /// <summary> Sound effects! </summary>
     private AudioClip auraSound, explosionSound;
 
+    public AudioClip music2;
+
     // Start is called before the first frame update
     new void Start()
     {
         // Good ol' badthing
         base.Start();
         anim = GetComponent<Animator>();
+        FindObjectOfType<MusicManager>().Play(base.music);
         phase = 0;
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
         pb.Breakout = false;
@@ -215,6 +218,7 @@ public class CrazyDennis : BadThing
             {
                 if (phase2Active)
                     togglePhase2Active();
+                FindObjectOfType<MusicManager>().Stop();
 
                 dialogue.SetActive(true);
                 talking = true;
@@ -226,6 +230,7 @@ public class CrazyDennis : BadThing
                 maxhits = 3;
                 Serve();
                 pb.PlayerHurt += Serve;
+                FindObjectOfType<MusicManager>().Play(music2);
                 break;
             }
             case 5:
@@ -235,6 +240,7 @@ public class CrazyDennis : BadThing
                 audioSource.volume = 1;
                 AuraSound();
                 anim.SetTrigger("Dead");
+                FindObjectOfType<MusicManager>().Stop();
                 break;
             }
         }

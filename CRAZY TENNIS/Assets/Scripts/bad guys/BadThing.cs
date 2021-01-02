@@ -72,6 +72,11 @@ public abstract class BadThing : MonoBehaviour
     private LineRenderer HealthCircle;
 
     /// <summary>
+    /// this where doot
+    /// </summary>
+    public AudioClip music;
+    
+    /// <summary>
     /// Plays cool sounds
     /// </summary>
     internal AudioSource audioSource;
@@ -154,7 +159,7 @@ public abstract class BadThing : MonoBehaviour
     {
         DestroyAllBalls();
         // (note that this will eventually call SpawnNextEnemy)
-        // TODO: FADE OUT CURRENT MUSIC
+        GameObject.FindObjectOfType<MusicManager>().Stop();
         GameObject.FindGameObjectWithTag("Enemy transition").GetComponent<EnemyTransitionControl>().StartTransition(this, nextEnemy);
 
         //this is self documenting code

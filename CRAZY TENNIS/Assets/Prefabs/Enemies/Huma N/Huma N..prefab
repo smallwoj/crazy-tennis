@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TipList: {fileID: 11400000, guid: 52c68f1f8f912c44598b12002f0f3c7b, type: 2}
   HealthRadius: 1.5
+  music: {fileID: 8300000, guid: fd6515934dd928c4b812575b018c4c61, type: 3}
 --- !u!50 &8278215582964729976
 Rigidbody2D:
   serializedVersion: 4

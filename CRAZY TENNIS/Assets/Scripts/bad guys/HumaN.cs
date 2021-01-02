@@ -43,6 +43,7 @@ public class HumaN : BadThing
         base.Start();
         anim = GetComponent<Animator>();
         phase = 0;
+        FindObjectOfType<MusicManager>().Play(base.music);
         
         // Tell the player about this cool thing called Rally (and !Breakout)
         pb = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehaviour>();
