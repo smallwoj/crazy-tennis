@@ -105,6 +105,13 @@ public class PlayerBehaviour : MonoBehaviour
     /// </summary>
     private AudioClip whoosh, dead;
 
+    /// <summary>
+    /// Keeps track of whether the player has been hit this frame. 
+    /// Used to prevent situations where the player loses several lives at once 
+    /// because they collided with multiple balls at once
+    /// </summary>
+    private bool dying;
+
     public string DeathCoroutine = "WaitAndRespawn";
 
     // Start is called before the first frame update
@@ -135,6 +142,13 @@ public class PlayerBehaviour : MonoBehaviour
         anim.SetFloat("yVel", rb.velocity.y);
     }
 
+    // Fixed Update is called once per fixed frame- wait that's not it
+    private void FixedUpdate() {
+        // Resetting this bool once every physics frame means that the player 
+        // can only die once per frame. Just like real life!
+        dying = false;
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         // Award points for almost hitting the ball
@@ -153,7 +167,9 @@ public class PlayerBehaviour : MonoBehaviour
         audioSource.Play();
         anim.SetBool("Dead x_x", true);
         FindObjectOfType<CameraBehaviour>().ShakeScreen(0.3f);
-        StartCoroutine(DeathCoroutine);
+        if (!dying)
+            StartCoroutine(DeathCoroutine);
+        dying = true;
     }
 
     /// <summary>
