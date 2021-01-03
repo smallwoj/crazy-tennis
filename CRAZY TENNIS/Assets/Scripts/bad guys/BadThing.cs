@@ -131,7 +131,7 @@ public abstract class BadThing : MonoBehaviour
 
     /// <summary>
     /// Transitions to the next enemy, 
-    /// denoted by the name of a prefab in Assets/Prefabs/Enemies
+    /// denoted by the name of a prefab in Assets/Resources/Prefabs/Enemies
     /// </summary>
     /// <param name="nextEnemy">prefab of the next enemy</param>
     public BadThing SpawnNextEnemy(string nextEnemy)
