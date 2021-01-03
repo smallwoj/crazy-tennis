@@ -143,8 +143,8 @@ public abstract class BadThing : MonoBehaviour
             Destroy(this.gameObject);
         if(GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
         {
-            GameObject enemy = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/"+nextEnemy+".prefab");
-            enemy = PrefabUtility.InstantiatePrefab(enemy) as GameObject;
+            GameObject enemy = Resources.Load<GameObject>("Prefabs/Enemies/"+nextEnemy);
+            enemy = GameObject.Instantiate(enemy);
             return enemy.GetComponent<BadThing>();
         }
         return null;
