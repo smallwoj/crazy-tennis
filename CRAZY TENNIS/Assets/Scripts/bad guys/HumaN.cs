@@ -82,14 +82,14 @@ public class HumaN : BadThing
         {
             case 1: 
             {   
-                GameObject ufoPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/Huma N/UFO.prefab");
+                GameObject ufoPrefab = Resources.Load<GameObject>("Prefabs/Enemies/Huma N/UFO");
                 
-                GameObject ufo1 = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ufoPrefab);
+                GameObject ufo1 = GameObject.Instantiate(ufoPrefab);
                 ufo1.GetComponent<UFO>().Commander = this;
                 ufo1.transform.position = new Vector3(2.38f, 3.26f, 0);
                 ufoFleet.Add(ufo1.GetComponent<UFO>());
 
-                GameObject ufo2 = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ufoPrefab);
+                GameObject ufo2 = GameObject.Instantiate(ufoPrefab);
                 // It would be so cool if I could pass parameters to a new object in order to ensure that it's properly initialized once it's created. I would call this feature a "constructor"
                 ufo2.GetComponent<UFO>().Commander = this;
                 ufo2.transform.position = new Vector3(-2.4f, 3.26f, 0);

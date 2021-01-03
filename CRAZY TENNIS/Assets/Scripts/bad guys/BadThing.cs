@@ -116,9 +116,9 @@ public abstract class BadThing : MonoBehaviour
     /// <returns>The ball created</returns>
     public Ball SpawnBall(System.Type type, Vector2 initPos, Vector2 initVel, float initRotVel)
     {
-        GameObject ball = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Balls/"+type.Name+".prefab");
+        GameObject ball = Resources.Load<GameObject>("Prefabs/Balls/"+type.Name);
         //instantiate the prefab
-		ball = (GameObject)PrefabUtility.InstantiatePrefab(ball);
+        ball = GameObject.Instantiate(ball);
         Ball comp = (Ball)ball.AddComponent(type);
         comp.body = ball.GetComponent<Rigidbody2D>();
         comp.Velocity = initVel;
@@ -131,7 +131,7 @@ public abstract class BadThing : MonoBehaviour
 
     /// <summary>
     /// Transitions to the next enemy, 
-    /// denoted by the name of a prefab in Assets/Prefabs/Enemies
+    /// denoted by the name of a prefab in Assets/Resources/Prefabs/Enemies
     /// </summary>
     /// <param name="nextEnemy">prefab of the next enemy</param>
     public BadThing SpawnNextEnemy(string nextEnemy)
@@ -143,8 +143,8 @@ public abstract class BadThing : MonoBehaviour
             Destroy(this.gameObject);
         if(GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
         {
-            GameObject enemy = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/"+nextEnemy+".prefab");
-            enemy = PrefabUtility.InstantiatePrefab(enemy) as GameObject;
+            GameObject enemy = Resources.Load<GameObject>("Prefabs/Enemies/"+nextEnemy);
+            enemy = GameObject.Instantiate(enemy);
             return enemy.GetComponent<BadThing>();
         }
         return null;

@@ -41,9 +41,9 @@ public class SceneLoader : MonoBehaviour
 			if(_overlay == null)
 			{
 				//get the data from the prefab
-				_overlay = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/SceneTransition.prefab");
+				_overlay = Resources.Load<GameObject>("Prefabs/SceneTransition");
 				//instantiate the prefab
-				_overlay = (GameObject)PrefabUtility.InstantiatePrefab(_overlay);
+				_overlay = GameObject.Instantiate(_overlay, Vector3.zero, Quaternion.identity);
 				//make it so it becomes god
 				DontDestroyOnLoad(_overlay);
 			}
