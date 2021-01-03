@@ -116,9 +116,9 @@ public abstract class BadThing : MonoBehaviour
     /// <returns>The ball created</returns>
     public Ball SpawnBall(System.Type type, Vector2 initPos, Vector2 initVel, float initRotVel)
     {
-        GameObject ball = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Balls/"+type.Name+".prefab");
+        GameObject ball = Resources.Load<GameObject>("Prefabs/Balls/"+type.Name);
         //instantiate the prefab
-		ball = (GameObject)PrefabUtility.InstantiatePrefab(ball);
+        ball = GameObject.Instantiate(ball);
         Ball comp = (Ball)ball.AddComponent(type);
         comp.body = ball.GetComponent<Rigidbody2D>();
         comp.Velocity = initVel;
