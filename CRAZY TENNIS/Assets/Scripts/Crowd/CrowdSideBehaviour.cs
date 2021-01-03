@@ -62,8 +62,10 @@ public class CrowdSideBehaviour : MonoBehaviour
                     case 4: prefabName = "oh yeah woo yeah"; break;
                     default: prefabName = "Generic crowd person"; break;
                 }
-                GameObject spectator = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/" + prefabName + ".prefab");
-                GameObject spectatorInstance = PrefabUtility.InstantiatePrefab(spectator) as GameObject;
+                
+                // Good code? :)?
+                GameObject spectatorPrefab = Resources.Load<GameObject>("Prefabs/" + prefabName);
+                GameObject spectatorInstance = GameObject.Instantiate(spectatorPrefab, transform.position, transform.rotation);
 
                 // Make it a child of the crowd object (and then fix up the transform so it displays properly)
                 spectatorInstance.transform.parent = gameObject.transform;

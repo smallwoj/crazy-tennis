@@ -40,13 +40,13 @@ public class SpectatorBehaviour : MonoBehaviour, Spectator
         SpriteRenderer skinColour = transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>();    // Sprite renderer for the skin colour sprite
         int spriteIndex = (int)(Random.value * sprites.Count);  // Index of the chosen sprite
         string spriteName = sprites[spriteIndex];   // Name of the chosen sprite (necessary since cameos are removed from the list once they're chosen)
-        string path = "Assets/images/Crowd/";   // Where to find the sprites
+        string path = "images/Crowd/";   // Where to find the sprites
 
         // It's a fan, so we randomly choose the skin colour too
         if (spriteIndex < FANS)
         {
             path += "Outfits/";
-            skinColour.sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/images/Crowd/Skin colours/" + SKIN_COLOURS[(int)(Random.value * SKIN_COLOURS.Length)] + ".png");
+            skinColour.sprite = Resources.Load<Sprite>("images/Crowd/Skin colours/" + SKIN_COLOURS[(int)(Random.value * SKIN_COLOURS.Length)]);
         }
         // It's a cameo, so we also make sure that it doesn't appear a second time
         else
@@ -56,7 +56,7 @@ public class SpectatorBehaviour : MonoBehaviour, Spectator
         }
 
         // Choose the sprite!
-        mainSprite.sprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(path + spriteName + ".png");
+        mainSprite.sprite = Resources.Load<Sprite>(path + spriteName);
     }
 
     // Update is called once per frame
