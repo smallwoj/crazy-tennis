@@ -1,5 +1,5 @@
 ﻿/*
-Alex Kitt (first time doing Unity development alone!)
+Zoey Kitt (first time doing Unity development alone!)
 July 11, 2018
 NPCBehaviour: This one is like bork.cs, except instead of borking it dialogues instead
 

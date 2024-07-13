@@ -1,5 +1,5 @@
 ﻿/*
-Alex Kitt and Josh Smallwood
+Zoey Kitt and Josh Smallwood
 July 17, 2019 (Wax Emoji Day  蠟  蠟  蠟  蠟 )
 Project ☣️
 DialogueBehaviour: This one defines the  蠟 behaviour for the  蠟  dialogue  蠟  蠟  蠟 
