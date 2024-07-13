@@ -45,7 +45,7 @@ TextureImporter:
       213: -2297844873410430411
     second: Sleepy doggy_6
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -65,6 +65,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -73,9 +75,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -96,9 +98,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -114,6 +121,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -143,7 +162,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ded0d1b385e5cf7e0800000000000000
-      internalID: -1730404423775220243
+      internalID: -7140197223729878899
       vertices: []
       indices: 
       edges: []
@@ -164,7 +183,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 429dda8249020f5e0800000000000000
-      internalID: -1877965223903766236
+      internalID: 3306356008696414406
       vertices: []
       indices: 
       edges: []
@@ -185,7 +204,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 96b3393ab438d4260800000000000000
-      internalID: 7083462149813779305
+      internalID: 378396904004194554
       vertices: []
       indices: 
       edges: []
@@ -206,7 +225,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e8a7c8c99dbfaadd0800000000000000
-      internalID: -2473888133233739122
+      internalID: -355485136217376188
       vertices: []
       indices: 
       edges: []
@@ -227,7 +246,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: dd8d4faedb5ca10a0800000000000000
-      internalID: -6909993258765199139
+      internalID: 4139151651900567156
       vertices: []
       indices: 
       edges: []
@@ -248,7 +267,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 7c3695d7f9ef84390800000000000000
-      internalID: -7833731590854712377
+      internalID: -958557365620372678
       vertices: []
       indices: 
       edges: []
@@ -269,7 +288,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 53a3b6b134a6c10e0800000000000000
-      internalID: -2297844873410430411
+      internalID: -4821144639710981374
       vertices: []
       indices: 
       edges: []
@@ -284,6 +303,14 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Sleepy doggy_0: -7140197223729878899
+      Sleepy doggy_1: 3306356008696414406
+      Sleepy doggy_2: 378396904004194554
+      Sleepy doggy_3: -355485136217376188
+      Sleepy doggy_4: 4139151651900567156
+      Sleepy doggy_5: -958557365620372678
+      Sleepy doggy_6: -4821144639710981374
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
