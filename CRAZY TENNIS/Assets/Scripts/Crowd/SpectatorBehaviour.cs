@@ -20,7 +20,7 @@ public class SpectatorBehaviour : MonoBehaviour, Spectator
     /// particular enemy (this value is used to make sure that the cameo sprites spawn at most once) </summary>
     private static readonly int FANS = 6;
     /// <summary> File names for spectators' sprites </summary>
-    private static List<string> sprites = new List<string> { "Generic crowd person", "Cocky bastard fan", "Surfer dude fan", "Mechanical ball thrower fan", "Spider fan", "Huma N. fan", "Skyla", "Yar", "Alex", "Josh" };
+    private static List<string> sprites = new List<string> { "Generic crowd person", "Cocky bastard fan", "Surfer dude fan", "Mechanical ball thrower fan", "Spider fan", "Huma N. fan", "Skyla", "Yar", "Zoey", "Josh" };
     /// <summary> Whether the spectator is currently cheering </summary>
     private bool hyped = false;
     /// <summary> How many seconds are left in the cheer </summary>
